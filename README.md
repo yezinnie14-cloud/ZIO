@@ -23,7 +23,7 @@
 ├── assets       # 이미지, 폰트, 공통 SCSS 같은 정적 리소스
 ├── components   # 재사용 가능한 컴포넌트   
 ├── contexts     # 전역 상태 관리 (로그인/예약 등 Context API)
-├── layout       # Header, Footer, Layout 같은 전체 공통 구조
+├── layout       # Header, Footer, Gnb, Layout 같은 전체 공통 구조
 ├── pages        # 라우터로 연결되는 실제 화면(페이지)들
 └── App.js       # 라우터 + 전체 앱 구조
 
