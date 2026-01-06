@@ -1,0 +1,18 @@
+@use "../../assets/scss/fonts" as *;
+@use "../../assets/scss/variables" as *;
+@use "../../assets/scss/mixins" as *;
+
+.gnb-mobile {
+  display: block;
+
+  @include respond {
+    display: none;
+  }
+}
+.gnb-desktop {
+  display: none;
+
+  @include respond {
+    display: block;
+  }
+}
