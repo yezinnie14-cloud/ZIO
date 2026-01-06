@@ -24,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +48,8 @@
   },
   "devDependencies": {
     "eslint": "^8.57.1",
+    "gh-pages": "^6.3.0",
     "prettier": "^3.7.4"
-  }
+  },
+  "homepage": "https://yezinnie14-cloud.github.io/ZIO/"
 }
