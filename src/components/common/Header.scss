@@ -1,3 +1,32 @@
 @use "../../assets/scss/fonts" as *;
 @use "../../assets/scss/variables" as *;
 @use "../../assets/scss/mixins" as *;
+.header{
+    .login{
+        margin: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-around;
+        position: fixed;
+        cursor: pointer;
+        font-size: 14px;
+        width: 90px;
+        height: 30px;
+        background-color: #B67FDB;
+        border-radius: 25px;
+        z-index: 9999;
+        right: 0;
+        
+        .icon{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        
+        &:hover{
+            background-color: #7F31BC;
+        }
+        
+    }
+}

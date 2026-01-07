@@ -1,0 +1,17 @@
+@use "../../assets/scss/fonts" as *;
+@use "../../assets/scss/variables" as *;
+@use "../../assets/scss/mixins" as *;
+.popup {
+  position: fixed;
+  left: 50%;
+  
+  transform: translateX(-50%);
+    top: 60%;
+    height: 30vh;
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  z-index: 9999;
+}
