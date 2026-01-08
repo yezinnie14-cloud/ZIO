@@ -4,7 +4,7 @@ import "./Ad.scss";
 
 const Ad = () => {
   return (
-    <div id="ad">
+    <section id="ad">
       <div className="car-img">
         <img src={BlueCar} alt="3d-blue-car" />
         <img src={YellowCar} alt="3d-yellow-car" />
@@ -13,7 +13,7 @@ const Ad = () => {
       <div className="ad-txt">
         <p>정기권으로 ZIO를 더 간편하게 사용해보세요!</p>
       </div>
-    </div>
+    </section>
   )
 }
 

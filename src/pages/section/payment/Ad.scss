@@ -37,6 +37,7 @@
       top: 2rem;
       right: 0.5rem;
       text-align: right;
+      z-index: 99;
       @include flex-layout($just:flex-end, $align:flex-start);
       @include caption-r;
     }

@@ -1,31 +1,44 @@
 @use "../../assets/scss/fonts" as *;
 @use "../../assets/scss/variables" as *;
 @use "../../assets/scss/mixins" as *;
-.header{
-    .login{
-        margin: 1rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-around;
-        position: fixed;
+
+header{
+    width: 100%;
+    height: 60px;
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    overflow: hidden;
+    @include flex-layout($just:space-between);
+
+    // 로고 이미지
+    .logo {
+        width: 30px;
+        height: 44px;
         cursor: pointer;
-        font-size: 14px;
-        width: 90px;
-        height: 30px;
-        background-color: #B67FDB;
-        border-radius: 25px;
-        z-index: 9999;
-        right: 0;
-        
-        .icon{
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        img {
+            width: 100%;
+            height: 100%;
         }
-        
-        
+    }
+    .login{
+        cursor: pointer;
+        width: 80px;
+        height: 30px;
+        background-color: $color-sub;
+        border-radius: 1rem;
+        @include flex-layout($gap:0.3rem);
+        @include caption-r;
+        // 아이콘 위치 조정
+        .icon { @include flex-layout(); }
+        // 텍스트 위치 조정
+        p { margin-top: 0.3rem; }
+
+        // 로그인 버튼 hover 시
         &:hover{
-            background-color: #7F31BC;
+            background-color: $color-main;
+            color: #fff;
         }
         
     }

@@ -2,6 +2,7 @@ import { IoHomeSharp } from "react-icons/io5";
 import { FaRegCalendarCheck } from "react-icons/fa6";
 import { CgProfile } from "react-icons/cg";
 import { BsFillLightbulbFill } from "react-icons/bs";
+
 export const GNB_MOBILE_MENU = [
   { label: "홈", path: "/", icon: IoHomeSharp },
   { label: "이용현황", path: "/parking/:parkingId", icon: FaRegCalendarCheck },

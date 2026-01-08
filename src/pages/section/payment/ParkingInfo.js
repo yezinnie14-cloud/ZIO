@@ -2,6 +2,9 @@ import { useRef, useState } from "react";
 import ParkImg from "../../../assets/images/parking-1.jpg";
 import "./ParkingInfo.scss";
 import { FaRegCopy } from "react-icons/fa";
+// import { useAuth } from "../../../contexts/AuthContext";
+// import { useReservation } from "../../../contexts/ReservationContext";
+// import { getPaymentInfo } from "../../../api/zioApi";
 
 const ParkingInfo = () => {
   const address = "경기 수원시 어쩌구 주차장";
@@ -26,7 +29,7 @@ const ParkingInfo = () => {
   };
 
   return (
-    <div className="payment-p-info">
+    <section id="payment-p-info">
       <img src={ParkImg} alt="주차장 사진" />
       <div className="parking-info">
         <h1>아무개 주차장</h1>
@@ -44,7 +47,7 @@ const ParkingInfo = () => {
           <p>\ 1,000</p>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
