@@ -2,7 +2,7 @@ import { TbMoodEmpty } from "react-icons/tb";
 import "./NonMember.scss";
 
 
-const nonMember = () => {
+const NonMember = () => {
     return (
         <div className="non-wrap">
             <div className="non-conten">
@@ -18,4 +18,4 @@ const nonMember = () => {
     )
 }
 
-export default nonMember
+export default NonMember

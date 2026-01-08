@@ -1,0 +1,20 @@
+@use "../../../assets/scss/fonts" as *;
+@use "../../../assets/scss/mixins" as *;
+@use "../../../assets/scss/variables" as *;
+
+
+.member-wrap {
+    @include respond();
+    height: 100vh;
+    .user {
+        .information{
+            padding-top: 5rem;
+            .user-info{
+                .user-icon {
+                    font-size: 2rem;
+                    color: $color-555;
+                }
+            }
+        }
+    }
+}
