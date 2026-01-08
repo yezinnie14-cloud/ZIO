@@ -1,17 +1,23 @@
 import { FaUserCircle } from "react-icons/fa";
+import Ad from "../payment/Ad"
+
 
 
 const Member = () => {
   return (
-    <div className='mypage-Member'>
-      <div className="user-wrap">
-        <div className="user-icon">
-          <FaUserCircle />
+    <div className="member-wrap">
+      <div className="user">
+        <div className="information">
+          <div className="user-info"></div>
+          <div className="car-info"></div>
         </div>
-        <div className="usar-information">
-          {/* 회원정보 dp 불러오기 */}
-        </div>
-        
+      </div>
+      <div className="Ad"></div>
+      <div className="history">
+        <div className="his-1"></div>
+        <div className="his-2"></div>
+        <div className="his-3"></div>
+        <div className="his-4"></div>
       </div>
     </div>
   )
