@@ -1,92 +1,240 @@
+// @use "../../../assets/scss/fonts" as *;
+// @use "../../../assets/scss/variables" as *;
+// @use "../../../assets/scss/mixins" as *;
+// .detail-page {
+//   position: relative;   
+//   min-height: 100vh;
+//       background: $color-555;
+//   .detail-page-map{
+//   height: calc(100vh - 80px); 
+//   display: flex;
+//   flex-direction: column;
+// }
+
+//     .parking-scroll {
+//   flex: 1;              
+//   overflow-y: auto;    
+//   @include flex-layout();
+// }
+//   }
+//   .reserve-popup-overlay {
+//   position: absolute;
+//   inset: 0;                         
+//   background: rgba(0, 0, 0, 0.25);   
+//   backdrop-filter: blur(4px);        
+//   -webkit-backdrop-filter: blur(6px); 
+//   @include flex-layout();
+//   padding: 2rem;
+//   z-index: 50;                    
+// }
+
+
+// /* 팝업 박스 */
+// .reserve-popup {
+//   @include caption-r();
+//   position: relative;
+//   width: 100%;
+//   max-width: 350px;
+//   border-radius: 1.4rem;
+//   background: #ffffff;
+//   padding: 1.5rem;
+//   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  
+// .reserve-popup-close {
+//   position: absolute;
+//   top: 8px;
+//   right: 10px;
+//   border: none;
+//   background: transparent;
+//   font-size: 1rem;
+//   cursor: pointer;
+// }
+// .reserve-popup-body {
+//   @include flex-layout("","",$align:space-between);
+//   flex-direction: column;
+//   margin-top: 0.5rem;
+//   .reserve-select-info{
+//     @include flex-layout("",$just:space-between);
+//     padding: 0.5rem;
+//     .reserve-type{
+//       margin-right: 1rem;
+//     }
+//   }
+//   .reserve-info-code{
+//     .reserve-type{
+//       @include caption-b();
+//     }
+//     .reserve-code{
+//       @include title-b();
+//     }
+//   }
+//   .select-name{
+//     display: flex;
+//     justify-content: space-between;
+//   }
+// .reserve-info-name {
+//   @include caption-b();
+//   margin-bottom: 0.2rem;
+// }
+// .reserve-popup-button {
+//   @include btn-theme();
+//   margin-top: 2px;
+//   width: 100%;
+//   padding: 10px 0;
+//   border-radius: 2rem;
+//   cursor: pointer;
+// }
+// }
+// }
+
 @use "../../../assets/scss/fonts" as *;
 @use "../../../assets/scss/variables" as *;
 @use "../../../assets/scss/mixins" as *;
+
+/* 페이지 전체 (오른쪽 영역) */
 .detail-page {
-  position: relative;   
-  min-height: 100vh;
-      background: $color-555;
-  .detail-page-map{
-  height: calc(100vh - 80px); 
-  display: flex;
-  flex-direction: column;
-}
-
-    .parking-scroll {
-  flex: 1;              
-  overflow-y: auto;    
-  @include flex-layout();
-}
-  }
-  .reserve-popup-overlay {
-  position: absolute;
-  inset: 0;                         
-  background: rgba(0, 0, 0, 0.25);   
-  backdrop-filter: blur(4px);        
-  -webkit-backdrop-filter: blur(6px); 
-  @include flex-layout();
-  padding: 2rem;
-  z-index: 50;                    
-}
-
-
-/* 팝업 박스 */
-.reserve-popup {
-  @include caption-r();
   position: relative;
-  width: 100%;
-  max-width: 350px;
-  border-radius: 1.4rem;
-  background: #ffffff;
-  padding: 1.5rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  
-.reserve-popup-close {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  border: none;
-  background: transparent;
-  font-size: 1rem;
-  cursor: pointer;
-}
-.reserve-popup-body {
-  @include flex-layout("","",$align:space-between);
-  flex-direction: column;
-  margin-top: 0.5rem;
-  .reserve-select-info{
-    @include flex-layout("",$just:space-between);
-    padding: 0.5rem;
-    .reserve-type{
-      margin-right: 1rem;
-    }
-  }
-  .reserve-info-code{
-    .reserve-type{
-      @include caption-b();
-    }
-    .reserve-code{
-      @include title-b();
-    }
-  }
-  .select-name{
-    display: flex;
-    justify-content: space-between;
-  }
-.reserve-info-name {
-  @include caption-b();
-  margin-bottom: 0.2rem;
-}
-.reserve-popup-button {
-  @include btn-theme();
-  margin-top: 2px;
-  width: 100%;
-  padding: 10px 0;
-  border-radius: 2rem;
-  cursor: pointer;
-}
-}
-}
+  min-height: 100vh;
+  background: $color-555;
 
+  /* 맵 + 오른쪽 정보 영역 */
+  .detail-page-map {
+    height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+
+    /* 주차 좌석 맵 스크롤 영역 */
+    .parking-scroll {
+      flex: 1;
+      overflow-y: auto;
+      @include flex-layout();
+    }
+  }
+
+  /* ================== 팝업 공통 (모바일 기준) ================== */
+
+  /* 배경 오버레이 */
+  .reserve-popup-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 2rem;
+    z-index: 50;
+    @include flex-layout(); // 가운데 정렬
+  }
+
+  /* 팝업 박스 */
+  .reserve-popup {
+    @include caption-r();
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    border-radius: 1.4rem;
+    background: #ffffff;
+    padding: 1.5rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+
+    /* 닫기 버튼 */
+    .reserve-popup-close {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* 팝업 안 내용 */
+    .reserve-popup-body {
+      @include flex-layout("", "", $align: space-between);
+      flex-direction: column;
+      margin-top: 0.5rem;
+
+      .reserve-select-info {
+        @include flex-layout("", $just: space-between);
+        padding: 0.5rem;
+
+        .reserve-type {
+          margin-right: 1rem;
+        }
+      }
+
+      .reserve-info-code {
+        .reserve-type {
+          @include caption-b();
+        }
+        .reserve-code {
+          @include title-b();
+        }
+      }
+
+      .select-name {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .reserve-info-name {
+        @include caption-b();
+        margin-bottom: 0.2rem;
+      }
+
+      .reserve-popup-button {
+        @include btn-theme();
+        margin-top: 2px;
+        width: 100%;
+        padding: 10px 0;
+        border-radius: 2rem;
+        cursor: pointer;
+      }
+    }
+  }
+
+  /* ============================================================
+   *                데스크탑(>= $mobile) 레이아웃
+   *  - 맵/정보 2컬럼
+   *  - 팝업 오버레이 숨김
+   * ============================================================ */
+  @include respond {
+    /* 전체 배경은 그대로 두고, 안쪽 레이아웃만 변경 */
+    .detail-page-map {
+      height: auto;
+      max-width: 1100px;      // 필요하면 숫자 조정
+      margin: 0 auto;
+      flex-direction: row;    // 🔹 좌/우 배치
+      align-items: flex-start;
+      gap: 1.5rem;
+
+      .parking-scroll {
+        flex: 0 0 60%;        // 왼쪽 맵 영역
+        border-radius: 1rem;
+      }
+
+      /* 오른쪽 상세 카드 (ReservationInfo 루트) */
+      .reservation-info {
+        flex: 0 0 340px;
+        align-self: stretch;
+        background: #ffffff;
+        border-radius: 1rem;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        /* 예약 정보(좌석, 타입, 버튼)는
+           ReservationInfo 안에서 space props로 조건부 렌더링 해주면 돼 */
+      }
+    }
+
+    /* 데스크탑에서는 오버레이 팝업을 안 보이게 */
+    .reserve-popup-overlay {
+      display: none;
+    }
+  }
+}
 
 
 
