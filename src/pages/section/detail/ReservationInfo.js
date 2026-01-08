@@ -23,12 +23,10 @@ const ReservationInfo = ({ lot, selectedBox, onReserve, isMobile }) => {
       className="parking-panorama"
       src="https://skybox.blockadelabs.com/f624a4b39d495a89f8bcb6b23270aada"
       title="주차장 파노라마"
-      // frameBorder="0"
       allow="fullscreen; accelerometer; gyroscope"
       allowFullScreen
     />
   </div>
-        
       )}
 
       {!isMobile && (
