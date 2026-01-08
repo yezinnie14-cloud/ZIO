@@ -65,7 +65,7 @@ const Popup = ({
         onMouseDown={(e) => e.stopPropagation()}
         onTransitionEnd={handleTransitionEnd}
       >
-        <div className="search" onMouseDown={(e) => e.stopPropagation()}>
+        {/* <div className="search" onMouseDown={(e) => e.stopPropagation()}> */}
 
           <button
             className="popup-close"
@@ -77,7 +77,7 @@ const Popup = ({
           >
             ×
           </button>
-        </div>
+        {/* </div> */}
 
         <div className="popup-content">
           {view === "list" && (

@@ -31,6 +31,7 @@ const MainPage = () => {
 
       <div className="search" >
         <input
+          className={`input ${open ? "active":""}`}
           type="text"
           placeholder="주차장을 찾아보세요"
           value={keyword}
