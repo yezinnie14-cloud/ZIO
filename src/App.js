@@ -13,6 +13,8 @@ import { ReservationProvider } from "./contexts/ReservationContext";
 
 import "./App.scss";
 import DetailPage from "./pages/DetailPage";
+import SignupPage from "./pages/SignupPage";
+import GuestLoginPage from "./pages/GuestLoginPage";
 
 const App = () => {
   return (
@@ -27,7 +29,9 @@ const App = () => {
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/tip" element={<Tip />} />
               <Route path="/auth" element={<AuthPage />} />
-                 <Route path="/detail" element={<DetailPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/guest-login" element={<GuestLoginPage />} />
+              <Route path="/detail" element={<DetailPage />} />
             </Route>
           </Routes>
         </ReservationProvider>

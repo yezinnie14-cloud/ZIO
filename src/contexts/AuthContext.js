@@ -57,6 +57,9 @@ export const AuthProvider = ({children}) => {
 
     try {
       const data = await signUpUser({ userId, password, phone, email, carNum });
+      // 자동 로그인
+      setUser(data);
+      setGuest(null);
       return data;
     } catch (error) {
       setError(error.message)
