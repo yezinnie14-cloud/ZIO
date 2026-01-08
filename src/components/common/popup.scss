@@ -43,7 +43,8 @@
 .popup-close {
   position: absolute;
   right: 10px; // 더 오른쪽으로 붙음
-  transform: translateY(-250px);
+  top: 10px;
+  padding: 1rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -61,7 +62,6 @@
   li {
     cursor: pointer;
     @include flex-layout(row,left);
-    padding: 1rem;
   }
 }
 .thumb {   width: 120px;   

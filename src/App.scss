@@ -3,27 +3,17 @@
 @use "./assets/scss/mixins" as *;
 *{margin: 0;padding: 0;box-sizing: none;}
 .mainpage{
-    
     width: 100%;
-
     .search{
         @include flex-layout(row,center);
+         overflow: visible;
+    input{
         position: fixed;
-        left: 16px;
-        right: 16px;
-        bottom: 10%;
-        z-index: 9999;
-        gap: 10px;
-        padding: 0 14px;
-        input{
-            @include flex-layout(row,center);
         text-align: center;
+        bottom: 10%;
         width: 200px;
-        box-sizing: border-box;
-        height: 44px;
-        line-height: 44px; 
-        padding: 0 14px;   
         z-index: 9999; // 지도 위로
+        padding: 0.5rem;
         @include caption-r();
         border-radius: 15px;
         border: none;
@@ -37,9 +27,7 @@
             border: 0.3px solid rgba(148, 148, 148, 0.45);
         }
     }
-    @include respond {display: none;}
 }
-
 }
 .gnb-mobile{
     position: fixed;

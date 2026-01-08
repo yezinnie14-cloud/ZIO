@@ -9,9 +9,9 @@ const Popup = ({
   view,
   selected,
   keyword,
-  setKeyword,
   onSelectItem,
   onBack,
+  popupAnchorRef
 }) => {
   const [mounted, setMounted] = useState(open);
   const [visible, setVisible] = useState(false);

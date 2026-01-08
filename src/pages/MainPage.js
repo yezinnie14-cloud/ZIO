@@ -7,6 +7,7 @@ const MainPage = () => {
   const [keyword, setKeyword] = useState("");
   const [view, setView] = useState("list"); 
   const [selected, setSelected] = useState(null);
+  
   const openPopup = () => {
     setOpen(true);
     setView("list");
