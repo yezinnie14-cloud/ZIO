@@ -1,5 +1,5 @@
 import {createContext, useContext, useState } from "react";
-import { guestLogin, signUpUser, userLogin } from "../api/zioApi";
+import { guestLogin, signUpUser, updateCarNum, userLogin } from "../api/zioApi";
 
 
 const AuthContext = createContext(null);
@@ -73,11 +73,19 @@ export const AuthProvider = ({children}) => {
     setError(null);
   }
 
+  // 차량정보 변경 
+  const changeMyCarNum = async (carNum) => {
+    if(!user?.id) throw new Error("사용자 정보 없음");
+    const updated = await updateCarNum({userId : user.id, carNum});
+    setUser((prev) => ({...prev, car_num:updated.car_num, subs_type:updated.subs_type}))
+    return updated;
+  }
+
   return (
     <AuthContext.Provider 
       value = {
         {
-          user, guest, authType, loading, error, loginUser, loginGuest, signUpUsers, logout
+          user, guest, authType, loading, error, loginUser, loginGuest, signUpUsers, logout,changeMyCarNum
         }
       }>
       {children}

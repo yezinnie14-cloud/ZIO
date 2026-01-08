@@ -213,6 +213,33 @@ export const userReservationInfo = async(userId) =>{
   return data || [];
 }
 
+export const getReservationDetail = async ({reservationId, userId = null, phone = null}) => {
+  if (!reservationId) throw new Error("예약 내역 조회 에러 - id없음");
+
+  let query = supabase
+    .from("reservation")
+    .select(
+      `id, lot_id, space_id, user_id, guest_phone, guest_car_num,
+      start_at, end_at, pay_type, pay_method, amount, status, created_at,
+      parking_lots:lot_id(parking_name, address),
+      users:user_id(subs_type)`
+    )
+    .eq("id", reservationId);
+
+  // 직접 URL 접근 방지: 회원이면 user_id로, 비회원이면 guest_phone으로 한번 더 필터링 함 
+  if (userId) query = query.eq("user_id", userId);
+  if (phone) query = query.eq("guest_phone", phone);
+
+  // 둘 다 없으면 접근 막기
+  if (!userId && !phone) throw new Error("조회 권한 없음");
+
+  const { data, error } = await query.single();
+
+  if (error) throw new Error("이용내역 상세 조회 실패: " + error.message);
+
+  return data;  
+}
+
 //마이페이지 
 // 상단 사용자 기본정보 api 
 export const getProfile = async (userId) => {
@@ -228,6 +255,23 @@ export const getProfile = async (userId) => {
 
   return data;
   
+}
+
+//차량 정보 수정 
+export const updateCarNum = async ({ userId, carNum }) => {
+  if (!userId) throw new Error("사용자 정보 없음");
+  if (!carNum) throw new Error("차량번호를 입력해주세요");
+
+  const { data, error } = await supabase
+    .from("users")
+    .update({ car_num: carNum })
+    .eq("id", userId)
+    .select("id, car_num, subs_type")
+    .single();
+
+  if (error) throw new Error("차량정보 변경 실패: " + error.message);
+
+  return data; // 업데이트된 프로필
 }
 
 // 간단한 이용 내역 api 

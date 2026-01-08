@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { createReservation, getLittleReservation, guestReservationInfo, userReservationInfo } from "../api/zioApi";
-
+import { createReservation, getLittleReservation, guestReservationInfo, userReservationInfo, getReservationDetail } from "../api/zioApi";
 
 const ReservationContext = createContext(null);
 
@@ -8,11 +7,20 @@ export const ReservationProvider = ({children}) => {
   // 결제 완료 후 예약 결과 
   const [reservationResult, setReservationResult] = useState(null);
 
+  // 예약 내역 상세
+  const [reservationDetail, setReservationDetail] = useState(null);
+
   // 예약 현황 리스트
   const [reservations, setReservations] = useState([]);
 
+  //마이페이지 5개 리스트
+  const [littleReservations, setLittleReservations] = useState([]);
+
   //예약 현황 로딩 
   const [loadingList, setLoadingList] = useState(false);
+
+  // 예약 상세 데이터 로딩 
+  const [loadingDetail, setLoadingDetail] = useState(false);
 
   // 결제 로딩 
   const [loadingPay, setLoadingPay] = useState(false);
@@ -34,7 +42,7 @@ export const ReservationProvider = ({children}) => {
     } catch (error) {
       setError(error.message);
       throw error;
-    }finally {
+    } finally {
       setLoadingPay(false);
     }
   };
@@ -44,7 +52,6 @@ export const ReservationProvider = ({children}) => {
     setReservationResult(null);
     setError(null);
   }; 
-
 
   /* ============ 예약 현황 조회 (이용내역)============== */
   // 비회원 예약 현황 (전번으로 조회)
@@ -70,15 +77,39 @@ export const ReservationProvider = ({children}) => {
     setError(null);
 
     try {
-      const data = await userReservationInfo(userId);
-      setReservations(data);
+      // zioApi.js가 userId 단일값 받는 구조 
+      const data = await userReservationInfo(userId); 
+      setReservations(data || []);
       return data || [];
     } catch (error) {
-      setError(error.message)
+      setError(error.message);
       throw error;
-    }finally {
+    } finally {
       setLoadingList(false);
     }
+  };
+
+  // 이용내역 단건 조회 
+  const fetchReservationDetail = async ({reservationId, userId, phone}) => {
+    setLoadingDetail(true);
+    setError(null);
+
+    try {
+      const data = await getReservationDetail({ reservationId, userId, phone });
+      setReservationDetail(data); // 상세페이지에서 바로 렌더 가능하게 저장
+      return data;
+    } catch (error) {
+      setError(error.message);
+      throw error;
+    } finally {
+      setLoadingDetail(false);
+    }
+  };
+
+  // 상세정보 초기화 
+  const resetReservationDetail = () => {
+    setReservationDetail(null);
+    setError(null);
   };
 
   // 예약 리스트 초기화 : 이건 왜 필요한지 모르겠으나.. 지피티가 깔끔슨하다고 해서 넣어보겟습니다. 
@@ -97,11 +128,12 @@ export const ReservationProvider = ({children}) => {
 
     try {
       const data = await getLittleReservation(userId);
+      setLittleReservations(data || []); 
       return data || [];
     } catch (error) {
       setError(error.message);
       throw error;
-    }finally {
+    } finally {
       setLoadingList(false);
     }
   };
@@ -112,26 +144,30 @@ export const ReservationProvider = ({children}) => {
         // state
         reservationResult,
         reservations,
+        reservationDetail,
+        littleReservations,
         loadingList,
         loadingPay,
+        loadingDetail,
         error,
 
         // actions
         PayReservation,
         fetchGuestReservation,
         fetchUserReservation,
-        fetchLittleReservations,
+        fetchLittleReservations, 
+        fetchReservationDetail,
 
         // reset
         resetReservation,
         resetReservations,
+        resetReservationDetail
       }}
     >
       {children}
     </ReservationContext.Provider>
   )
-}
-
+};
 
 export const useReservation = () => {
   const ctx = useContext(ReservationContext);
