@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 import "./popup.scss";
-const Popup = ({onClose}) => {
+const Popup = ({onClose,children}) => {
   return (
     
       <div className="popup" onClick={(e) => e.stopPropagation()}>
-        팝업 내용
+        {children}
       </div>
     
   )

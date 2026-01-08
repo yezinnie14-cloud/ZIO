@@ -27,7 +27,7 @@ const App = () => {
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/tip" element={<Tip />} />
               <Route path="/auth" element={<AuthPage />} />
-                 <Route path="/detail" element={<DetailPage />} />
+                <Route path="/detail" element={<DetailPage />} />
             </Route>
           </Routes>
         </ReservationProvider>
