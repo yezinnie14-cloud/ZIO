@@ -1,0 +1,39 @@
+@use "../../../assets/scss/variables" as *;
+@use "../../../assets/scss/fonts" as *;
+@use "../../../assets/scss/mixins" as *;
+
+#ad {
+  width: 100%;
+  height: 150px;
+  background-color: $color-sub;
+  border-radius: 1rem;
+  padding: 1rem;
+  @include flex-layout();
+  .car-img {
+    width: 50%;
+    height: inherit;
+    position: relative;
+    img {
+      width: 100px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      &:nth-child(1) {
+        background-color: red;
+        top: 10%;
+      }
+      &:nth-child(2) {
+        background-color: blue;
+      }
+    }
+  }
+  .ad-txt {
+    width: 50%;
+    height: inherit;
+    p {
+      text-align: right;
+      @include flex-layout($just:flex-end, $align:flex-start);
+      @include caption-r;
+    }
+  }
+}

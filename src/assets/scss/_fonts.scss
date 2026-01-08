@@ -19,31 +19,31 @@
 //bold
 @mixin display-b{
   @include font-face;
-  font-size: 56px;
+  font-size: 3.5rem;
   line-height: auto;
   font-weight: bold;
 }
 @mixin heading-b{
   @include font-face;
-  font-size: 40px;
+  font-size: 2.5rem;
   line-height: auto;
   font-weight: bold;
 }
 @mixin title-b{
   @include font-face;
-  font-size: 32px;
+  font-size: 2rem;
   line-height: auto;
   font-weight: bold;
 }
 @mixin body-b{
   @include font-face;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: auto;
   font-weight: bold;
 }
 @mixin caption-b{
   @include font-face;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: auto;
   font-weight: bold;
 }
@@ -52,31 +52,31 @@
 //Regular
 @mixin display-r{
   @include font-face;
-  font-size: 56px;
+  font-size: 3.5rem;
   line-height: auto;
   font-weight: 400;
 }
 @mixin heading-r{
   @include font-face;
-  font-size: 40px;
+  font-size: 2.5rem;
   line-height: auto;
   font-weight: 400;
 }
 @mixin title-r{
   @include font-face;
-  font-size: 32px;
+  font-size: 2rem;
   line-height: auto;
   font-weight: 400;
 }
 @mixin body-r{
   @include font-face;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: auto;
   font-weight: 400;
 }
 @mixin caption-r{
   @include font-face;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: auto;
   font-weight: 400;
 }
