@@ -16,41 +16,48 @@ const Member = () => {
   const [profile, setProfile] = useState(null);
   const [history, setHistory] = useState([]);
 
-  // 로딩 에러상태
+  // ✅ 시안처럼 4개만 보여줄 배열 (원본 history를 가공한 "화면용 데이터")
+  const viewHistory = (history || []).slice(0, 4);
+
+  // 로딩 / 에러 상태
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
-  // // 차량번호 변경 모달 상태/입력값/저장중 상태
-  // const [isCarModalOpen, setIsCarModalOpen] = useState(false);
-  // const [carInput, setCarInput] = useState("");
-  // const [saving, setSaving] = useState(false);
+  // 차량번호 변경 모달 상태/입력값/저장중 상태 (API 완성되면 사용)
+  const [isCarModalOpen, setIsCarModalOpen] = useState(false);
+  const [carInput, setCarInput] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  // ✅ 이용내역 접기/펼치기 상태 (시안: 화살표 눌렀을 때 열리고 닫힘)
+  const [isHistoryOpen, setIsHistoryOpen] = useState(true);
 
   useEffect(() => {
+    // userId가 없으면 (아직 로그인 안 했으면) DB 호출 안 함
     if (!userId) return;
 
     let alive = true;
 
     const fetchData = async () => {
       try {
-        setLoading(true); //로딩 시작
-        setErrMsg(""); //이전 에러 초기화
+        setLoading(true);   // 로딩 시작
+        setErrMsg("");      // 이전 에러 초기화
 
         // 프로필 + 이용내역 병렬 호출
         const [p, h] = await Promise.all([
-          getProfile(userId),
-          getLittleReservation(userId),
+          getProfile(userId),            // users 테이블
+          getLittleReservation(userId),  // reservation 테이블 (최대 5개)
         ]);
 
         if (!alive) return;
 
         setProfile(p);
-        setHistory(h);
+        setHistory(h || []); // h가 null/undefined일 수도 있으니 안전 처리
       } catch (e) {
         if (!alive) return;
         setErrMsg(e?.message ?? "회원 정보 조회 실패");
       } finally {
         if (!alive) return;
-        setLoading(false);
+        setLoading(false); // 로딩 종료
       }
     };
 
@@ -61,53 +68,72 @@ const Member = () => {
     };
   }, [userId]);
 
+  // if (loading) return null;
+  // if (!profile) return null;
 
-  // 개발 완료 후 삭제하기
+
+  // 개발 중이라 DB / 로그인 없어도 화면 만들 수 있게 임시 fallback
+  // 개발 완료 후에는 profile.id / profile.car_num 만 쓰면 됨
   const viewUserId = profile?.id ?? userId ?? "임시회원ID";
   const viewCarNum = profile?.car_num ?? "351로 8349(임시)";
 
-  // // 차량정보 수정
-  // // 모달 열기: 현재 차량번호를 input에 넣어서 편하게 수정
-  // const openCarModal = () => {
-  //   setCarInput(profile?.car_num ?? "");
-  //   setIsCarModalOpen(true);
-  // };
 
-  // // 모달 닫기
-  // const closeCarModal = () => {
-  //   setIsCarModalOpen(false);
-  // };
+  // 차량정보 수정
+  // 모달 열기: 현재 차량번호를 input에 넣어서 편하게 수정
+  const openCarModal = () => {
+    setCarInput(profile?.car_num ?? "");
+    setIsCarModalOpen(true);
+  };
 
-  //   // ✅ 차량번호 저장(DB 업데이트) → 성공 시 profile 즉시 갱신
-  // const handleSaveCarNum = async () => {
-  //   if (!userId) {
-  //     alert("로그인 후 이용해주세요.");
-  //     return;
-  //   }
+  // 모달 닫기
+  const closeCarModal = () => {
+    setIsCarModalOpen(false);
+  };
 
-  //   const nextCar = carInput.trim();
-  //   if (!nextCar) {
-  //     alert("차량번호를 입력해주세요.");
-  //     return;
-  //   }
+  // ✅ 차량번호 저장(DB 업데이트) → 성공 시 profile 즉시 갱신
+  const handleSaveCarNum = async () => {
+    if (!userId) {
+      alert("로그인 후 이용해주세요.");
+      return;
+    }
 
-  //   try {
-  //     setSaving(true);
-  //     const updated = await updateCarNum({ userId, carNum: nextCar });
-  //     setProfile(updated);          // ✅ 화면 즉시 반영
-  //     setIsCarModalOpen(false);     // ✅ 모달 닫기
-  //   } catch (e) {
-  //     alert(e?.message ?? "차량정보 변경 실패");
-  //   } finally {
-  //     setSaving(false);
-  //   }
-  // };
+    const nextCar = carInput.trim();
+    if (!nextCar) {
+      alert("차량번호를 입력해주세요.");
+      return;
+    }
+
+    try {
+      setSaving(true);
+      const updated = await updateCarNum({ userId, carNum: nextCar });
+      setProfile(updated);          // ✅ 화면 즉시 반영
+      setIsCarModalOpen(false);     // ✅ 모달 닫기
+    } catch (e) {
+      alert(e?.message ?? "차량정보 변경 실패");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // ✅ 이용권 표기 통일 함수 (DB 값 → 화면 텍스트)
+  const getPayTypeLabel = (payType) => {
+    if (payType === "정기권") return "정기권";
+    return "시간제";
+  };
+
+  // ✅ 상태 표기 통일 함수 (DB 값 → 화면 텍스트)
+  const getStatusLabel = (status) => {
+    if (status === "USING") return "이용 중";
+    if (status === "RESERVED") return "이용 중"; // 필요 없으면 삭제 가능
+    return "이용 완료";
+  };
 
 
   return (
     <div className="member-wrap">
-      {/* ✅ 로딩/에러 (원하면 디자인 맞춰 숨겨도 됨) */}
+      {/*  에러 표시 (원하면 디자인으로 숨겨도 됨) */}
       {errMsg && <div className="member-error">{errMsg}</div>}
+
       <div className="user">
         <div className="information">
           <div className="user-info">
@@ -116,10 +142,11 @@ const Member = () => {
             </div>
             <div className="user-name">
               {viewUserId}
-              {/* {profile.id}  */}
-              {/* 개발 완료 후 주석 제거 */}
+              {/* {profile.id} */}
+              {/* 개발 완료 후 위 주석 제거 */}
             </div>
           </div>
+
           <div className="car-info">
             {/* 차량 정보 표시 */}
             <div className="car-title">
@@ -128,18 +155,61 @@ const Member = () => {
             <div className="car-num">
               {viewCarNum}
               {/* {profile.car_num} */}
-              {/* 개발 완료 후 주석 제거 */}
+              {/* 개발 완료 후 위 주석 제거 */}
             </div>
             <div className="car-btn">차량정보수정</div>
           </div>
         </div>
       </div>
+
       <div className="Ad">
         <Ad />
       </div>
-      
-    </div>
-  )
-}
 
-export default Member
+      {/* ================= 이용 내역 ================= */}
+      <section className={`member-history ${isHistoryOpen ? "is-open" : ""}`}>
+        <p
+          type="button"
+          className="member-history__header"
+          onClick={() => setIsHistoryOpen((v) => !v)}
+          aria-expanded={isHistoryOpen}
+        >
+          <span className="member-history__title">이용 내역</span>
+          <span className="member-history__arrow">∨</span>
+        </p>
+
+        {/* 열렸을 때만 렌더링 (접히면 DOM 자체가 사라짐) */}
+        {isHistoryOpen && (
+          <div className="member-history__body">
+            {viewHistory.length === 0 ? (
+              <div className="member-history__empty">이용 내역이 없습니다.</div>
+            ) : (
+              <ul className="member-history__list">
+                {viewHistory.map((item) => (
+                  <li className="member-history__item" key={item.id}>
+                    <span
+                      className={`member-history__badge ${getPayTypeLabel(item.pay_type) === "정기권"
+                          ? "is-pass"
+                          : "is-time"
+                        }`}
+                    >
+                      {getPayTypeLabel(item.pay_type)}
+                    </span>
+
+                    <span className="member-history__status">
+                      {getStatusLabel(item.status)}
+                    </span>
+
+                    <span className="member-history__chev">{">"}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+};
+
+export default Member;

@@ -8,13 +8,61 @@
     height: 100vh;
     .user {
         .information{
-            padding-top: 5rem;
+            padding: 3rem 0;
+            width: 100%;
+            
             .user-info{
+                width: 100%;
+                height: 90px;
+                @include flex-layout($just:space-between);
                 .user-icon {
                     font-size: 2rem;
                     color: $color-555;
                 }
+                .user-name {
+                    @include body-b();
+                }
             }
+            .car-info {
+                background-color: $color-white;
+                padding: 1rem;
+                border-radius: 1rem;
+                position: relative;
+                height: 10rem;
+
+                .car-title {
+                    @include caption-b();
+                }
+                .car-num {
+                    padding: 1.5rem 0 ;
+                    @include title-b();
+                }
+                .car-btn {
+                    @include btn-theme();
+                    position: absolute;
+                    width: 7rem;
+                    right: 1rem;
+                    bottom: 0.5rem;
+                }
+            }
+        }
+    }
+    .member-history {
+        background-color: $color-sub;
+        border-radius: 1rem;
+        margin: 3rem 0 ;
+        padding: 2rem 1rem;
+        .member-history__header {
+            @include body-r();
+            @include flex-layout($just:space-between);
+            .member-history__arrow {
+                line-height: 1rem;
+            }
+        }
+        .member-history__body {
+            background-color: $color-white;
+            padding: 1rem ;
+            border-radius: 1rem;
         }
     }
 }
