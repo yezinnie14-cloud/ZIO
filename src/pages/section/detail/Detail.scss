@@ -1,87 +1,111 @@
 @use "../../../assets/scss/fonts" as *;
 @use "../../../assets/scss/variables" as *;
 @use "../../../assets/scss/mixins" as *;
+
 .detail-page {
-  position: relative;
-  min-height: 100vh;
-      background: $color-555;
-  .detail-page-map{
-  height: calc(100vh - 80px);
-  display: flex;
-  flex-direction: column;
-}
-
-    .parking-scroll {
-  flex: 1;
-  overflow-y: auto;
-  @include flex-layout();
-}
-  }
-  .reserve-popup-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(6px);
-  @include flex-layout();
-  padding: 2rem;
-  z-index: 50;
-}
-
-/* 팝업 박스 */
-.reserve-popup {
+  padding: 1rem;
+  box-sizing: border-box;
   @include caption-r();
-  position: relative;
-  width: 100%;
-  max-width: 350px;
-  border-radius: 1.4rem;
-  background: #ffffff;
-  padding: 1.5rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  @include respond{
+    padding: 2rem 2.5rem;
+  }
 
-.reserve-popup-close {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  border: none;
-  background: transparent;
-  font-size: 1rem;
-  cursor: pointer;
+  &--center {
+    min-height: 60vh;
+    @include flex-layout(column, center, center, 0.5rem);
+    font-size: 0.875rem;
+  }
+  .detail-page-map {
+    @include flex-layout(column, flex-start, stretch, 0.75rem);
+    @include respond {
+      max-width: 1200px;
+      margin: 0 auto;
+      @include flex-layout(row, flex-start, flex-start, 2rem);
+    }
+    .parking-scroll {
+      width: 100%;
+      @include respond {
+        flex: 0 0 360px;
+        max-height: calc(100vh - 140px);
+        overflow-y: auto;
+      }
+    }
+  }
 }
-.reserve-popup-body {
-  @include flex-layout("","",$align:space-between);
-  flex-direction: column;
-  margin-top: 0.5rem;
-  .reserve-select-info{
-    @include flex-layout("",$just:space-between);
-    padding: 0.5rem;
-    .reserve-type{
-      margin-right: 1rem;
-    }
+
+.reservation-info {
+  margin-top: 0.75rem;
+  @include respond {
+    flex: 1 1 auto;
+    margin-top: 0;
   }
-  .reserve-info-code{
-    .reserve-type{
-      @include caption-b();
-    }
-    .reserve-code{
-      @include title-b();
-    }
-  }
-  .select-name{
-    display: flex;
-    justify-content: space-between;
-  }
-.reserve-info-name {
-  @include caption-b();
-  margin-bottom: 0.2rem;
 }
-.reserve-popup-button {
-  @include btn-theme();
-  margin-top: 2px;
+
+// 팝업
+.reserve-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  @include flex-layout(column, center, center, 0);
+  z-index: 40;
+  .reserve-popup {
+    background: $color-white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    width: 92%;
+    max-width: 360px;
+    position: relative;
+    .reserve-popup-close {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      border: none;
+      background: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .reserve-popup-body {
+      margin-top: 12px;
+      .reserve-info {
+        padding: 1rem;
+        .reserve-select-info {
+          margin-bottom: 10px;
+          @include flex-layout("",space-between,"","");
+
+          .reserve-info-name {
+            @include caption-b();
+          }
+          .reserve-info-code {
+            @include flex-layout(row, flex-start, center, 2rem);
+
+            .reserve-code {
+              @include title-b();
+            }
+          }
+        }
+      }
+    }
+  }
+  .reserve-popup-button {
+    @include btn-theme();
+    width: 100%;
+  }
+}
+
+//데스크탑일 때 사진이랑 상세
+
+
+  .parking-header-desktop {
   width: 100%;
-  padding: 10px 0;
-  border-radius: 2rem;
-  cursor: pointer;
+  height: 500px;          // 원하는 높이 (220~320px 추천)
+  border-radius: 16px;
+  overflow: hidden;       // iframe 모서리 둥글게
+  margin-bottom: 1rem;
+  background: #000;       // 로딩 중 검정 배경
 }
-}
+
+.parking-panorama {
+  width: 100%;
+  height: 100%;
+  border: none;
 }

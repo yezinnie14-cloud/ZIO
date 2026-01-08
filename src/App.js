@@ -22,12 +22,13 @@ const App = () => {
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<MainPage />} />
+              <Route path="/detail" element={<DetailPage />} />
               <Route path="/parking/:parkingId" element={<ReservationPage />} />
               <Route path="/payment" element={<PaymentPage />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/tip" element={<Tip />} />
               <Route path="/auth" element={<AuthPage />} />
-                 <Route path="/detail" element={<DetailPage />} />
+                 
             </Route>
           </Routes>
         </ReservationProvider>

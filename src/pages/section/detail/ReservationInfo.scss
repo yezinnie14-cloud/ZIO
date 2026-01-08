@@ -1,38 +1,97 @@
 @use "../../../assets/scss/fonts" as *;
 @use "../../../assets/scss/variables" as *;
 @use "../../../assets/scss/mixins" as *;
-// 모바일 하단에 뜨는 주차장 정보
-.parking-card {
-  position: sticky;  
-  bottom: 60px;         
-  z-index: 5;
-  margin: 0 2rem;
-  padding: 0.5rem 0.7rem;
-  border-radius: 1rem;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
 
-  &-img {
-    width: 50px;
-    height: 50px;
+@media (max-width: 767px) {
+  .parking-scroll {
+    position: relative;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+
+  .parking-map {
+    padding-bottom: 110px;
+  }
+
+  .parking-card {
+    position: fixed;
+    left: 50%;
+    bottom: 110px;
+    transform: translateX(-50%);
+    width: 70%;
+    padding: 0.5rem 0.5rem;
     border-radius: 1rem;
-    background: $color-555;
-  }
+    background: $color-white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    @include flex-layout(row, flex-start, center, 1rem);
 
-  &-texts {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
+    &-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 1rem;
+      background: $color-555;
+      flex: 0 0 auto;
+    }
 
-  &-name {
-    @include body-b();
-  }
+    &-texts {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-width: 0;
+    }
 
-  &-addr {
-    @include caption-r();
+    &-name {
+      @include body-b();
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &-addr {
+      @include caption-r();
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
+}
+
+.reservation-info {
+  .parking-header-desktop {
+    width: 100%;
+    height: 220px;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    background: transparent;
+  }
+}
+
+.reserve-popup-body {
+  margin-top: 12px;
+
+  .reserve-info {
+    padding: 1rem;
+
+    .reserve-select-info {
+      margin-bottom: 10px;
+      @include flex-layout(row, space-between, center, 0.75rem);
+
+      .reserve-info-name {
+        @include caption-b();
+      }
+
+      .reserve-info-code {
+        @include flex-layout(row, flex-start, center, 1rem);
+
+        .reserve-code {
+          @include title-b();
+        }
+      }
+    }
+  }
+}
+
+.reserve-popup-button {
+  @include btn-theme();
+  width: 100%;
 }
