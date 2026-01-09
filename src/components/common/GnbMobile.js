@@ -1,7 +1,6 @@
 import "./Gnb.scss";
 import { NavLink } from "react-router-dom";
 import { GNB_MOBILE_MENU } from "../common/gnbMenuicon.js";
-import "../../App.scss";
 
 const GnbMobile = () => {
   return (

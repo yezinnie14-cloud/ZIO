@@ -4,11 +4,49 @@
 
 .gnb-mobile {
   display: block;
-
-  @include respond {
-    display: none;
-  }
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999; // 지도 위로
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    .menu{
+        
+        @include flex-layout(row,space-around);
+        color: #7F31BC;
+        width: 100%;
+        padding: 0.5rem;
+        border-top: 0.3px solid rgba(148, 148, 148, 0.45);
+        border-top-style: groove;
+        svg{
+          width: 30px;
+          height: 30px;
+        }
+        li{
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 15px;
+             
+        &:hover{
+            background-color: rgba(148, 148, 148, 0.45);
+            box-shadow: 0 3px 3px #eee;
+            backdrop-filter: saturate(100%) blur(5px);
+        }
 }
+    }
+    @include respond{
+      display: none;
+    }
+}
+  
+
 .gnb-desktop {
   display: none;
 

@@ -9,6 +9,7 @@ const Popup = ({
   view,
   selected,
   keyword,
+  setKeyword,
   onSelectItem,
   onBack,
   popupAnchorRef
@@ -65,8 +66,13 @@ const Popup = ({
         onMouseDown={(e) => e.stopPropagation()}
         onTransitionEnd={handleTransitionEnd}
       >
-        <div className="search" onMouseDown={(e) => e.stopPropagation()}>
-
+        
+          <input 
+          type="text"
+          placeholder="주차장을 찾아보세요"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          />
           <button
             className="popup-close"
             onMouseDown={(e) => e.stopPropagation()}
@@ -77,7 +83,7 @@ const Popup = ({
           >
             ×
           </button>
-        </div>
+        {/* </div> */}
 
         <div className="popup-content">
           {view === "list" && (

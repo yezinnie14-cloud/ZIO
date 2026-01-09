@@ -17,16 +17,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-
-  width: 90%;
+  overflow: hidden;
+  width: 80%;
   max-width: 520px;          // 중앙형 sheet 원하면 유지
   margin: 0 auto;            // 가운데 정렬
-  height: 40vh;              // 필요에 맞게
+  height: 35vh;              // 필요에 맞게
   background: #fff;
-  border-radius: 16px 16px 0 0;
+  border-radius: 16px;
   padding: 16px;
-
-  transform: translateY(100%); // ⭐️ 화면 아래에 숨김
+  transform: translateY(100%); 
   opacity: 1;
   transition: transform 260ms ease;
   z-index: 9999;
@@ -34,23 +33,44 @@
   will-change: transform;
 
   &.is-open {
-    transform: translateY(-18%); // ⭐️ 위로 올라옴
+    transform: translateY(-30%); 
   }
 }
 }
-
-/* X 버튼 더 오른쪽 끝 */
+      input{
+            position: fixed;
+            transition: transform 0.3s ease;
+            text-align: center;
+            // bottom: 0;
+            // transform: translateY(-90px);
+            width: 200px;
+            z-index: 9999; // 지도 위로
+            padding: 0.5rem;
+            @include caption-r();
+            border-radius: 15px;
+            border: none;
+            background-color: rgba(148, 148, 148, 0.25);
+            box-shadow: 0 3px 3px rgba($color: #000000, $alpha: 0.33);
+            backdrop-filter: saturate(100%) blur(5px);
+            
+        &:focus{
+            width: 300px;
+            outline: none;
+            border: 0.5px solid rgba(148, 148, 148, 0.45);
+        }
+    }
 .popup-close {
-  position: absolute;
-  right: 10px; // 더 오른쪽으로 붙음
-  top: 10px;
-  padding: 1rem;
+  position: relative;
+  left: 100%;
+  transform: translateX(-150%);
   background: none;
   border: none;
   cursor: pointer;
   font-size: 22px;
   line-height: 1;
 }
+
+/* X 버튼 더 오른쪽 끝 */
 
 /* 내용 */
 .popup-content {
@@ -59,15 +79,32 @@
 }
 
 .popup-list {
+  position: relative;
+  transform: translateY(-15%);
+  max-height: 220px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  // Firefox
+  scrollbar-width: none;
+
+  // IE, 옛 Edge (이제 쓸 일 없지만)
+  -ms-overflow-style: none;
+  padding: 10px 0;
   li {
     cursor: pointer;
     @include flex-layout(row,left);
+    padding: 10px 1px;
+    
   }
 }
-.thumb {   width: 120px;   
-  height: 120px;   
+.thumb {   
+  width: 100px;   
+  height: 100px;   
   border-radius: 12px;   
-  object-fit: cover; // 핵심: 정사각 유지 + 꽉 채움   
+  object-fit: cover;  
   flex: 0 0 120px; }  
   
   .meta .title { font-weight: 600; } 

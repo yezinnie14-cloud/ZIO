@@ -9,6 +9,7 @@
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.13.2",
+    "ci": "^2.3.0",
     "date-fns": "^4.1.0",
     "gsap": "^3.14.2",
     "js": "^0.1.0",
