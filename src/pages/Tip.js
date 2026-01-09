@@ -1,6 +1,10 @@
+import Footer from "../components/common/Footer"
+
 const Tip = () => {
   return (
-    <div className="tip">Tip</div>
+    <div className="tip">
+      <Footer/>
+    </div>
   )
 }
 
