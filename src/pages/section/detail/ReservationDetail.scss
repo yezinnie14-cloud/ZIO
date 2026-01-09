@@ -10,7 +10,7 @@
   height: 100%;
   @include flex-layout();
   background: $color-555;
-  padding: 1rem 0;
+  // padding: 1rem 0;
 
   .parking-direction {
     position: absolute;

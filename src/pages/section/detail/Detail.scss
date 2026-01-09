@@ -19,7 +19,7 @@
     @include flex-layout(column, flex-start, stretch, 0.75rem);
     @include respond {
       max-width: 1200px;
-      margin: 0 auto;
+      // margin: 0 auto;
       @include flex-layout(row, flex-start, flex-start, 2rem);
     }
     .parking-scroll {
