@@ -62,7 +62,7 @@
       font-size: 16px;
       font-weight: 600;
 
-      @include btn-theme($color-black, $color-btn, $color-real-white, $color-black);
+      @include btn-theme($color-black, $color-btn, $color-white, $color-black);
 
       //화면 꽉 채우려면 override 필요
       width: 100%;
