@@ -3,15 +3,19 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-import './GuestLoginPage.scss';
+import "./GuestLoginPage.scss";
 
 const normalizePhone = (value) => {
   const digits = String(value || "").replace(/[^0-9]/g, "");
-  if (digits.length === 11) return `${digits.slice(0,3)}-${digits.slice(3,7)}-${digits.slice(7)}`;
+  if (digits.length === 11)
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
   return value.trim();
 };
 
-const normalizeCarNum = (value) => String(value || "").replace(/\s/g, "").trim();
+const normalizeCarNum = (value) =>
+  String(value || "")
+    .replace(/\s/g, "")
+    .trim();
 
 const GuestLoginPage = () => {
   const navigate = useNavigate();
@@ -36,7 +40,7 @@ const GuestLoginPage = () => {
     <div className="guest-login-page">
       <h2>비회원 로그인</h2>
 
-    <div className="form">
+      <div className="form">
         <div className="input-wrap">
           <div className="inputData">
             <label>차량 번호</label>
@@ -48,7 +52,7 @@ const GuestLoginPage = () => {
             />
           </div>
 
-          <div className="inputData"> 
+          <div className="inputData">
             <label>연락처</label>
             <input
               type="text"
@@ -57,12 +61,16 @@ const GuestLoginPage = () => {
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
-
-          <button className="submit-btn" onClick={handleGuestLogin} disabled={loading}>
-            {loading ? "로그인 중..." : "비회원 로그인"}
-          </button>
         </div>
-    </div>
+
+        <button
+          className="submit-btn"
+          onClick={handleGuestLogin}
+          disabled={loading}
+        >
+          {loading ? "로그인 중..." : "비회원 로그인"}
+        </button>
+      </div>
     </div>
   );
 };

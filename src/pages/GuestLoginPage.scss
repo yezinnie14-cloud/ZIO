@@ -1,77 +1,83 @@
 /* Guest-LoginPage.scss */
 @use "../assets/scss/variables" as *;
 @use "../assets/scss/mixins" as *;
+@use "../assets/scss/fonts" as * ;
 
 .guest-login-page{
   width: 100%;
-  max-width: 360px;
+  min-width: 430px;
   height: 100vh;
   margin: 0 auto;
   padding-top: 100px;
   min-height: calc(100vh - 60px);
   background: $color-real-white;
-  font-size: 16px;
+  @include caption-b();
 
 
   @include flex-layout(column, flex-start, center, 0);
 
   h2 {
     padding-bottom: 50px;
-    font-size: 32px;
-    font-weight: 800;
+    @include title-b();
     color: $color-black;
   }
 
   .form {
     width: 100%;
-    max-width: 360px;
+    @include flex-layout($dir:column, $gap: 5rem);
 
-    .inputData {
-      @include flex-layout(row, flex-start, center, 20px);
-      margin-bottom: 16px;
+      .input-wrap{
+            .inputData {
+        @include flex-layout(row, flex-start, center, 20px);
+        margin-bottom: 16px;
 
-      label {
-        width: 70px;
-        font-size: 16px;
-        font-weight: 600;
-        color: $color-black;
-      }
+        label {
+          width: 70px;
+          @include caption-b();
+          color: $color-black;
+        }
 
-      input {
-        // flex: 1;
-        width: 311px;
-        height: 42px;
-        padding: 0 14px;
-        border-radius: 6px;
-        border: none;
-        outline: none;
-        background: rgba($color-bbb, 0.25);
-        color: $color-black;
-        font-size: 16px;
+        input {
+          // flex: 1;
+          width: 300px;
+          height: 42px;
+          padding: 0 14px;
+          border-radius: 6px;
+          border: none;
+          outline: none;
+          background: rgba($color-bbb, 0.25);
+          color: $color-black;
+          @include caption-b();
 
-        &::placeholder {
+          &::placeholder {
           color: rgba($color-555, 0.6);
-          font-size: 16px;
+            @include caption-r();
+
+          }
         }
       }
     }
 
+
     
     .submit-btn {
-      width: 100%;
-      font-size: 16px;
-      font-weight: 600;
+      @include caption-b();
 
-      @include btn-theme($color-black, $color-btn, $color-white, $color-black);
+      @include btn-theme(
+        $color-black,
+        $color-btn,
+        $color-white,
+        $color-black
+      );
 
       //화면 꽉 채우려면 override 필요
-      width: 100%;
-      max-width: 360px;
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
+        width: 100%;
+        max-width: 390px;
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
       }
-    }
     
 
     

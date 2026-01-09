@@ -296,8 +296,9 @@ export const getLittleReservation = async(userId) => {
 // 1) guests 테이블에 (g_phone, g_car_num) insert (이미 있으면 그대로 사용)
 // 2) return: { g_id, g_phone, g_car_num }  -> Context 저장용
 export const guestLogin = async ({phone, carNum}) => {
-  if(!phone) throw new Error("연락처 없음");
-  if(!carNum) throw new Error("차량번호 없음");
+  
+  if(!carNum) throw new Error("차량번호를 입력해주세요");
+  if(!phone) throw new Error("연락처를 입력해주세요");
 
   // 데이터 있는지 조회 
   const {data : exiting, error : findError} = await supabase
@@ -346,12 +347,12 @@ export const userLogin = async ({userId, password}) => {
 export const signUpUser = async ({ userId, password, phone, email, carNum }) => {
 
   // 사용자가 입력 안했을 경우 
-  if (!userId) throw new Error("아이디 없음");
-  if (!password) throw new Error("비밀번호 없음");
-  if (!phone) throw new Error("연락처 없음");
-  if (!carNum) throw new Error("차량번호 없음");
+  if (!userId) throw new Error("아이디를 입력해주세요");
+  if (!password) throw new Error("비밀번호를 입력해주세요");
+  if (!phone) throw new Error("연락처를 입력해주세요");
+  if (!carNum) throw new Error("차량번호를 입력해주세요");
   // email은 NOT NULL이 아니라서 비워도 되지만, UI상 입력 받으니까 일단 검사
-  if (!email) throw new Error("이메일 없음");
+  if (!email) throw new Error("이메일를 입력해주세요");
 
   // 이미 등록된 어쩌구 처리하기 (중복 체크)
   // duplicate id, phone, carNum 

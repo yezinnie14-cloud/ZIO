@@ -11,14 +11,13 @@
   padding-top: 100px;
   min-height: calc(100vh - 60px);
   background: $color-real-white;
-  font-size: 16px;
+  @include caption-b();
 
   @include flex-layout(column, flex-start, center, 0);
 
   h2 {
     padding-bottom: 50px;
-    font-size: 32px;
-    font-weight: 800;
+    @include title-b();
     color: $color-black;
   }
 
@@ -50,7 +49,7 @@
 
         &::placeholder {
           color: rgba($color-555, 0.6);
-          font-size: 16px;
+          @include caption-r();
         }
       }
     }
@@ -82,7 +81,8 @@
   }
 
   .social-login {
-      width: 100%;
+      width: 390px;
+      min-width: 430px;
       margin-top: 100px;
       @include flex-layout(row, space-around, center, 1.5rem);
       transition: 0.3s;

@@ -1,29 +1,54 @@
 @use "../assets/scss/variables" as *;
 @use "../assets/scss/mixins" as *;
+
 .tip-card {
   width: 100%;
   background: #fff;
   border-radius: 16px;
-  padding: 2rem 1rem;
+
+  /*모든 카드 높이 통일 */
+  height: 140px;             
+  padding: 18px 16px;
+  box-sizing: border-box;
+
   margin-bottom: 3rem;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+
+  /*내용 세로 중앙 정렬 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tip-text {
+  width: 100%;
+  text-align: center;
+
+  /* 단어 단위 줄바꿈*/
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .tip-title {
   @include flex-layout(row, center, center, 0.5rem);
   font-size: 1.2rem;
   font-weight: 900;
-  margin-bottom: 0.5rem;
+  margin: 0 0 8px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .tip-icon {
-  font-size: 18px; 
+  font-size: 18px;
   line-height: 1;
 }
 
-.tip-text {
-  text-align: center;
+.tip-text p.tip-text {
+  margin: 0;
   font-size: 1rem;
   line-height: 1.5;
   color: $color-555;
+
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
