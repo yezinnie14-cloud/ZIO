@@ -38,6 +38,7 @@ const Popup = ({
     }
   }
 
+  
   const filtered = useMemo(() => {
     const q = (keyword ?? "").trim().toLowerCase()
     const base = Array.isArray(list) ? list : []

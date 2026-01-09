@@ -27,7 +27,7 @@ const MainPage = () => {
   const handleSelectItem = (item) => {
     setSelected(item)
     setView("detail")
-    setOpen(true) // 마커 클릭으로도 팝업 열리게
+    setOpen(true) // 마커 클릭으로도 팝업 열림
   }
 
   useEffect(() => {

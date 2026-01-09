@@ -15,6 +15,7 @@ export function useParkings() {
       .select("id, name, addr, lat, lng")
       .order("id", { ascending: true });
 
+      
     if (error) {
       setError(error.message);
       setLots([]);

@@ -45,7 +45,7 @@ export default function ParkingMap({ keyword, selected, onSelectItem }) {
     return filteredLots.filter((p) => Number.isFinite(p.lat) && Number.isFinite(p.lng))
   }, [filteredLots])
 
-  // ✅ 선택 시 
+  // ✅ 선택  
   useEffect(() => {
     if (!selected || !mapRef.current) return
     const lat = Number(selected.lat ?? selected.latitude)
