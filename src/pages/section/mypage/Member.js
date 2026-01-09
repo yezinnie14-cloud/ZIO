@@ -156,6 +156,9 @@ const Member = () => {
     return "이용 완료";
   };
 
+  // 구독 뱃지 문구/조건: DB subs_type 값에 맞춰 수정하면 됨
+  const isPassUser = profile?.subs_type && profile?.subs_type !== "none";
+
 
   return (
     <div className="member-wrap">
@@ -173,17 +176,20 @@ const Member = () => {
               {profile.id}
               {/* 개발 완료 후 위 주석 제거 */}
             </div>
+
           </div>
 
           <div className="car-info">
             {/* 차량 정보 표시 */}
-            <div className="car-title">
-              <p>내 차 정보</p>
-            </div>
-            <div className="car-num">
-              {/* {viewCarNum} */}
-              {profile.car_num}
-              {/* 개발 완료 후 위 주석 제거 */}
+            <div className="car-txt">
+              <div className="car-title">
+                <p>내 차 정보</p>
+              </div>
+              <div className="car-num">
+                {/* {viewCarNum} */}
+                {profile.car_num}
+                {/* 개발 완료 후 위 주석 제거 */}
+              </div>
             </div>
             <div className="car-btn">차량정보수정</div>
           </div>

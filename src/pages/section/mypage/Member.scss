@@ -15,7 +15,8 @@
 
             .user-info {
                 width: 100%;
-                height: 90px;
+                height: 10rem;
+                padding: 0 2rem;
                 @include flex-layout($just: space-between);
 
                 .user-icon {
@@ -32,8 +33,9 @@
                 background-color: $color-white;
                 padding: 1rem;
                 border-radius: 1rem;
-                position: relative;
                 height: 10rem;
+                @include flex-layout($just : space-between);
+
 
                 .car-title {
                     @include caption-b();
@@ -46,10 +48,12 @@
 
                 .car-btn {
                     @include btn-theme();
-                    position: absolute;
                     width: 7rem;
-                    right: 1rem;
-                    bottom: 1rem;
+                }
+
+                @media (min-width : 768px) {
+                    height: 200px;
+                    padding: 0 4rem;
                 }
             }
         }
