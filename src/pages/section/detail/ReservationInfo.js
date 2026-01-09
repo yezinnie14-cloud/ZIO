@@ -9,15 +9,6 @@ const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
     <div className="reservation-info">
       {isMobile ? (
         <div className="parking-card">
-          <div className="parking-card-img" />
-          <div className="parking-card-texts">
-            <p className="parking-card-name">
-              {lotDetail?.parking_name || "주차장 이름"}
-            </p>
-            <p className="parking-card-addr">
-              {lotDetail?.address || "주차장 주소"}
-            </p>
-          </div>
         </div>
       ) : (
         <div className="parking-header-desktop">

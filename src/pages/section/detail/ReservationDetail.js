@@ -13,10 +13,6 @@ const sortBySpaceCode = (a, b) => {
 };
 const ReservationDetail = ({ selectedCode, onSelect }) => {
   const{ spaces, isSpaceTaken,fetchLotDetailAll}= useParking();
-  // useEffect(() => {
-  //   const lotId = selectedId || "HG_01";
-  //   fetchLotDetailAll(lotId);
-  // }, [fetchLotDetailAll, selectedId]);
   const [laneA, setLaneA] = useState([]);
   const [laneB, setLaneB] = useState([]);
 
