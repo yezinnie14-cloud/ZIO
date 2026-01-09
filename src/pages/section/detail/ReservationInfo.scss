@@ -95,3 +95,28 @@
   @include btn-theme();
   width: 100%;
 }
+
+
+// .copy-toast {
+//       width: 60px;
+//       height: 25px;
+//       position: absolute;
+//       left: 68%;
+//       transform: translateX(-50%) translateY(10px);
+//       top: 20px;
+//       background: #7F31BC;
+//       color: #fff;
+//       padding-top: 6px;
+//       border-radius: 1rem;
+//       font-size: 14px;
+//       text-align: center;
+//       opacity: 0;
+//       pointer-events: none;
+//       transition: opacity 0.2s ease, transform 0.2s ease;
+//       z-index: 10;
+//     }
+
+//     .copy-toast.show {
+//       opacity: 1;
+//       transform: translateX(-50%) translateY(0);
+//     }

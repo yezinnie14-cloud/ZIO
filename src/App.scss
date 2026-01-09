@@ -64,3 +64,42 @@
 }
     }
 }
+
+// layout -sec3 처리 
+.layout-main {
+  width: 100%;
+}
+
+@include respond {
+  .layout-main {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .layout-outlet {
+    min-width: 0;
+  }
+
+  .sec3 {
+    width: 100%;
+    max-width: 360px;
+    justify-self: end;
+  }
+}
+
+@media (max-width: 767px) {
+  .layout-main {
+    display: block;
+    padding: 0;
+  }
+
+  .sec3 {
+    display: none;
+  }
+}

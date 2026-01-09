@@ -1,4 +1,5 @@
 import "./ReservationInfo.scss";
+// import { FaRegCopy } from "react-icons/fa";
 
 const ReservationInfo = ({ lot, selectedBox, onReserve, isMobile }) => {
   return (
@@ -11,7 +12,7 @@ const ReservationInfo = ({ lot, selectedBox, onReserve, isMobile }) => {
               {lot?.parking_name || "주차장 이름"}
             </p>
             <p className="parking-card-addr">
-              {lot?.address || "주차장 주소"}
+              {lot?.address || "주차장 주소"} 
             </p>
           </div>
         </div>
