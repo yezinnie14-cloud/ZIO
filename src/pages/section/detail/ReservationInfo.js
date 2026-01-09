@@ -1,7 +1,10 @@
 import "./ReservationInfo.scss";
-// import { FaRegCopy } from "react-icons/fa";
+import { useParking } from "../../../contexts/ParkingContext";
+// import Popup from "../../../components/common/Popup";
 
-const ReservationInfo = ({ lot, selectedBox, onReserve, isMobile }) => {
+const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
+  const { lotDetail } = useParking(); 
+
   return (
     <div className="reservation-info">
       {isMobile ? (
@@ -9,25 +12,30 @@ const ReservationInfo = ({ lot, selectedBox, onReserve, isMobile }) => {
           <div className="parking-card-img" />
           <div className="parking-card-texts">
             <p className="parking-card-name">
-              {lot?.parking_name || "주차장 이름"}
+              {lotDetail?.parking_name || "주차장 이름"}
             </p>
             <p className="parking-card-addr">
-              {lot?.address || "주차장 주소"} 
+              {lotDetail?.address || "주차장 주소"}
             </p>
           </div>
         </div>
       ) : (
-        /* 데스크탑에서는 사진+상세 들어와야함 */
         <div className="parking-header-desktop">
-        {/* 바로 여긔 */}
-        {/* <iframe
-      className="parking-panorama"
-      src="https://skybox.blockadelabs.com/f624a4b39d495a89f8bcb6b23270aada"
-      title="주차장 파노라마"
-      allow="fullscreen; accelerometer; gyroscope"
-      allowFullScreen
-    /> */}
-  </div>
+          <div className="img"></div>
+          <div className="detail-desktop">
+            {/* <Popup
+        open={open}
+        onClose={closePopup}
+        keyword={keyword}
+        setKeyword={setKeyword}
+        view={detail}
+        selected={selected}
+        list={lots}                 
+        onSelectItem={handleSelectItem}
+        onBack={() => setView("list")}
+      /> */}
+          </div>
+        </div>
       )}
 
       {!isMobile && (
@@ -36,7 +44,7 @@ const ReservationInfo = ({ lot, selectedBox, onReserve, isMobile }) => {
             <div className="reserve-select-info">
               <p className="reserve-info-label">선택한 주차장</p>
               <p className="reserve-info-name">
-                {lot?.parking_name || "주차장 이름"}
+                {lotDetail?.parking_name || "주차장 이름"}
               </p>
             </div>
 
@@ -44,17 +52,11 @@ const ReservationInfo = ({ lot, selectedBox, onReserve, isMobile }) => {
               <p className="reserve-info-label">선택한 구역</p>
               {selectedBox ? (
                 <div className="reserve-info-code">
-                  <span className="reserve-type">
-                    {selectedBox.space_type}
-                  </span>
-                  <span className="reserve-code">
-                    {selectedBox.space_code}
-                  </span>
+                  <span className="reserve-type">{selectedBox.space_type}</span>
+                  <span className="reserve-code">{selectedBox.space_code}</span>
                 </div>
               ) : (
-                <p className="reserve-info-empty">
-                  자리를 선택해주세요
-                </p>
+                <p className="reserve-info-empty">자리를 선택해주세요</p>
               )}
             </div>
           </div>
