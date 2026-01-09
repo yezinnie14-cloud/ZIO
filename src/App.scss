@@ -52,6 +52,11 @@
       flex: 1 1 auto;      
       min-width: 0;         
     }
+}
+
+// layout -sec3 처리 
+.layout-main {
+  width: 100%;
   .sec3 {
     display: none;
     flex: 0 0 360px;
@@ -76,5 +81,15 @@
     max-width: 360px;
     justify-self: end;
   }
+}
+
+@media (max-width: 767px) {
+  .layout-main {
+    display: block;
+    padding: 0;
+  }
+
+  .sec3 {
+    display: none;
   }
 }

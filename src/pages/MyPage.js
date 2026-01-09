@@ -8,6 +8,8 @@ export default function MyPage() {
   // AuthContext에서 authType 가져옴
   // authType: "user" | "guest" | null
   const { authType } = useAuth();
+  // console.log( authType );
+
 
   /**
    * ✅ 개발용 토글
@@ -17,27 +19,33 @@ export default function MyPage() {
    *
    * ✅ 로그인 구현 완료되면:
    * - 아래 devIsMember / 버튼 영역 지우고
-   * - return authType === "user" ? <Member/> : <NonMember/> 만 남기면 끝
+   * - return authType === "user" ? <Member/> : <NonMember/> 만 남기기
    */
-  const [devIsMember, setDevIsMember] = useState(true);
 
-  // ✅ 실제 분기(완성형): 회원이면 Member, 아니면 NonMember(guest 포함)
-  const isMember = authType === "user";
+  // return authType === "user" ? <Member/> : <NonMember/>
+  return <Member/>
 
-  // ✅ 개발 중에는 토글이 우선(원하면)
-  const viewMember = devIsMember || isMember;
+  // const [devIsMember, setDevIsMember] = useState(true);
 
-  return (
-    <div className="mypage">
-      {/* ✅ 개발 중에만 사용. 나중에 삭제 */}
-      <div style={{ padding: 12 }}>
-        <button onClick={() => setDevIsMember((v) => !v)}>
-          화면 전환(개발용): {viewMember ? "회원(Member)" : "비회원(NonMember)"}
-        </button>
-      </div>
+  // // ✅ 실제 분기(완성형): 회원이면 Member, 아니면 NonMember(guest 포함)
+  // const isMember = authType === "user";
 
-      {/* ✅ 분기 렌더링 */}
-      {viewMember ? <Member /> : <NonMember />}
-    </div>
-  );
+  // // ✅ 개발 중에는 토글이 우선(원하면)
+  // const viewMember = devIsMember || isMember;
+
+  
+
+  // return (
+  //   <div className="mypage">
+  //     {/* ✅ 개발 중에만 사용. 나중에 삭제 */}
+  //     <div style={{ padding: 12 }}>
+  //       <button onClick={() => setDevIsMember((v) => !v)}>
+  //         화면 전환(개발용): {viewMember ? "회원(Member)" : "비회원(NonMember)"}
+  //       </button>
+  //     </div>
+
+  //     {/* ✅ 분기 렌더링 */}
+  //     {viewMember ? <Member /> : <NonMember />}
+  //   </div>
+  // );
 }

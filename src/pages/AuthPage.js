@@ -24,7 +24,7 @@ const AuthPage = () => {
       });
       navigate("/"); // 로그인 성공 시 메인으로 이동
     } catch (error) {
-      alert(error.message); //
+      alert(error.message); // 
     }
   };
 

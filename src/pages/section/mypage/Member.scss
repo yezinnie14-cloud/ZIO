@@ -4,16 +4,137 @@
 
 
 .member-wrap {
+    margin: 0 3rem;
     @include respond();
-    height: 100vh;
+    height: 150vh;
+
     .user {
-        .information{
-            padding-top: 5rem;
-            .user-info{
+        .information {
+            padding: 3rem 0;
+            width: 100%;
+
+            .user-info {
+                width: 100%;
+                height: 10rem;
+                padding: 0 2rem;
+                @include flex-layout($just: space-between);
+
                 .user-icon {
                     font-size: 2rem;
                     color: $color-555;
                 }
+
+                .user-name {
+                    @include body-b();
+                }
+            }
+
+            .car-info {
+                background-color: $color-white;
+                padding: 1rem;
+                border-radius: 1rem;
+                height: 10rem;
+                @include flex-layout($just : space-between);
+
+
+                .car-title {
+                    @include caption-b();
+                }
+
+                .car-num {
+                    padding: 1.5rem 0;
+                    @include title-b();
+                }
+
+                .car-btn {
+                    @include btn-theme();
+                    width: 7rem;
+                }
+
+                @media (min-width : 768px) {
+                    height: 200px;
+                    padding: 0 4rem;
+                }
+            }
+        }
+    }
+
+    .member-history {
+        background-color: $color-sub;
+        border-radius: 1rem;
+        margin: 3rem 0;
+        padding: 2rem 1rem;
+        width: 100%;
+
+        .member-history__header {
+            @include body-r();
+            @include flex-layout($just: space-between);
+            cursor: pointer;
+            padding: 1rem;
+
+            .member-history__arrow {
+                line-height: 1rem;
+                display: inline-flex;
+                cursor: pointer;
+                transition: transform 0.2s ease;
+
+                &.is-open {
+                    transform: rotate(90deg); // ▶ → ▼ 느낌
+                }
+
+            }
+        }
+
+        .member-history__body {
+            // background-color: $color-white;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 3rem;
+
+            .member-history__empty {
+                padding: 0.5rem 1rem;
+                @include caption-b();
+                color: $color-555;
+            }
+
+            .member-history__list {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .member-history__item {
+                height: 80px;
+                background: $color-white;
+                border-radius: 1rem;
+                padding: 1rem;
+                @include flex-layout($just: space-between);
+            }
+
+            .member-history__right {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin: 0;
+            }
+
+            /* ===== 배지(정기권/시간제) ===== */
+            .member-history__badge {
+                @include flex-layout();
+                padding: 0.5rem 1rem;
+                border-radius: 5rem;
+                @include caption-b;
+                background: $color-bbb;
+                color: #fff;
+            }
+
+            .member-history__badge.is-using.is-pass {
+                background: $color-main;
+            }
+
+            .member-history__badge.is-using.is-time {
+                background: $color-sub;
             }
         }
     }
