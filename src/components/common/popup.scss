@@ -35,7 +35,7 @@
     transform: translateY(-30%); 
   }
 
-  
+
       input{
             position: relative;
             transition: transform 0.3s ease;
@@ -109,7 +109,10 @@
   border-radius: 12px;   
   object-fit: cover;  
   flex: 0 0 120px; }  
-  
+  .popup-detail{
+    input{display: none;}
+    
+  }
   .meta .title { font-weight: 600; } 
   
   .meta .addr { color: #777; }

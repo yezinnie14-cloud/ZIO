@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useRef, useState, useMemo } from "react"
 import "./popup.scss"
 import parking from "../../assets/images/detail img/parking.png"
+import { useNavigate } from 'react-router-dom'
 
 const Popup = ({
   open,
@@ -14,10 +15,16 @@ const Popup = ({
   onBack,
   list = [],
 }) => {
-  const [mounted, setMounted] = useState(open)
-  const [visible, setVisible] = useState(false)
+  const [mounted, setMounted] = useState(open);
+  const [visible, setVisible] = useState(false);
+  const navigate=useNavigate();
   const sheetRef = useRef(null)
-
+  const handleClick =()=>{
+    navigate(`/signup`)
+  }
+  const handleLogin =()=>{
+    navigate(`/guest-login`)
+  }
   useEffect(() => {
     if (open) {
       setMounted(true)
@@ -38,7 +45,7 @@ const Popup = ({
     }
   }
 
-  
+
   const filtered = useMemo(() => {
     const q = (keyword ?? "").trim().toLowerCase()
     const base = Array.isArray(list) ? list : []
@@ -59,23 +66,27 @@ const Popup = ({
         onMouseDown={(e) => e.stopPropagation()}
         onTransitionEnd={handleTransitionEnd}
       >
-        <input
-          type="text"
-          placeholder="주차장을 찾아보세요"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-        />
+        {view === "list" && (
+          <>
+            <input
+              type="text"
+              placeholder="주차장을 찾아보세요"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
 
-        <button
-          className="popup-close"
-          onMouseDown={(e) => e.stopPropagation()}
-          onClick={(e) => {
-            e.stopPropagation()
-            onClose()
-          }}
-        >
-          ×
-        </button>
+            <button
+              className="popup-close"
+              onMouseDown={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation()
+                onClose()
+              }}
+            >
+              ×
+            </button>
+          </>
+        )}
 
         <div className="popup-content">
           {view === "list" && (
@@ -84,6 +95,7 @@ const Popup = ({
                 <li key={item.id} onClick={() => onSelectItem(item)}>
                   <img className="thumb" src={item.photo_urls?.[0] ?? parking} alt="" />
                   <div className="meta">
+                    <h3 className='parking-name'>{item.parking_name}</h3>
                     <p className="title">{item.name}</p>
                     <p className="addr">{item.address ?? item.addr ?? "주소 없음"}</p>
                   </div>
@@ -105,6 +117,8 @@ const Popup = ({
               <p style={{ marginTop: 8 }}>
                 가격(1h): {selected.price_per_1h ?? "-"}원
               </p>
+              <button onClick={handleClick}>비회원 예약</button>
+              <button onClick={handleLogin}>로그인</button>
             </div>
           )}
         </div>
