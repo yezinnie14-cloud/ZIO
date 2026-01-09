@@ -9,11 +9,11 @@
         overflow: visible;
         
         .input{
-            position: fixed;
+            position: relative;
             transition: transform 0.3s ease;
             text-align: center;
-            bottom: 0;
-            transform: translateY(-90px);
+            transform: translateY(-300%);
+            @include flex-layout(row,center);
             width: 200px;
             z-index: 9999; // 지도 위로
             padding: 0.5rem;
@@ -34,31 +34,4 @@
         }
     }
 }
-}
-
-
-// layout -sec3 처리 
-.layout-main {
-  width: 100%;
-  display: block;
-  padding: 0;
-  .sec3 {
-    display: none;
-  }
-}
-
-@include respond {
-  .layout-main {
-
-    @include flex-layout(row,center,center,none);
-    .layout-outlet {
-    min-width: 0;
-  }
-     .sec3 {
-    display: inline-block;
-    width: 100%;
-    max-width: 360px;
-    justify-self: end;
-  }
-  }
 }

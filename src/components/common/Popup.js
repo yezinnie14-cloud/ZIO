@@ -1,7 +1,7 @@
 import React from 'react'
-import { useEffect, useRef, useState } from "react";
-import "./popup.scss";
-import parking from "../../assets/images/detail img/parking.png";
+import { useEffect, useRef, useState, useMemo } from "react"
+import "./popup.scss"
+import parking from "../../assets/images/detail img/parking.png"
 
 const Popup = ({
   open,
@@ -12,48 +12,40 @@ const Popup = ({
   setKeyword,
   onSelectItem,
   onBack,
-  popupAnchorRef
+  list = [],
 }) => {
-  const [mounted, setMounted] = useState(open);
-  const [visible, setVisible] = useState(false);
-  const sheetRef = useRef(null);
-
-  const list = [
-    { id: 1, img: parking, name: "수원역 주차장", addr: "수원시 ..." },
-    { id: 2, img: parking, name: "인계동 주차장", addr: "수원시 ..." },
-  ];
+  const [mounted, setMounted] = useState(open)
+  const [visible, setVisible] = useState(false)
+  const sheetRef = useRef(null)
 
   useEffect(() => {
     if (open) {
-      setMounted(true);
-      setVisible(false);
-
-      // DOM이 붙고 난 뒤 "닫힌 상태"를 한 번 그리게 만들기
+      setMounted(true)
+      setVisible(false)
       setTimeout(() => {
-        if (!sheetRef.current) return;
-
-        // 강제 reflow: 이 한 줄이 트랜지션을 살린다
-        sheetRef.current.getBoundingClientRect();
-
-        setVisible(true);
-      }, 0);
+        if (!sheetRef.current) return
+        sheetRef.current.getBoundingClientRect()
+        setVisible(true)
+      }, 0)
     } else {
-      setVisible(false); // 닫힘 애니메이션 시작
+      setVisible(false)
     }
-  }, [open]);
+  }, [open])
 
   const handleTransitionEnd = (e) => {
-    // popup 본체 transform 끝나면 언마운트
     if (!open && e.propertyName === "transform") {
-      setMounted(false);
+      setMounted(false)
     }
-  };
+  }
 
-  if (!mounted) return null;
+  const filtered = useMemo(() => {
+    const q = (keyword ?? "").trim().toLowerCase()
+    const base = Array.isArray(list) ? list : []
+    if (!q) return base
+    return base.filter((item) => (item?.name ?? "").toLowerCase().includes(q))
+  }, [list, keyword])
 
-  const filtered = list.filter((item) =>
-    item.name.includes((keyword ?? "").trim())
-  );
+  if (!mounted) return null
 
   return (
     <div
@@ -66,37 +58,41 @@ const Popup = ({
         onMouseDown={(e) => e.stopPropagation()}
         onTransitionEnd={handleTransitionEnd}
       >
-        
-          <input 
+        <input
           type="text"
           placeholder="주차장을 찾아보세요"
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
-          />
-          <button
-            className="popup-close"
-            onMouseDown={(e) => e.stopPropagation()}
-            onClick={(e) => {
-              e.stopPropagation();
-              onClose();
-            }}
-          >
-            ×
-          </button>
-        {/* </div> */}
+        />
+
+        <button
+          className="popup-close"
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation()
+            onClose()
+          }}
+        >
+          ×
+        </button>
 
         <div className="popup-content">
           {view === "list" && (
             <ul className="popup-list">
               {filtered.map((item) => (
                 <li key={item.id} onClick={() => onSelectItem(item)}>
-                  <img className="thumb" src={item.img} alt="" />
+                  <img className="thumb" src={item.photo_urls?.[0] ?? parking} alt="" />
                   <div className="meta">
                     <p className="title">{item.name}</p>
-                    <p className="addr">{item.addr}</p>
+                    <p className="addr">{item.address ?? item.addr ?? "주소 없음"}</p>
                   </div>
                 </li>
               ))}
+              {filtered.length === 0 && (
+                <li style={{ padding: 12, color: "#777" }}>
+                  검색 결과 없음
+                </li>
+              )}
             </ul>
           )}
 
@@ -104,14 +100,18 @@ const Popup = ({
             <div className="popup-detail">
               <button className="back" onClick={onBack}>←</button>
               <h3>{selected.name}</h3>
-              <p>{selected.addr}</p>
+              <p>{selected.address ?? selected.addr ?? "주소 없음"}</p>
+              <p style={{ marginTop: 8 }}>
+                가격(1h): {selected.price_per_1h ?? "-"}원
+              </p>
             </div>
           )}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Popup;
+
 

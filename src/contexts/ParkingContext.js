@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useMemo } from "react";
 import { getDetailInfo, getMainInfo, getParked, getParkingSpace } from "../api/zioApi";
 
 
@@ -23,10 +23,12 @@ export const ParkingProvider = ({children}) => {
   const [loadingDetail, setLoadingDetail] = useState(false); 
   // api 호출 실패 메세지 저장 (alert에 쓰일 용도로 선언함 )
   const [error, setError] = useState(null);
-
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedLot, setSelectedLot] = useState(null)
 
   // ================= 함수 지정 time ===============
-  
+  // if (loadingMap) return <div>지도 로딩중...</div>
+  // if (errorMap) return <div>지도 SDK 에러: {String(errorMap)}</div>
   /* 메인페이지 */ 
   const fatchParkingLots = async () => {
     setLoadingMain(true);
@@ -89,7 +91,16 @@ export const ParkingProvider = ({children}) => {
     if (!found) return null;
     return found.status || "PARKED";
   };
+  const filteredLots = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase()
+    if (!q) return lots
+    return (lots || []).filter((p) => (p?.name ?? "").toLowerCase().includes(q))
+  }, [lots, searchQuery])
 
+  const selectLot = (lot) => {
+    setSelectedLot(lot)
+    setSelectedId(lot?.id ?? null)
+  }
   return (
     <ParkingContext.Provider
       value={{
@@ -110,6 +121,13 @@ export const ParkingProvider = ({children}) => {
 
         //helpers
         isSpaceTaken,
+
+         // ✅ 검색/선택
+        searchQuery,
+        setSearchQuery,
+        filteredLots,
+        selectedLot,
+        selectLot,
       }}
     >
       {children}
