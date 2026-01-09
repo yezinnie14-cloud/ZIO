@@ -5,10 +5,18 @@ import ReservationCard from "./ReservationCard";
 const GuestReservation = ({ phone, onFail }) => {
   const { reservations, fetchGuestReservation, loadingList, error } = useReservation();
 
-  // 같은 phone으로 useEffect가 불필요하게 중복 호출되는 것 방지
+  // 같은 phone으로 중복 호출 방지
   const lastPhoneRef = useRef("");
+  // "실제로 조회를 시도했다" 플래그 (이게 핵심)
+  const didRequestRef = useRef(false);
 
   useEffect(() => {
+    if (!phone) return;
+    if (lastPhoneRef.current === phone) return;
+
+    lastPhoneRef.current = phone;
+    didRequestRef.current = true;
+
     const run = async () => {
       try {
         await fetchGuestReservation({ phone });
@@ -17,22 +25,19 @@ const GuestReservation = ({ phone, onFail }) => {
       }
     };
 
-    if (!phone) return;
-    if (lastPhoneRef.current === phone) return;
-
-    lastPhoneRef.current = phone;
     run();
-  }, [phone, fetchGuestReservation, onFail]);
+  }, [phone]); // fetchGuestReservation, onFail 의존성 제거(무한 반복 가능성 방지)
 
-  // 기획상 1건만 노출
-  const currentReservation = reservations && reservations.length > 0 ? reservations[0] : null;
+  // 1건만 노출
+  const currentReservation =
+    reservations && reservations.length > 0 ? reservations[0] : null;
 
-  // 로딩이 끝났는데도 데이터가 없으면 “조회 실패”로 처리해서 팝업으로 복귀
+  // "조회 시도한 적이 있고" + "로딩이 끝난 뒤"에만 실패 처리
   useEffect(() => {
     if (!phone) return;
+    if (!didRequestRef.current) return;
     if (loadingList) return;
 
-    // 에러가 있거나, 결과가 비어있으면 실패 처리
     if (error || !reservations || reservations.length === 0) {
       onFail?.();
     }
@@ -40,9 +45,7 @@ const GuestReservation = ({ phone, onFail }) => {
 
   return (
     <section className="reservation-section">
-      {/* {loadingList && <p className="state-text">조회 중...</p>} */}
       {error && <p className="state-text error">{error}</p>}
-
       <ReservationCard reservation={currentReservation} />
     </section>
   );

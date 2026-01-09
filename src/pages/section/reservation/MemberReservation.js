@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useReservation } from "../../../contexts/ReservationContext";
 import ReservationCard from "./ReservationCard";
@@ -7,20 +7,34 @@ const MemberReservation = () => {
   const { user } = useAuth();
   const { reservations, fetchUserReservation, loadingList, error } = useReservation();
 
-  // 회원은 진입 시 자동 조회
-  useEffect(() => {
-    if (user?.id) fetchUserReservation({ userId: user.id });
-  }, [user?.id, fetchUserReservation]);
+  // 같은 userId로 중복 호출 방지(깜빡이는 로딩 효과 없애는 용)
+  const lastUserIdRef = useRef("");
 
-  // 현재 예약은 첫 번째 데이터만 사용 (기획상 1건만 보여줌)
-  const currentReservation = reservations && reservations.length > 0 ? reservations[0] : null;
+  useEffect(() => {
+    const userId = user?.id;
+    if (!userId) return;
+
+    if (lastUserIdRef.current === userId) return;
+    lastUserIdRef.current = userId;
+
+    fetchUserReservation({ userId });
+  }, [user?.id]); // fetchUserReservation은 의존성에서 제외(무한 호출 방지)
+
+  const currentReservation =
+    reservations && reservations.length > 0 ? reservations[0] : null;
 
   return (
     <section className="reservation-section">
-      {loadingList && <p className="state-text">조회 중...</p>}
       {error && <p className="state-text error">{error}</p>}
 
-      <ReservationCard reservation={currentReservation} />
+      {currentReservation ? (
+        <ReservationCard reservation={currentReservation} />
+      ) : (
+        // 로딩 중에는 아무것도 안 보이게 loadingList 체크 추가함
+        !loadingList && (
+          <p className="state-text empty">현재 이용중인 내역이 없습니다.</p>
+        )
+      )}
     </section>
   );
 };
