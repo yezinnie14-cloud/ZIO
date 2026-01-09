@@ -1,0 +1,14 @@
+@use "../../../assets/scss/fonts" as *;
+@use "../../../assets/scss/variables" as *;
+@use "../../../assets/scss/mixins" as *;
+
+ .guest-popup {
+    @include flex-layout($dir: column, $just: center, $align: center, $gap: 10px);
+  padding: 0 20px;
+    background-color: $color-white;
+    
+  }
+
+@media (max-width: 767px) {
+ 
+}

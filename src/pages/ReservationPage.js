@@ -1,14 +1,36 @@
 import MemberReservation from "./section/reservation/MemberReservation";
 import GuestReservation from "./section/reservation/GuestReservation";
+import GuestPopup from "./section/reservation/GuestPopup";
 import { useAuth } from "../contexts/AuthContext";
+import { useState } from "react";
 
 const ReservationPage = () => {
   const { authType } = useAuth();
 
+  // 비회원 조회용 연락처
+  const [guestPhone, setGuestPhone] = useState("");
+  // 팝업 조회 실패 메세지 (truthy면 GuestPopup이 에러 문구 표시 + input 초기화)
+  const [guestErrorMessage, setGuestErrorMessage] = useState("");
+
+  const handleGuestSubmit = ({ phone }) => {
+    setGuestErrorMessage("");
+    setGuestPhone(phone);
+  };
+
+  const handleGuestFail = () => {
+    setGuestPhone("");
+    setGuestErrorMessage("fail");
+  };
+
   return (
     <div className="reservation-page">
-      {/* 회원이 아닐 경우 게스트(비회원) 모드로 넘어가게 끔 함-> 비회원은 팝업이 먼저 떠야함 */}
-      {authType === "user" ? <MemberReservation /> : <GuestReservation />}
+      {authType === "user" ? (
+        <MemberReservation />
+      ) : guestPhone ? (
+        <GuestReservation phone={guestPhone} onFail={handleGuestFail} />
+      ) : (
+        <GuestPopup onSubmit={handleGuestSubmit} errorMessage={guestErrorMessage} />
+      )}
     </div>
   );
 };
