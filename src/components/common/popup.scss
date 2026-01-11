@@ -19,7 +19,7 @@
   right: 0;
   bottom: 0;
   overflow: hidden;
-  width: 350px;         
+  width: 380px;         
   margin: 0 auto;            
   height: 35vh;              
   background: #fff;
@@ -37,13 +37,11 @@
 
 
       input{
-            position: relative;
-            transition: transform 0.3s ease;
+            position: fixed;
             text-align: center;
-            left: 0;
-            right: 0;
-            top: 30%;
-            // transform: translateX(80px);
+            // left: 0;
+            // right: 0;
+            top: 5%;
             width: 200px;
             z-index: 9999; // 지도 위로
             padding: 0.5rem 0;
@@ -61,10 +59,10 @@
         }
     }
 .popup-close {
-  position: relative;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-60%);
+  position: fixed;
+  top: 8%;
+  left: 90%;
+  transform: translateX(50%);
   background: none;
   border: none;
   cursor: pointer;
@@ -77,15 +75,35 @@
 
 /* 내용 */
 .popup-content {
-  width: 100%;
-  margin-top: 20px; // X랑 겹치지 않게
+  height: 100%;
+  overflow: hidden;
 }
 
+.popup-track {
+  width: 200%;
+  height: 100%;
+  display: flex;
+  transform: translateX(0);
+  transition: transform 280ms ease;
+}
+
+.popup-content.is-detail .popup-track {
+  transform: translateX(-50%);
+}
+
+.popup-panel {
+  width: 50%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto; // 리스트 스크롤/상세 스크롤 필요하면
+}
 .popup-list {
   position: relative;
-  transform: translateY(-15%);
-  max-height: 300px;
+  transform: translateY(-5%);
+  max-height: 400px;
   overflow-y: auto;
+  @include caption-r();
+  font-size: 14px;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -95,19 +113,22 @@
 
   // IE, 옛 Edge (이제 쓸 일 없지만)
   -ms-overflow-style: none;
-  padding: 80px 0;
+  padding: 60px 0;
   li {
+    background: #e4e4e4;
     cursor: pointer;
     @include flex-layout(row,left);
     padding: 10px 1px;
-    
+    margin: 1rem 0;
+    border-radius: 16px;
   }
 }
 .thumb {   
-  width: 100px;   
-  height: 100px;   
-  border-radius: 12px;   
+  width: 60px;   
+  height: 60px;   
+  border-radius: 16px;   
   object-fit: cover;  
+  padding: 0 2rem ;
   flex: 0 0 120px; }  
   .popup-detail{
     input{display: none;}
@@ -119,3 +140,58 @@
  }
 }
 
+.popup-detail{
+  @include flex-layout(column,center);
+  width: 100%;
+  .detail{
+    @include flex-layout(row,space-around);
+    padding: 0.5rem;
+    .thumb{
+      width: 100px;
+      height: 100px;
+    }
+    .txt{
+      @include caption-r;
+      font-size: 12px;
+      width: 100%;
+    }
+  }
+  .keyword{
+    @include flex-layout(column,left);
+    width: 80%;
+    transform: translateX(-26%);
+    padding: 0 2rem;
+    // p{padding: 1rem}
+    button{
+    border: none;
+    border-radius: 16px;
+    background-color: #B67FDB;
+    color: #eee;
+    width: 86px;
+    height: 34px;
+    }
+}
+  .b{
+    width: 70%;
+    height: 2px;
+    @include flex-layout(row,left);
+    .back{
+    cursor: pointer;
+    background: none;
+    width: 10px;
+    height: 10px;
+    border: none;
+    &:hover{
+      color: #777
+    }
+  }
+}
+.btn{
+  @include flex-layout;
+  button{
+  @include btn-theme;
+  width: 135px;
+  height: 38px;
+  }
+}
+}
