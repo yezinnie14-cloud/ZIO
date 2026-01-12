@@ -26,7 +26,7 @@ const useIsMobile = () => {
   return isMobile;
 };
 
-const DetailContainer = () => {
+const DetailContainer = (onReserve) => {
   const { state } = useLocation();
 const { parkingId } = useParams();
 const { user } = useAuth();
