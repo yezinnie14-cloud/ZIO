@@ -24,7 +24,7 @@ const useIsMobile = () => {
   return isMobile;
 };
 
-const DetailContainer = () => {
+const DetailContainer = (onReserve) => {
     const {
     selectedId,
     lotDetail,
@@ -59,13 +59,6 @@ const DetailContainer = () => {
     setIsPopupOpen(false);
   };
 
-  const handleReserve = () => {
-    if (!selectedBox) return;
-    navigator("/payment");
-    if (isMobile) {
-      setIsPopupOpen(false);
-    }
-  };
 
   if (loadingDetail) {
     return <div className="detail-page detail-page--center">로딩중...</div>;
@@ -130,9 +123,14 @@ const DetailContainer = () => {
                 </div>
               </div>
 
-              <button className="reserve-popup-button" onClick={handleReserve}>
+              <button className="reserve-popup-button"
+               type="button"
+            onClick={onReserve}
+            disabled={!selectedBox}>
                 예약하기
               </button>
+          
+
             </div>
           </div>
         </div>
