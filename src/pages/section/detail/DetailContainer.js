@@ -145,9 +145,15 @@ const DetailContainer = () => {
                 </div>
               </div>
 
-              <button className="reserve-popup-button" onClick={handleReserve}>
+              <button className="reserve-popup-button"
+               type="button"
+            onClick={onReserve}
+            disabled={!selectedBox}>
                 예약하기
               </button>
+
+          
+
             </div>
           </div>
         </div>

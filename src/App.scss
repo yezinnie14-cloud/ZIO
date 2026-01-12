@@ -44,19 +44,19 @@
   padding: 0;
   .sec1{
     display: none;
-    flex: 0 0 240px;
-    width: 240px;
-    min-width: 240px;
-  }
-  .layout-outlet {
-      flex: 1 1 auto;      
-      min-width: 0;         
-    }
-  .sec3 {
-    display: none;
     flex: 0 0 360px;
     width: 360px;
     min-width: 360px;
+  }
+  .layout-outlet {
+      flex: 1 1 auto;      
+      min-width: 400px;         
+    }
+  .sec3 {
+    display: none;
+    flex: 0 0 400px;
+    width: 400px;
+    min-width: 400px;
   }
 }
 
@@ -74,9 +74,7 @@
     display: inline-block;
     width: 100%;
     max-width: 360px;
-    // margin-top: auto;
     justify-self: end;
-    padding-top: 4rem;
     padding-right:3rem ;
   }
   }

@@ -65,9 +65,13 @@
     width: 100%;
     height: auto;
     min-height: 220px;
+    max-height: 500px;
     border-radius: 16px;
     margin-bottom: 1rem;
     background: transparent;
+    .img{
+      height: 250px;
+    }
   }
 }
 

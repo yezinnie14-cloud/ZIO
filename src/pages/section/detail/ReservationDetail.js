@@ -7,17 +7,16 @@ const sortBySpaceCode = (a, b) => {
   const [bPrefix, bNum] = (b.space_code || "").split("-");
 
   if (aPrefix === bPrefix) {
-    return Number(aNum) - Number(bNum); // 숫자 기준 정렬
+    return Number(aNum) - Number(bNum); 
   }
   return aPrefix.localeCompare(bPrefix);
 };
 const ReservationDetail = ({ selectedCode, onSelect }) => {
-  const{ spaces, isSpaceTaken,fetchLotDetailAll}= useParking();
+  const{lotDetail, spaces, isSpaceTaken,fetchLotDetailAll}= useParking();
   const [laneA, setLaneA] = useState([]);
   const [laneB, setLaneB] = useState([]);
-
   useEffect(()=>{
-    fetchLotDetailAll("HG_01");
+    fetchLotDetailAll(lotDetail);
     console.log( "spaces==>", spaces );
     const arrA = spaces.filter((item) => (item.space_code || "").startsWith("A-")).slice().sort(sortBySpaceCode);
     const arrB = spaces.filter((item) => (item.space_code || "").startsWith("B-")).slice().sort(sortBySpaceCode);
