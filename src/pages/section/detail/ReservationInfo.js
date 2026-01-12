@@ -1,30 +1,50 @@
 import "./ReservationInfo.scss";
 import { useParking } from "../../../contexts/ParkingContext";
-// import Popup from "../../../components/common/Popup";
+import { useEffect, useState } from "react";
+import Popup from "../../../components/common/Popup";
 
 const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
-  const { lotDetail } = useParking(); 
+  const { lots, lotDetail } = useParking();
+
+  const [keyword, setKeyword] = useState("");
+  const [view, setView] = useState("detail");
+  const [selected, setSelected] = useState(null);
+    useEffect(() => {
+    if (lotDetail) {
+      setSelected(lotDetail);
+      setView("detail");
+    }
+  }, [lotDetail]);
+
+  const handleSelectItem = (item) => {
+    setSelected(item);
+    setView("detail");
+  };
 
   return (
     <div className="reservation-info">
       {isMobile ? (
-        <div className="parking-card">
-        </div>
+        <div className="parking-card"></div>
       ) : (
         <div className="parking-header-desktop">
-          <div className="img"></div>
+          <div className="img"><iframe
+      className="parking-panorama"
+      src="https://skybox.blockadelabs.com/f624a4b39d495a89f8bcb6b23270aada"
+      allow="xr-spatial-tracking; fullscreen; autoplay"
+      title="주차장 파노라마"
+    /></div>
           <div className="detail-desktop">
-            {/* <Popup
-        open={open}
-        onClose={closePopup}
-        keyword={keyword}
-        setKeyword={setKeyword}
-        view={detail}
-        selected={selected}
-        list={lots}                 
-        onSelectItem={handleSelectItem}
-        onBack={() => setView("list")}
-      /> */}
+            <Popup
+              open={true}
+              onClose={() => {}}
+              keyword={keyword}
+              setKeyword={setKeyword}
+              view={view}
+              selected={selected}
+              list={lots}
+              onSelectItem={handleSelectItem}
+              onBack={() => setView("list")}
+            />
           </div>
         </div>
       )}

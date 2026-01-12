@@ -63,7 +63,8 @@
 .reservation-info {
   .parking-header-desktop {
     width: 100%;
-    height: 220px;
+    height: auto;
+    min-height: 220px;
     border-radius: 16px;
     margin-bottom: 1rem;
     background: transparent;
@@ -106,12 +107,46 @@
   height: 300px;
   background-color: $color-555;
 }
-.detail-desktop{
-    width: 100%;
-  height: 300px;
-  background-color: $color-yellow;
-}
+
 };
+
+.detail-desktop {
+  .popup-overlay {
+    position: relative !important;
+    inset: auto !important;
+    background: none !important;
+  }
+
+  .popup {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    transform: none !important;
+
+    width: 100% !important;
+    height: auto !important;
+    box-shadow: none !important;
+  }
+
+  .popup-overlay,
+  .popup,
+  .popup-content,
+  .popup-track,
+  .popup-panel,
+  .popup-detail {
+    overflow: hidden !important;
+    max-height: none !important;
+    .btn {
+      display: none !important;
+    }
+     .back {
+      display: none !important;
+    }
+  }
+
+}
 // .copy-toast {
 //       width: 60px;
 //       height: 25px;
