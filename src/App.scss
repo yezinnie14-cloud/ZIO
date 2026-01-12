@@ -12,7 +12,7 @@
             position: relative;
             transition: transform 0.3s ease;
             text-align: center;
-            transform: translateY(-300%);
+            transform: translateY(-350%);
             @include flex-layout(row,center);
             width: 200px;
             z-index: 9999; // 지도 위로

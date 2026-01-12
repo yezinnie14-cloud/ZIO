@@ -20,10 +20,10 @@ const Popup = ({
   const navigate=useNavigate();
   const sheetRef = useRef(null)
   const handleClick =()=>{
-    navigate(`/signup`)
+    navigate(`/guest-login`)
   }
   const handleLogin =()=>{
-    navigate(`/guest-login`)
+    navigate(`/auth`)
   }
   useEffect(() => {
     if (open) {
@@ -50,7 +50,7 @@ const Popup = ({
     const q = (keyword ?? "").trim().toLowerCase()
     const base = Array.isArray(list) ? list : []
     if (!q) return base
-    return base.filter((item) => (item?.name ?? "").toLowerCase().includes(q))
+    return base.filter((item) => (item?.parking_name ?? "").toLowerCase().includes(q))
   }, [list, keyword])
 
   if (!mounted) return null
@@ -88,40 +88,65 @@ const Popup = ({
           </>
         )}
 
-        <div className="popup-content">
-          {view === "list" && (
-            <ul className="popup-list">
-              {filtered.map((item) => (
-                <li key={item.id} onClick={() => onSelectItem(item)}>
-                  <img className="thumb" src={item.photo_urls?.[0] ?? parking} alt="" />
-                  <div className="meta">
-                    <h3 className='parking-name'>{item.parking_name}</h3>
-                    <p className="title">{item.name}</p>
-                    <p className="addr">{item.address ?? item.addr ?? "주소 없음"}</p>
-                  </div>
-                </li>
-              ))}
-              {filtered.length === 0 && (
-                <li style={{ padding: 12, color: "#777" }}>
-                  검색 결과 없음
-                </li>
-              )}
-            </ul>
-          )}
+        <div className={`popup-content ${view === "detail" ? "is-detail" : ""}`}>
+  <div className="popup-track">
+    {/* LIST PANEL */}
+    <section className="popup-panel">
 
-          {view === "detail" && selected && (
-            <div className="popup-detail">
-              <button className="back" onClick={onBack}>←</button>
-              <h3>{selected.name}</h3>
-              <p>{selected.address ?? selected.addr ?? "주소 없음"}</p>
-              <p style={{ marginTop: 8 }}>
-                가격(1h): {selected.price_per_1h ?? "-"}원
-              </p>
-              <button onClick={handleClick}>비회원 예약</button>
-              <button onClick={handleLogin}>로그인</button>
+      <ul className="popup-list">
+        {filtered.map((item) => (
+          <li
+            key={item.id}
+            onClick={() => onSelectItem(item)} // 여기서 부모가 view를 detail로 바꾸면 슬라이드 됨
+          >
+            <img className="thumb" src={item.photo_urls?.[0] ?? parking} alt="" />
+            <div className="meta">
+              <h3 className="parking-name">{item.parking_name}</h3>
+              <p className="title">{item.name}</p>
+              <p className="addr">{item.address ?? item.addr ?? "주소 없음"}</p>
             </div>
-          )}
+          </li>
+        ))}
+        {filtered.length === 0 && (
+          <li style={{ padding: 12, color: "#777",background:"none" }}>검색 결과 없음</li>
+        )}
+      </ul>
+    </section>
+
+    {/* DETAIL PANEL */}
+    <section className="popup-panel">
+      <div className="popup-detail">
+        <div className='b'>
+          <button className="back" onClick={onBack}>←</button>
         </div>
+        {selected ? (
+          <>
+          <div className='detail'>
+          <img className="thumb" src={selected.photo_urls?.[0] ?? parking} alt="" />
+          <div className='txt'>
+            <h3>{selected.parking_name}</h3>
+            <p>{selected.address ?? selected.addr ?? "주소 없음"}</p>
+            <p style={{ marginTop: 8 }}>
+              시간당: {selected.price_per_1h ?? "-"}원
+            </p>
+            </div>
+            </div>
+            <div className='keyword'>
+              <p>주차장 설명</p>
+              <button>리뷰키워드</button>
+            </div>
+            <div className='btn'>
+            <button onClick={handleClick}>비회원 예약</button>
+            <button onClick={handleLogin}>로그인</button>
+            </div>
+          </>
+        ) : (
+          <p style={{ color: "#777" }}>선택된 주차장 없음</p>
+        )}
+      </div>
+    </section>
+  </div>
+</div>
       </div>
     </div>
   )
