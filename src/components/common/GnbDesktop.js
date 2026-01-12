@@ -15,7 +15,7 @@ const GnbDesktop = () => {
             <p>홈</p>
             <p><MdOutlineKeyboardArrowRight /></p>
           </li>
-          <li className="gnb-txt" onClick={()=>navigate("/reserve-page")}>
+          <li className="gnb-txt" onClick={()=>navigate("/reservations")}>
             <p>예약현황</p>
             <p><MdOutlineKeyboardArrowRight /></p>
           </li>

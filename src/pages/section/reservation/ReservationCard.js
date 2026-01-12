@@ -1,4 +1,5 @@
 // reservation 1건을 받아서 화면에 “보여주기만” 하는 공통 카드 컴포넌트
+import "./ReservationCard.scss";
 const ReservationCard = ({ reservation }) => {
     // 예약 데이터가 없으면 아무것도 띄우지 않게
   if (!reservation) return null;
