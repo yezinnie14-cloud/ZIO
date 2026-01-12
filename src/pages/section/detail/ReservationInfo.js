@@ -2,14 +2,10 @@ import "./ReservationInfo.scss";
 import { useParking } from "../../../contexts/ParkingContext";
 import { useEffect, useState } from "react";
 import Popup from "../../../components/common/Popup";
-import { useNavigate } from "react-router-dom";
+
 
 const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
-  const navigate = useNavigate();
 
- const handleReserve = () => {
-    navigate("/payment");
-  };
   const { lots, lotDetail } = useParking();
 
   const [keyword, setKeyword] = useState("");
@@ -25,6 +21,7 @@ const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
   const handleSelectItem = (item) => {
     setSelected(item);
     setView("detail");
+
   };
 
   return (
@@ -81,11 +78,12 @@ const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
           <button
             type="button"
             className="reserve-popup-button"
-            onClick={handleReserve}
+            onClick={onReserve}
             disabled={!selectedBox}
           >
             예약하기
           </button>
+          
         </div>
       )}
     </div>

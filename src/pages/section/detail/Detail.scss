@@ -3,7 +3,6 @@
 @use "../../../assets/scss/mixins" as *;
 
 .detail-page {
-  // padding: 1rem;
   box-sizing: border-box;
   @include caption-r();
   @include respond{
@@ -11,7 +10,7 @@
   }
 
   &--center {
-    min-height: 60vh;
+    min-height: 100vh;
     @include flex-layout(column, center, center, 0.5rem);
     font-size: 0.875rem;
   }
