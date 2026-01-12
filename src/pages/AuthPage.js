@@ -1,6 +1,6 @@
 // AuthPage.js
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 import kakao from "../assets/images/social_logo/kakao.png";
@@ -10,32 +10,25 @@ import naver from "../assets/images/social_logo/naver.png";
 import "./AuthPage.scss";
 
 const AuthPage = () => {
+  
   const navigate = useNavigate();
-  const [params] = useSearchParams()
   const { loginUser, loading } = useAuth();
 
-  const redirect = params.get("redirect");   
-  const parkingId = params.get("parkingId"); 
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-      try {
-      await loginUser({ userId: userId.trim(), password: password.trim() })
-
-      // ✅ 팝업에서 온 케이스만 디테일로
-      if (redirect === "/detail" && parkingId) {
-        navigate(`/detail?parkingId=${parkingId}`, { replace: true })
-      } else {
-        // ✅ 헤더에서 온 케이스는 메인
-        navigate("/", { replace: true })
-      }
+    try {
+      await loginUser({
+        userId: userId.trim(),
+        password: password.trim(),
+      });
+      navigate("/"); // 로그인 성공 시 메인으로 이동
     } catch (error) {
-      alert(error.message)
+      alert(error.message); // 
     }
-    
   };
-  
+
   return (
     <div className="auth-page">
       <h2>로그인</h2>
