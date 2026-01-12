@@ -4,46 +4,54 @@
 .tip-card {
   width: 100%;
   background: #fff;
-  border-radius: 16px;
+  border-radius: 1rem;
 
   /*모든 카드 높이 통일 */
   height: 140px;             
   padding: 18px 16px;
   box-sizing: border-box;
 
-  margin-bottom: 3rem;
+  margin-top: 0.5rem;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 
   /*내용 세로 중앙 정렬 */
   display: flex;
   align-items: center;
   justify-content: center;
+
+  position: relative;
+}
+.tip-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  img{
+    width: 80px;
+    height: 80px;
+  }
 }
 
 .tip-text {
   width: 100%;
   text-align: center;
+  z-index: 99;
 
   /* 단어 단위 줄바꿈*/
   word-break: keep-all;
   overflow-wrap: break-word;
+  @include flex-layout(column, center, center, 0.5rem);
 }
 
 .tip-title {
-  @include flex-layout(row, center, center, 0.5rem);
   font-size: 1.2rem;
   font-weight: 900;
   margin: 0 0 8px;
   word-break: keep-all;
   overflow-wrap: break-word;
+  width: 65%;
 }
 
-.tip-icon {
-  font-size: 18px;
-  line-height: 1;
-}
-
-.tip-text p.tip-text {
+.tip-text p.tip-txt {
   margin: 0;
   font-size: 1rem;
   line-height: 1.5;
