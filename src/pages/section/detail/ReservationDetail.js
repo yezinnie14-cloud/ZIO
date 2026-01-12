@@ -7,7 +7,7 @@ const sortBySpaceCode = (a, b) => {
   const [bPrefix, bNum] = (b.space_code || "").split("-");
 
   if (aPrefix === bPrefix) {
-    return Number(aNum) - Number(bNum); // 숫자 기준 정렬
+    return Number(aNum) - Number(bNum); 
   }
   return aPrefix.localeCompare(bPrefix);
 };

@@ -2,10 +2,9 @@ import "./ReservationInfo.scss";
 import { useParking } from "../../../contexts/ParkingContext";
 import { useEffect, useState } from "react";
 import Popup from "../../../components/common/Popup";
-// import { useNavigate } from "react-router-dom";
+
 
 const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
-  // const navigate = useNavigate(); 
 
   const { lots, lotDetail } = useParking();
 
@@ -84,18 +83,6 @@ const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
           >
             예약하기
           </button>
-          {/* <button
-            type="button"
-            className="reserve-popup-button"
-            onClick={() => {
-    console.log("✅ 버튼 눌림");
-    onReserve?.();
-  }}
-            disabled={false}
-          >
-            
-            예약하기
-          </button>  */}
           
         </div>
       )}

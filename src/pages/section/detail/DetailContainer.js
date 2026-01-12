@@ -43,13 +43,13 @@ const DetailContainer = (onReserve) => {
   useEffect(() => {
     if (!selectedId) return;
     fetchLotDetailAll(selectedId);
-    setSelectedBox(null); // 주차장 바뀌면 선택 초기화
+    setSelectedBox(null); 
   }, [selectedId, fetchLotDetailAll]);
-  // 자리 클릭
+
   const handleSelectBox = (box) => {
     setSelectedBox(box);
 
-    // 모바일일 때만 팝업 열기
+
     if (isMobile) {
       setIsPopupOpen(true);
     }
@@ -129,6 +129,7 @@ const DetailContainer = (onReserve) => {
             disabled={!selectedBox}>
                 예약하기
               </button>
+
           
 
             </div>
