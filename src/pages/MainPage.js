@@ -3,8 +3,6 @@ import { useEffect, useState } from "react"
 import Popup from "../components/common/Popup"
 import { useParking } from "../contexts/ParkingContext"
 import "../App.scss"
-import { useNavigate } from "react-router-dom"
-import { useAuth } from "../contexts/AuthContext"
 
 const MainPage = () => {
   const { lots } = useParking()
@@ -12,6 +10,7 @@ const MainPage = () => {
   const [keyword, setKeyword] = useState("")
   const [view, setView] = useState("list")
   const [selected, setSelected] = useState(null)
+  
 
   const openPopup = () => {
     setOpen(true)
@@ -29,7 +28,6 @@ const MainPage = () => {
     setSelected(item)
     setView("detail")
     setOpen(true) // 마커 클릭으로도 팝업 열림
-     
   }
 
   useEffect(() => {
