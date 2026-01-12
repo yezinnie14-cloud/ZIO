@@ -20,7 +20,7 @@ const PaymentPage = () => {
   // 주차장 정보
   const { lots, selectedId } = useParking();
   const parkingID = "HG_01";
-  console.log(parkingID);
+  
 
   return (
     <div className="payment-page">

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParking } from "../../../contexts/ParkingContext";
 import ReservationDetail from "./ReservationDetail";
 import "./Detail.scss";
 
 import Detailbar from "./Detailbar";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 
 
@@ -27,32 +27,39 @@ const useIsMobile = () => {
 };
 
 const DetailContainer = () => {
-  const { state } = useLocation();
-const { parkingId } = useParams();
+  
+  
 const { user } = useAuth();
     const {
-    selectedId,
     lotDetail,
     spaces,
     loadingDetail,
     error,
     fetchLotDetailAll,
   } = useParking();
-
+  const { parkingId } = useParams();
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
   const [selectedBox, setSelectedBox] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
+  
   const isMobile = useIsMobile();
-  const parking = state?.parking;       // ✅ 팝업에서 넘어온 주차장
-const passedUser = state?.user;       // ✅ auth에서 넘긴 최소 유저정보(선택)
-const authUser = user;                // ✅ 진짜 유저 정보는 보통 여기
 
+  // ✅ 중복 fetch 방지용 ref
+  const lastFetchedRef = useRef(null);
+
+  // ✅ 디테일 진입 시 딱 1번만 호출
   useEffect(() => {
-    if (!selectedId) return;
-    fetchLotDetailAll(selectedId);
-    // setSelectedBox(null);
-  }, [selectedId, fetchLotDetailAll]);
+    if (!parkingId) return;
+    fetchLotDetailAll(parkingId);
+    if (lastFetchedRef.current === parkingId) return;
+
+    lastFetchedRef.current = parkingId;
+    fetchLotDetailAll(parkingId);
+  }, [parkingId]);
+
+
   // 자리 클릭
   const handleSelectBox = (box) => {
     setSelectedBox(box);
@@ -69,7 +76,7 @@ const authUser = user;                // ✅ 진짜 유저 정보는 보통 여�
 
   const onReserve = () => {
     if (!selectedBox) return;
-    navigator("/payment");
+    navigate("/payment");
     if (isMobile) {
       setIsPopupOpen(false);
     }
@@ -84,7 +91,7 @@ const authUser = user;                // ✅ 진짜 유저 정보는 보통 여�
       <div className="detail-page detail-page--center">에러: {error}</div>
     );
   }
-   if (!selectedId) {
+   if (!parkingId) {
     return (
       <div className="detail-page detail-page--center">
         주차장을 선택해주세요.
@@ -96,6 +103,7 @@ const authUser = user;                // ✅ 진짜 유저 정보는 보통 여�
     <div className="detail-page">
       <section className="detail-page-map">
         <div className="parking-scroll">
+          
           <ReservationDetail
             spaces={spaces}
             selectedCode={selectedBox?.space_code}

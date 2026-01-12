@@ -34,7 +34,11 @@ const GuestLoginPage = () => {
       await loginGuest(payload);
       // ✅ 디테일로 바로 이동 + 주차장/게스트정보 같이 넘김
       
-navigate("/detail", { state: { parking, guest: payload }});
+    const parkingId = parking?.id ?? parking?.parking_id;
+    if (!parkingId) throw new Error("주차장 ID 없음");
+    navigate(`/detail/${parkingId}`, {
+      state: { parking, guest: payload, from: "guest" },
+    });
     } catch (error) {
       alert(error.message);
     }

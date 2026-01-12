@@ -1,6 +1,6 @@
 // AuthPage.js
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 import kakao from "../assets/images/social_logo/kakao.png";
@@ -13,21 +13,40 @@ const AuthPage = () => {
   
   const navigate = useNavigate();
   const { loginUser, loading } = useAuth();
-
+  const location = useLocation();
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const { redirectTo, parking, from } = location.state || {};
 
   const handleLogin = async () => {
-    try {
-      await loginUser({
-        userId: userId.trim(),
-        password: password.trim(),
+  try {
+    const loggedInUser = await loginUser({
+      userId: userId.trim(),
+      password: password.trim(),
+    });
+
+    // 팝업에서 온 로그인만 디테일로
+    if (from === "popup" && redirectTo) {
+      navigate(redirectTo, {
+        replace: true,
+        state: { parking, user: loggedInUser, from: "popup" },
       });
-      navigate("/"); // 로그인 성공 시 메인으로 이동
-    } catch (error) {
-      alert(error.message); // 
+      return;
     }
-  };
+
+    navigate("/", { replace: true });
+  } catch (err) {
+    const msg =
+      err?.message ||
+      err?.response?.data?.message ||
+      "아이디 또는 비밀번호가 틀림";
+
+    // ✅ 브라우저 기본 팝업
+    alert(msg);
+  }
+};
 
   return (
     <div className="auth-page">
