@@ -1,0 +1,15 @@
+@use "../assets/scss/variables" as *;
+@use "../assets/scss/fonts" as *;
+@use "../assets/scss/mixins" as *;
+
+.payment-page {
+  margin: 0 2rem;
+  margin-top: 60px;
+  @include flex-layout($dir:column, $gap:0);
+
+  button.price-btn {
+    cursor: pointer;
+    @include btn-theme();
+    @include caption-r;
+  } 
+}

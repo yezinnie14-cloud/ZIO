@@ -9,7 +9,7 @@ import paycoImg from "../../../assets/images/pay_payco.png"
 
 const Payment = () => {
   return (
-    <section className="pay-box">
+    <section id="pay-box">
       <button>앱카드</button>
       <button>휴대폰 결제</button>
       <button>내통장 결제</button>
