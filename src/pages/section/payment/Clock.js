@@ -26,7 +26,7 @@ const Clock = () => {
         <Select
           className="clock-input"
           options={timeOptions}
-          placeholder="시작 시간 선택"
+          placeholder="입차 시간 선택"
           value={startTime}
           onChange={(selectedOption) => {
             setStartTime(selectedOption);
@@ -46,7 +46,7 @@ const Clock = () => {
         <Select
           className="clock-input"
           options={endTimeOptions}
-          placeholder="종료 시간 선택"
+          placeholder="출차 시간 선택"
           value={endTime}
           onChange={(selectedOption) => setEndTime(selectedOption)}
           isDisabled={!startTime} // 시작 시간이 없으면 비활성화
