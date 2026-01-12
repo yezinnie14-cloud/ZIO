@@ -55,6 +55,7 @@ const AuthPage = () => {
           <div className="inputData">
             <label>비밀번호</label>
             <input
+              type="password"
               placeholder="영문과 숫자 조합으로 입력해주세요"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
