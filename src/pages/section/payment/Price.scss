@@ -1,0 +1,10 @@
+@use "../../../assets/scss/mixins" as *;
+@use "../../../assets/scss/fonts" as *;
+@use "../../../assets/scss/variables" as *;
+
+#price {
+  width: 100%;
+  margin: 1rem auto;
+  @include flex-layout($just:flex-end);
+  @include caption-r;
+}

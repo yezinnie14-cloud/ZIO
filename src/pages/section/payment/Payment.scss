@@ -3,20 +3,31 @@
 @use "../../../assets/scss/mixins" as *;
 
 
-section.pay-box{
-  background-color: $color-bbb;
-  width: 80%;
-  margin: 1rem auto;
+section#pay-box{
+  background-color: $color-white;
+  width: 100%;
+  margin: 0.5rem auto;
   display: grid;
   padding: 1rem;
   grid-template-columns: repeat(3,1fr);
-  gap: 1rem;  
+  gap: 1rem; 
+  border-radius: 1rem;
+  
+  // 버튼
   button{
     background-color: #fff;
     border-radius: 10px;
     border: 0.5px solid $color-sub;
     outline: none;
-    height: 36px;
-    line-height: 36px;    
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
+    padding-top: 0.1rem;
+
+    // 버튼 hover 시
+    &:hover {
+      background-color: $color-white;
+    }
   }
 }

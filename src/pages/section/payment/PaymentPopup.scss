@@ -1,0 +1,35 @@
+@use "../../../assets/scss/mixins" as *;
+@use "../../../assets/scss/fonts" as *;
+@use "../../../assets/scss/variables" as *;
+
+
+.pay-overlay {
+  position: fixed;
+  // top/right/bottom/left: 0
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  @include flex-layout($gap:0);
+
+  #pay-popup {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 400px;
+    height: 200px;
+    max-width: calc(100vw - 40px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    @include flex-layout($dir:column);
+    h1 {
+      @include title-b;
+    }
+
+    button.reserv-check-btn {
+      cursor: pointer;
+      margin-top: 1rem;
+      @include btn-theme();
+      @include caption-r;
+    }
+  }
+}
+
