@@ -1,11 +1,13 @@
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DetailContainer from "./section/detail/DetailContainer";
 import { useParking } from "../contexts/ParkingContext";
 
-const DetailPage = ({selectedBox}) => {
-    const { lotDetail} = useParking();
-    const goPayment = () => {
-    Navigate("/payment", {
+const DetailPage = ({ selectedBox }) => {
+  const navigate = useNavigate();
+  const { lotDetail } = useParking();
+  const goPayment = () => {
+    if (!lotDetail || !selectedBox) return;
+    navigate("/payment", {
       state: {
         lotId: lotDetail.id,
         lotName: lotDetail.parking_name,
@@ -16,13 +18,14 @@ const DetailPage = ({selectedBox}) => {
       },
     });
   };
-  return <DetailContainer 
+  return (
+    <DetailContainer
       lot={lotDetail}
       selectedBox={selectedBox}
       onReserve={goPayment}
-      isMobile={false}/>;
+      isMobile={false}
+    />
+  );
 };
 
 export default DetailPage;
-
-

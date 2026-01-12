@@ -18,11 +18,11 @@ const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
     }
   }, [lotDetail]);
 
-  const handleSelectItem = (item) => {
-    setSelected(item);
-    setView("detail");
+  // const handleSelectItem = (item) => {
+  //   setSelected(item);
+  //   setView("detail");
 
-  };
+  // };
 
   return (
     <div className="reservation-info">
@@ -45,7 +45,7 @@ const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
               view={view}
               selected={selected}
               list={lots}
-              onSelectItem={handleSelectItem}
+              // onSelectItem={handleSelectItem}
               onBack={() => setView("list")}
             />
           </div>
