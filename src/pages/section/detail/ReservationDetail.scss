@@ -35,6 +35,21 @@
       background: $color-555;
       cursor: pointer;
       @include flex-layout();
+      
+  &.selected {
+    background: $color-green; 
+    color: #fff;
+  }
+
+  &.taken {
+    background: $color-bbb
+  }
+
+  &.taken::after {
+    content: "사용중";
+    color: $color-555;
+    display: block;
+  }
 
       .box-code {
         @include caption-b();
