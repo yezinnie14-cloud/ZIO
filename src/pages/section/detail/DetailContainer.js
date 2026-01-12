@@ -67,7 +67,7 @@ const authUser = user;                // ✅ 진짜 유저 정보는 보통 여�
     setIsPopupOpen(false);
   };
 
-  const handleReserve = () => {
+  const onReserve = () => {
     if (!selectedBox) return;
     navigator("/payment");
     if (isMobile) {
