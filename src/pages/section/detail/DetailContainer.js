@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext"; // 너 프로젝트 경로 맞게
 import { useParking } from "../../../contexts/ParkingContext";
 import ReservationDetail from "./ReservationDetail";
 import "./Detail.scss";
 import Detailbar from "./Detailbar";
+
+
 
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(() => {
@@ -12,42 +14,49 @@ const useIsMobile = () => {
     return window.innerWidth < 768;
   });
 
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+useEffect(() => {
+  const handleResize = () => setIsMobile(window.innerWidth < 768);
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
-  return isMobile;
+return isMobile;
 };
 
 const DetailContainer = () => {
   const navigate = useNavigate();
   const { user } = useAuth(); // 로그인 정보
   const location = useLocation();
-  const guest = location.state?.guest;   // { carNum, phone }
-  const parking = location.state?.parking;
   const {
     selectedId,
-    setSelectedId,
     lotDetail,
     spaces,
     loadingDetail,
     error,
     fetchLotDetailAll,
   } = useParking();
-
+  
   const [selectedBox, setSelectedBox] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
+  
   const isMobile = useIsMobile();
-
+  const parkingId = location.state?.parking_name
+  
+  useEffect(() => {
+    if (!parkingId) return;
+    fetchLotDetailAll(parkingId);
+  }, [parkingId, fetchLotDetailAll]);
+  useEffect(() => {
+    if (!parkingId) return;
+    fetchLotDetailAll(parkingId); // ✅ 이걸로 lotDetail 채워
+  }, [parkingId, fetchLotDetailAll]);
+  
   useEffect(() => {
     if (!selectedId) return;
     fetchLotDetailAll(selectedId);
     setSelectedBox(null);
   }, [selectedId, fetchLotDetailAll]);
-
+  
   const handleSelectBox = (box) => {
     setSelectedBox(box);
     if (isMobile) setIsPopupOpen(true);
@@ -70,7 +79,6 @@ const DetailContainer = () => {
           },
         },
       });
-      console.log(navigate);
       return;
     }
 
@@ -98,7 +106,6 @@ const DetailContainer = () => {
     <div className="detail-page">
     {/* ✅ 여기 추가: 선택한 주차장 정보 */}
     <div className="detail-parking-summary">
-      <p className="label">선택한 주차장</p>
       <h2 className="name">{lotDetail?.parking_name || "주차장 이름"}</h2>
       <p className="addr">{lotDetail?.address || "주소"}</p>
       <p className="price">

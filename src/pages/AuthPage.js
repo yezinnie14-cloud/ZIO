@@ -1,6 +1,6 @@
 // AuthPage.js
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 import kakao from "../assets/images/social_logo/kakao.png";
@@ -11,6 +11,7 @@ import "./AuthPage.scss";
 
 const AuthPage = () => {
   const navigate = useNavigate();
+  const location =useLocation();
   const [params] = useSearchParams()
   const { loginUser, loading } = useAuth();
 
@@ -18,14 +19,16 @@ const AuthPage = () => {
   const parkingId = params.get("parkingId"); 
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-
+  const redirectTo = location.state?.redirectTo || "/";
+  const parking = location.state?.parking;
+  
   const handleLogin = async () => {
       try {
       await loginUser({ userId: userId.trim(), password: password.trim() })
 
       // ✅ 팝업에서 온 케이스만 디테일로
       if (redirect === "/detail" && parkingId) {
-        navigate(`/detail?parkingId=${parkingId}`, { replace: true })
+        navigate(`/detail?parkingId=${parkingId}`, { replace: true, state: { parking, parkingId } })
       } else {
         // ✅ 헤더에서 온 케이스는 메인
         navigate("/", { replace: true })

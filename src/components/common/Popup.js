@@ -22,16 +22,35 @@ const Popup = ({
   const [visible, setVisible] = useState(false);
   const navigate=useNavigate();
   const { user } = useAuth();
+  
   const sheetRef = useRef(null);
   const goDetail =()=>{
-     navigate("/detail");
+      if (!selected) return;
+
+  const parkingId = selected.id ?? selected.parking_id;
+
+  navigate(`/detail/${parkingId}`, {
+    state: {
+      parkingId,
+      parking: selected, // ✅ 팝업에서 선택한 주차장 객체 통째로 전달
+    },
+  });
+  console.log(parkingId)
   }
   const goGuest = () => {
     navigate("/guest-login", { state: { parking: selected } })
   }
-  
 const goLogin = () => {
-  navigate(`/auth?redirect=/detail&parkingId=${selected.id}`)
+  if (!selected) return;
+
+  navigate("/auth", {
+    state: {
+      from: "popup",
+      redirectTo: `/detail/${selected.id}`,  // 또는 /parking/${selected.id}
+      parking: selected,                    // 주차장 객체 통째로(임시 표시용)
+      parkingId: selected.id,               // 디테일에서 fetch용
+    },
+  });
 }
   useEffect(() => {
     if (open) {
