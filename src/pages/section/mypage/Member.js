@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import "./Member.scss";
 import Ad from "../payment/Ad";
+import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../../contexts/AuthContext";
 import { getProfile, getLittleReservation, updateCarNum } from "../../../api/zioApi";
 
 const Member = () => {
+  //리스트 눌렀을 때 링크 이동
+  const navigate = useNavigate();
 
   // AuthContext에서 현재 로그인한 회원정보
   const { user, authType } = useAuth();
@@ -159,6 +162,11 @@ const Member = () => {
   // 구독 뱃지 문구/조건: DB subs_type 값에 맞춰 수정하면 됨
   const isPassUser = profile?.subs_type && profile?.subs_type !== "none";
 
+  //+추가 : 리스트 클릭 시 예약 현황(/reservations)로 이동
+  //state로 예약 1건을 넘김 ->  ReservationCard 페이지에서 이걸 받아 렌더링
+  const goReservation = (reservation)=>{
+    navigate("/reservations",{state: {reservation}});
+  };
 
   return (
     <div className="member-wrap">
@@ -232,6 +240,9 @@ const Member = () => {
                     <li
                       className={`member-history__item ${usingNow ? "is-using" : "is-done"}`}
                       key={item.id}
+                      role="button"
+                      tabIndex={0}
+                      onClick={()=>goReservation(item)}
                     >
                       <span
                         className={`member-history__badge

@@ -6,9 +6,21 @@ import Payment from "./section/payment/Payment";
 import Price from "./section/payment/Price";
 import PaymentPopup from "./section/payment/PaymentPopup";
 import "./PaymentPage.scss";
+import { useAuth } from "../contexts/AuthContext";
+import { useParking } from "../contexts/ParkingContext";
 
 const PaymentPage = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  // AuthContext에서 현재 로그인한 회원정보
+  const { user, authType } = useAuth();
+  // const userId = user?.id;
+  const userId = 'jeje';
+
+  // 주차장 정보
+  const { lots, selectedId } = useParking();
+  const parkingID = "HG_01";
+  console.log(parkingID);
 
   return (
     <div className="payment-page">

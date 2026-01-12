@@ -1,6 +1,6 @@
 import "./ReservationInfo.scss";
 import { useParking } from "../../../contexts/ParkingContext";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Popup from "../../../components/common/Popup";
 
 
@@ -9,20 +9,14 @@ const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
   const { lots, lotDetail } = useParking();
 
   const [keyword, setKeyword] = useState("");
-  const [view, setView] = useState("detail");
-  const [selected, setSelected] = useState(null);
-    useEffect(() => {
-    if (lotDetail) {
-      setSelected(lotDetail);
-      setView("detail");
-    }
-  }, [lotDetail]);
-
-  const handleSelectItem = (item) => {
-    setSelected(item);
-    setView("detail");
-
-  };
+  // const [view, setView] = useState("detail");
+  // const [selected, setSelected] = useState(null);
+  //   useEffect(() => {
+  //   if (lotDetail) {
+  //     setSelected(lotDetail);
+  //     setView("detail");
+  //   }
+  // }, [lotDetail]);
 
   return (
     <div className="reservation-info">
@@ -42,11 +36,11 @@ const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
               onClose={() => {}}
               keyword={keyword}
               setKeyword={setKeyword}
-              view={view}
-              selected={selected}
+              view="detail"
+              selected={lotDetail}
               list={lots}
-              onSelectItem={handleSelectItem}
-              onBack={() => setView("list")}
+              // onSelectItem={handleSelectItem}
+              onBack="none"
             />
           </div>
         </div>

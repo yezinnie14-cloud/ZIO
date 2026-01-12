@@ -51,7 +51,7 @@ const authUser = user;                // ✅ 진짜 유저 정보는 보통 여�
   useEffect(() => {
     if (!selectedId) return;
     fetchLotDetailAll(selectedId);
-    setSelectedBox(null); // 주차장 바뀌면 선택 초기화
+    // setSelectedBox(null);
   }, [selectedId, fetchLotDetailAll]);
   // 자리 클릭
   const handleSelectBox = (box) => {
@@ -95,17 +95,14 @@ const authUser = user;                // ✅ 진짜 유저 정보는 보통 여�
   return (
     <div className="detail-page">
       <section className="detail-page-map">
-        {/* 왼쪽 주차 좌석 영역 */}
         <div className="parking-scroll">
           <ReservationDetail
             spaces={spaces}
             selectedCode={selectedBox?.space_code}
             onSelect={handleSelectBox}
           />
-          <Detailbar/>
+          <Detailbar />
         </div>
-
-        {/* 데스크탑일 때 */}
       </section>
 
       {/* 모바일에서만 팝업 */}
@@ -138,7 +135,12 @@ const authUser = user;                // ✅ 진짜 유저 정보는 보통 여�
                 </div>
               </div>
 
-              <button className="reserve-popup-button" onClick={handleReserve}>
+              <button
+                className="reserve-popup-button"
+                type="button"
+                onClick={onReserve}
+                disabled={!selectedBox}
+              >
                 예약하기
               </button>
             </div>

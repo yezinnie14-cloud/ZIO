@@ -3,6 +3,18 @@ import { createReservation, getLittleReservation, guestReservationInfo, userRese
 
 const ReservationContext = createContext(null);
 
+// 결제 페이지에서 임시로 저장되는 값들
+// 결제버튼 클릭 시 아래 저장된 값이 payload로 만들어지고 db에 저장됨
+const initialDraft = {
+  lotId : null,
+  spaceId : null, 
+  startAt : null, 
+  endAt : null, 
+  payType : "시간권",
+  Paymethod : null,
+  amount :0
+};
+
 export const ReservationProvider = ({children}) => {
   // 결제 완료 후 예약 결과 
   const [reservationResult, setReservationResult] = useState(null);
@@ -28,7 +40,28 @@ export const ReservationProvider = ({children}) => {
   // 에러 메세지
   const [error, setError] = useState(null);
 
+  // 결제 페이지에서 임지 저장식으로 사용되는 state 
+  // 상페에서 넘어온 데이터(주차장아이디, 주차면아이디) + 결제 페이지에서 선택한 시간, 수단, 금액 저장
+  const [draft, setDraft] = useState(initialDraft);
+
   /*============결제 / 예약 생성 함수 ============== */
+
+  // 상페 -> 결제 넘어올 때 세팅하기 
+  const setLotId = (lotId) => setDraft((i) => ({...i, lotId}));
+  // 상페에서 선택한 주차면id 저장
+  const setSpaceId = (spaceId) => setDraft((i) => ({...i, spaceId}))
+  // 사용자가 선택한 입차시간 저장
+  const setStartAt = (startAt) => setDraft((i) => ({...i,startAt}))
+  // 사용자가 선택한 출차시간 저장
+  const setEndAt = (endAt) => setDraft((i) => ({...i,endAt}))
+  // 사용자의 payType (시간권/정기권) 저장
+  const setPayType = (payType) => setDraft((i) => ({...i,payType}))
+  // 사용자가 선택한 결제수단 저장
+  const setPayMethod = (paymethod) => setDraft((i) => ({...i,paymethod}))
+  // 최종 계산된 금액 저장
+  const setAmount = (amount) => setDraft((i) => ({...i,amount}))
+  // 결제 완료 시 초기 상태로 돌려놓는 함수 
+  const resetDraft = () => setDraft(initialDraft)
 
   // 결제하기 (예약 insert)
   const PayReservation = async (payload) => {
@@ -47,7 +80,7 @@ export const ReservationProvider = ({children}) => {
     }
   };
 
-  // 결제 결과 초기화 
+  // 결제 결과 초기화 (팝업 닫기)
   const resetReservation = () => {
     setReservationResult(null);
     setError(null);
@@ -150,6 +183,17 @@ export const ReservationProvider = ({children}) => {
         loadingPay,
         loadingDetail,
         error,
+
+        // 임시 저장 
+        draft,
+        setLotId,
+        setSpaceId,
+        setStartAt,
+        setEndAt,
+        setPayType,
+        setPayMethod,
+        setAmount,
+        resetDraft,
 
         // actions
         PayReservation,

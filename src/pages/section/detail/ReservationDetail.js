@@ -16,7 +16,7 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
   const [laneA, setLaneA] = useState([]);
   const [laneB, setLaneB] = useState([]);
   useEffect(()=>{
-    fetchLotDetailAll(lotDetail);
+    fetchLotDetailAll(lotDetail?.id);
     console.log( "spaces==>", spaces );
     const arrA = spaces.filter((item) => (item.space_code || "").startsWith("A-")).slice().sort(sortBySpaceCode);
     const arrB = spaces.filter((item) => (item.space_code || "").startsWith("B-")).slice().sort(sortBySpaceCode);
