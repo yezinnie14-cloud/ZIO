@@ -25,14 +25,7 @@ const Header = () => {
       {/* 로그인 상태 분기 */}
       {user ? (
         <div className="login">
-          <div className="icon">
-            <button>
-            <CgProfile />
-            <Link to="/mypage">
-              <p style={{ marginLeft: 12 }}>마이페이지</p>
-            </Link>
-            </button>
-          </div>
+          
 
           
           {/* <button>{user.userId ?? user.id ?? "USER"}</button> */}

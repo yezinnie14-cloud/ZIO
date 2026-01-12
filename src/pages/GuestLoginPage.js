@@ -2,46 +2,45 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-
 import "./GuestLoginPage.scss";
 
 const normalizePhone = (value) => {
   const digits = String(value || "").replace(/[^0-9]/g, "");
   if (digits.length === 11)
     return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
-  return value.trim();
+  return String(value || "").trim();
 };
 
 const normalizeCarNum = (value) =>
-  String(value || "")
-    .replace(/\s/g, "")
-    .trim();
+  String(value || "").replace(/\s/g, "").trim();
 
 const GuestLoginPage = () => {
   const navigate = useNavigate();
   const { loginGuest, loading } = useAuth();
-  //주차장 정보
-  const { state } = useLocation()
-  const parking = state?.parking
 
-  
-  
+  const { state } = useLocation();
+  const parking = state?.parking; // 팝업에서 넘겨준 주차장 객체
+
   const [carNum, setCarNum] = useState("");
   const [phone, setPhone] = useState("");
-  
+
   const handleGuestLogin = async () => {
     try {
-      await loginGuest({
+      const payload = {
         phone: normalizePhone(phone),
         carNum: normalizeCarNum(carNum),
-      });
-      navigate("/"); // 로그인 성공 시 메인 페이지로 이동
+      };
+
+      await loginGuest(payload);
+      // ✅ 디테일로 바로 이동 + 주차장/게스트정보 같이 넘김
+      
+navigate("/detail", { state: { parking, guest: payload }});
     } catch (error) {
       alert(error.message);
     }
   };
-  // parking이 없으면 직링/새로고침 케이스라 처리 필요
-  if (!parking) return <div>주차장 정보 없음</div>
+
+  if (!parking) return <div>주차장 정보 없음</div>;
 
   return (
     <div className="guest-login-page">
@@ -69,11 +68,7 @@ const GuestLoginPage = () => {
           </div>
         </div>
 
-        <button
-          className="submit-btn"
-          onClick={handleGuestLogin}
-          disabled={loading}
-        >
+        <button className="submit-btn" onClick={handleGuestLogin} disabled={loading}>
           {loading ? "로그인 중..." : "비회원 로그인"}
         </button>
       </div>
@@ -82,3 +77,4 @@ const GuestLoginPage = () => {
 };
 
 export default GuestLoginPage;
+

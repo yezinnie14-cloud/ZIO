@@ -3,12 +3,15 @@ import { useEffect, useRef, useState, useMemo } from "react"
 import "./popup.scss"
 import parking from "../../assets/images/detail img/parking.png"
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
+import { userLogin } from '../../api/zioApi'
 
 const Popup = ({
   open,
   onClose,
   view,
   selected,
+  setSelected,
   keyword,
   setKeyword,
   onSelectItem,
@@ -18,13 +21,17 @@ const Popup = ({
   const [mounted, setMounted] = useState(open);
   const [visible, setVisible] = useState(false);
   const navigate=useNavigate();
-  const sheetRef = useRef(null)
- const goGuest = () => {
-  navigate("/guest-login", { state: { parking: selected } })
-}
-
+  const { user } = useAuth();
+  const sheetRef = useRef(null);
+  const goDetail =()=>{
+     navigate("/detail");
+  }
+  const goGuest = () => {
+    navigate("/guest-login", { state: { parking: selected } })
+  }
+  
 const goLogin = () => {
-  navigate("/auth", { state: { parking: selected } })
+  navigate(`/auth?redirect=/detail&parkingId=${selected.id}`)
 }
   useEffect(() => {
     if (open) {
@@ -46,7 +53,7 @@ const goLogin = () => {
     }
   }
 
-
+  const isLoggedIn = !!user; 
   const filtered = useMemo(() => {
     const q = (keyword ?? "").trim().toLowerCase()
     const base = Array.isArray(list) ? list : []
@@ -117,29 +124,38 @@ const goLogin = () => {
     {/* DETAIL PANEL */}
     <section className="popup-panel">
       <div className="popup-detail">
-        <div className='b'>
+        <div className="b">
           <button className="back" onClick={onBack}>←</button>
         </div>
+
         {selected ? (
           <>
-          <div className='detail'>
-          <img className="thumb" src={selected.photo_urls?.[0] ?? parking} alt="" />
-          <div className='txt'>
-            <h3>{selected.parking_name}</h3>
-            <p>{selected.address ?? selected.addr ?? "주소 없음"}</p>
-            <p style={{ marginTop: 8 }}>
-              시간당: {selected.price_per_1h ?? "-"}원
-            </p>
+            <div className="detail">
+              <img className="thumb" src={selected.photo_urls?.[0] ?? parking} alt="" />
+              <div className="txt">
+                <h3>{selected.parking_name}</h3>
+                <p>{selected.address ?? selected.addr ?? "주소 없음"}</p>
+                <p style={{ marginTop: 8 }}>
+                  시간당: {selected.price_per_1h ?? "-"}원
+                </p>
+              </div>
             </div>
-            </div>
-            <div className='keyword'>
+
+            <div className="keyword">
               <p>주차장 설명</p>
               <button>리뷰키워드</button>
             </div>
-            <div className='btn'>
-            <button onClick={goGuest}>비회원 예약</button>
-            <button onClick={goLogin}>로그인</button>
-            </div>
+
+            {isLoggedIn ? (
+              <div className="btn">
+                <button onClick={goDetail}>예약하기</button>
+              </div>
+            ) : (
+              <div className="btn">
+                <button onClick={goGuest}>비회원 예약</button>
+                 <button onClick={goLogin}>로그인</button>
+              </div>
+            )}
           </>
         ) : (
           <p style={{ color: "#777" }}>선택된 주차장 없음</p>
