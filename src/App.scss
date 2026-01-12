@@ -44,13 +44,13 @@
   padding: 0;
   .sec1{
     display: none;
-    flex: 0 0 240px;
-    width: 240px;
-    min-width: 240px;
+    flex: 0 0 360px;
+    width: 360px;
+    min-width: 360px;
   }
   .layout-outlet {
       flex: 1 1 auto;      
-      min-width: 0;         
+      min-width: 400px;         
     }
   .sec3 {
     display: none;
