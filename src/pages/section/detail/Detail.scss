@@ -10,7 +10,7 @@
   }
 
   &--center {
-    min-height: 60vh;
+    min-height: 100vh;
     @include flex-layout(column, center, center, 0.5rem);
     font-size: 0.875rem;
   }
