@@ -1,33 +1,36 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext"; // 너 프로젝트 경로 맞게
 import { useParking } from "../../../contexts/ParkingContext";
 import ReservationDetail from "./ReservationDetail";
 import "./Detail.scss";
+
 import Detailbar from "./Detailbar";
+import { useLocation, useParams } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthContext";
 
 
-
+//  모바일인지 아닌지
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === "undefined") return true;
     return window.innerWidth < 768;
   });
 
-useEffect(() => {
-  const handleResize = () => setIsMobile(window.innerWidth < 768);
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-return isMobile;
+  return isMobile;
 };
 
 const DetailContainer = () => {
-  const navigate = useNavigate();
-  const { user } = useAuth(); // 로그인 정보
-  const location = useLocation();
-  const {
+  const { state } = useLocation();
+const { parkingId } = useParams();
+const { user } = useAuth();
+    const {
     selectedId,
     lotDetail,
     spaces,
@@ -35,132 +38,116 @@ const DetailContainer = () => {
     error,
     fetchLotDetailAll,
   } = useParking();
-  
+
+
   const [selectedBox, setSelectedBox] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
+
   const isMobile = useIsMobile();
-  const parkingId = location.state?.parking_name
-  
-  useEffect(() => {
-    if (!parkingId) return;
-    fetchLotDetailAll(parkingId);
-  }, [parkingId, fetchLotDetailAll]);
-  useEffect(() => {
-    if (!parkingId) return;
-    fetchLotDetailAll(parkingId); // ✅ 이걸로 lotDetail 채워
-  }, [parkingId, fetchLotDetailAll]);
-  
+  const parking = state?.parking;       // ✅ 팝업에서 넘어온 주차장
+const passedUser = state?.user;       // ✅ auth에서 넘긴 최소 유저정보(선택)
+const authUser = user;                // ✅ 진짜 유저 정보는 보통 여기
+
   useEffect(() => {
     if (!selectedId) return;
     fetchLotDetailAll(selectedId);
-    setSelectedBox(null);
+    setSelectedBox(null); // 주차장 바뀌면 선택 초기화
   }, [selectedId, fetchLotDetailAll]);
-  
+  // 자리 클릭
   const handleSelectBox = (box) => {
     setSelectedBox(box);
-    if (isMobile) setIsPopupOpen(true);
+
+    // 모바일일 때만 팝업 열기
+    if (isMobile) {
+      setIsPopupOpen(true);
+    }
   };
 
-  const handleClosePopup = () => setIsPopupOpen(false);
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   const handleReserve = () => {
     if (!selectedBox) return;
-
-    // 로그인 안 됐으면 로그인으로 보내거나 팝업 띄워
-    if (!user) {
-      navigate("/login", {
-        state: {
-          redirectTo: "/payment",
-          payload: {
-            parkingId: selectedId,
-            lotDetail,
-            selectedBox,
-          },
-        },
-      });
-      return;
+    navigator("/payment");
+    if (isMobile) {
+      setIsPopupOpen(false);
     }
-
-    // 로그인 상태면 결제로 이동 + 정보 같이 넘김
-    navigate("/payment", {
-      state: {
-        user, // 필요 없으면 payment에서 AuthContext로 읽어도 됨
-        parkingId: selectedId,
-        lotDetail,
-        selectedBox,
-      },
-    });
-
-    if (isMobile) setIsPopupOpen(false);
   };
 
-  if (loadingDetail) return <div className="detail-page detail-page--center">로딩중...</div>;
-  if (error) return <div className="detail-page detail-page--center">에러: {error}</div>;
+  if (loadingDetail) {
+    return <div className="detail-page detail-page--center">로딩중...</div>;
+  }
 
-  if (!selectedId) {
-    return <div className="detail-page detail-page--center">주차장을 선택해주세요.</div>;
+  if (error) {
+    return (
+      <div className="detail-page detail-page--center">에러: {error}</div>
+    );
+  }
+   if (!selectedId) {
+    return (
+      <div className="detail-page detail-page--center">
+        주차장을 선택해주세요.
+      </div>
+    );
   }
 
   return (
     <div className="detail-page">
-    {/* ✅ 여기 추가: 선택한 주차장 정보 */}
-    <div className="detail-parking-summary">
-      <h2 className="name">{lotDetail?.parking_name || "주차장 이름"}</h2>
-      <p className="addr">{lotDetail?.address || "주소"}</p>
-      <p className="price">
-        {lotDetail?.price ? `${lotDetail.price}원` : "요금 정보"}
-      </p>
-    </div>
+      <section className="detail-page-map">
+        {/* 왼쪽 주차 좌석 영역 */}
+        <div className="parking-scroll">
+          <ReservationDetail
+            spaces={spaces}
+            selectedCode={selectedBox?.space_code}
+            onSelect={handleSelectBox}
+          />
+          <Detailbar/>
+        </div>
 
-    <section className="detail-page-map">
-      <div className="parking-scroll">
-        <ReservationDetail
-          spaces={spaces}
-          selectedCode={selectedBox?.space_code}
-          onSelect={handleSelectBox}
-        />
-        <Detailbar />
-      </div>
-    </section>
+        {/* 데스크탑일 때 */}
+      </section>
 
+      {/* 모바일에서만 팝업 */}
       {isMobile && isPopupOpen && selectedBox && (
         <div className="reserve-popup-overlay" onClick={handleClosePopup}>
           <div className="reserve-popup" onClick={(e) => e.stopPropagation()}>
-            <button className="reserve-popup-close" onClick={handleClosePopup}>✕</button>
+            <button className="reserve-popup-close" onClick={handleClosePopup}>
+              ✕
+            </button>
 
             <div className="reserve-popup-body">
               <div className="reserve-info">
                 <div className="reserve-select-info">
                   <p className="reserve-info-label">선택한 주차장</p>
-                  <p className="reserve-info-name">{lotDetail?.parking_name || "주차장 이름"}</p>
+                  <p className="reserve-info-name">
+                    {lotDetail?.parking_name || "주차장 이름"}
+                  </p>
                 </div>
 
                 <div className="reserve-select-info">
                   <p className="reserve-info-label">선택한 구역</p>
                   <div className="reserve-info-code">
-                    <span className="reserve-type">{selectedBox.space_type}</span>
-                    <span className="reserve-code">{selectedBox.space_code}</span>
+                    <span className="reserve-type">
+                      {selectedBox.space_type}
+                    </span>
+                    <span className="reserve-code">
+                      {selectedBox.space_code}
+                    </span>
                   </div>
                 </div>
               </div>
 
-              <button className="reserve-popup-button"
-               type="button"
-            onClick={onReserve}
-            disabled={!selectedBox}>
+              <button className="reserve-popup-button" onClick={handleReserve}>
                 예약하기
               </button>
-
-          
-
             </div>
           </div>
         </div>
       )}
     </div>
+    
   );
 };
 
 export default DetailContainer;
-

@@ -5,6 +5,7 @@ import parking from "../../assets/images/detail img/parking.png"
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { userLogin } from '../../api/zioApi'
+import { useParking } from '../../contexts/ParkingContext'
 
 const Popup = ({
   open,
@@ -18,37 +19,35 @@ const Popup = ({
   onBack,
   list = [],
 }) => {
+   const {
+      selectedId,
+      lotDetail,
+      spaces,
+      loadingDetail,
+      error,
+      fetchLotDetailAll,
+    } = useParking();
   const [mounted, setMounted] = useState(open);
   const [visible, setVisible] = useState(false);
   const navigate=useNavigate();
   const { user } = useAuth();
-  
   const sheetRef = useRef(null);
+  
   const goDetail =()=>{
-      if (!selected) return;
-
-  const parkingId = selected.id ?? selected.parking_id;
-
-  navigate(`/detail/${parkingId}`, {
-    state: {
-      parkingId,
-      parking: selected, // ✅ 팝업에서 선택한 주차장 객체 통째로 전달
-    },
-  });
-  console.log(parkingId)
+    navigate(`/detail/`);
   }
   const goGuest = () => {
     navigate("/guest-login", { state: { parking: selected } })
   }
+  
 const goLogin = () => {
   if (!selected) return;
 
   navigate("/auth", {
     state: {
-      from: "popup",
-      redirectTo: `/detail/${selected.id}`,  // 또는 /parking/${selected.id}
-      parking: selected,                    // 주차장 객체 통째로(임시 표시용)
-      parkingId: selected.id,               // 디테일에서 fetch용
+      redirectTo: `/detail/${selected.id}`, // 로그인 후 이동 목적지
+      parking: selected,                    // ✅ 선택한 li 정보 통째로
+      from: "popup",                        // (선택) 어디서 왔는지 구분용
     },
   });
 }
@@ -172,7 +171,7 @@ const goLogin = () => {
             ) : (
               <div className="btn">
                 <button onClick={goGuest}>비회원 예약</button>
-                 <button onClick={goLogin}>로그인</button>
+                <button onClick={goLogin}>로그인</button>
               </div>
             )}
           </>
