@@ -7,7 +7,6 @@ const DetailAsidePage = () => {
   const { lotDetail, selectedSpace } = useParking();
 
   const goPayment = () => {
-    if (!lotDetail || !selectedSpace) return;
     navigate("/payment", {
       state: {
         lotId: lotDetail.id,
@@ -17,7 +16,7 @@ const DetailAsidePage = () => {
       },
     });
   };
-console.log("selectedSpace:", selectedSpace);
+  console.log("selectedSpace:", selectedSpace);
   return (
     <ReservationInfo
       lot={lotDetail}
