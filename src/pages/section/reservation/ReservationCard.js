@@ -38,36 +38,36 @@ const ReservationCard = ({ reservation,authType }) => {
   return (
     <div className="reservation-card">
       <div className="card-badges">
-        <span className="badge badge-type">{reservation.pay_type}</span>
-        <span className={`badge badge-status ${reservation.status}`}>
+        <p className="badge badge-type">{reservation.pay_type}</p>
+        <p className={`badge badge-status ${reservation.status}`}>
           {statusLabel(reservation.status)}
-        </span>
+        </p>
       </div>
 
       <div className="card-rows">
         <div className="row">
-          <span className="label">주차 유형</span>
-          <span className="value">{periodLabel}</span>
+          <p className="label">주차 유형</p>
+          <p className="value">{periodLabel}</p>
         </div>
 
         <div className="row">
-          <span className="label">주차장 정보</span>
-          <span className="value">{reservation?.parking_lots?.address ?? "-"}</span>
+          <p className="label">주차장 정보</p>
+          <p className="value">{reservation?.parking_lots?.address ?? "-"}</p>
         </div>
 
         <div className="row">
-          <span className="label">이용 날짜</span>
-          <span className="value">{dateRange}</span>
+          <p className="label">이용 날짜</p>
+          <p className="value">{dateRange}</p>
         </div>
 
         <div className="row">
-          <span className="label">이용 시간</span>
-          <span className="value">{timeRange}</span>
+          <p className="label">이용 시간</p>
+          <p className="value">{timeRange}</p>
         </div>
 
-        <div className="row amount">
-          <span className="label">결제 금액</span>
-          <span className="value">{Number(reservation.amount ?? 0).toLocaleString()}원</span>
+        <div className="row">
+          <p className="label">결제 금액</p>
+          <p className="value">{Number(reservation.amount ?? 0).toLocaleString()}원</p>
         </div>
       </div>
     </div>
