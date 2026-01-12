@@ -1,6 +1,6 @@
 // GuestLoginPage.js
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 import "./GuestLoginPage.scss";
@@ -20,10 +20,15 @@ const normalizeCarNum = (value) =>
 const GuestLoginPage = () => {
   const navigate = useNavigate();
   const { loginGuest, loading } = useAuth();
+  //주차장 정보
+  const { state } = useLocation()
+  const parking = state?.parking
 
+  
+  
   const [carNum, setCarNum] = useState("");
   const [phone, setPhone] = useState("");
-
+  
   const handleGuestLogin = async () => {
     try {
       await loginGuest({
@@ -35,11 +40,12 @@ const GuestLoginPage = () => {
       alert(error.message);
     }
   };
+  // parking이 없으면 직링/새로고침 케이스라 처리 필요
+  if (!parking) return <div>주차장 정보 없음</div>
 
   return (
     <div className="guest-login-page">
       <h2>비회원 로그인</h2>
-
       <div className="form">
         <div className="input-wrap">
           <div className="inputData">
