@@ -20,8 +20,9 @@
   bottom: 0;
   overflow: hidden;
   width: 380px;         
-  margin: 0 auto;            
-  height: 35vh;              
+  margin: 0 auto;     
+  max-width: calc(100vw - 32px);       
+  height: 38vh;              
   background: #fff;
   border-radius: 16px;
   padding: 16px;
@@ -83,8 +84,8 @@
   width: 200%;
   height: 100%;
   display: flex;
-  transform: translateX(0);
   transition: transform 280ms ease;
+  transform: translateX(0);
 }
 
 .popup-content.is-detail .popup-track {
@@ -92,26 +93,27 @@
 }
 
 .popup-panel {
+  position: relative;
   width: 50%;
   height: 100%;
   box-sizing: border-box;
-  overflow: auto; // 리스트 스크롤/상세 스크롤 필요하면
-}
-.popup-list {
-  position: relative;
-  transform: translateY(-5%);
-  max-height: 400px;
-  overflow-y: auto;
-  @include caption-r();
-  font-size: 14px;
+  overflow-y: auto; // 리스트 스크롤/상세 스크롤 필요하면
+  min-width: 0;
+  scrollbar-gutter: stable;
   &::-webkit-scrollbar {
     display: none;
   }
+}
+.popup-list {
+  position: static;
+  transform: translateY(-5%);
+  max-height: 400px;
+  @include caption-r();
+  font-size: 14px;
 
   // Firefox
   scrollbar-width: none;
 
-  // IE, 옛 Edge (이제 쓸 일 없지만)
   -ms-overflow-style: none;
   padding: 60px 0;
   li {
@@ -134,6 +136,9 @@
     input{display: none;}
     
   }
+  .meta {
+  min-width: 0; 
+}
   .meta .title { font-weight: 600; } 
   
   .meta .addr { color: #777; }
@@ -173,7 +178,7 @@
 }
   .b{
     width: 70%;
-    height: 2px;
+    height: 3px;
     @include flex-layout(row,left);
     .back{
     cursor: pointer;

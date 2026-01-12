@@ -19,12 +19,13 @@ const Popup = ({
   const [visible, setVisible] = useState(false);
   const navigate=useNavigate();
   const sheetRef = useRef(null)
-  const handleClick =()=>{
-    navigate(`/guest-login`)
-  }
-  const handleLogin =()=>{
-    navigate(`/auth`)
-  }
+ const goGuest = () => {
+  navigate("/guest-login", { state: { parking: selected } })
+}
+
+const goLogin = () => {
+  navigate("/auth", { state: { parking: selected } })
+}
   useEffect(() => {
     if (open) {
       setMounted(true)
@@ -136,8 +137,8 @@ const Popup = ({
               <button>리뷰키워드</button>
             </div>
             <div className='btn'>
-            <button onClick={handleClick}>비회원 예약</button>
-            <button onClick={handleLogin}>로그인</button>
+            <button onClick={goGuest}>비회원 예약</button>
+            <button onClick={goLogin}>로그인</button>
             </div>
           </>
         ) : (

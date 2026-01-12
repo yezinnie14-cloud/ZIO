@@ -64,7 +64,7 @@ const MainPage = () => {
         setKeyword={setKeyword}
         view={view}
         selected={selected}
-        list={lots}                 // ✅ 여기 중요: Supabase 데이터 연결
+        list={lots}                 
         onSelectItem={handleSelectItem}
         onBack={() => setView("list")}
       />
