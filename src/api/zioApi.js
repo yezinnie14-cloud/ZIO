@@ -69,7 +69,6 @@ export const getDetailInfo = async (lotId) => {
     )
     .eq("id", lotId)
     .single();
-
   if(error){
     throw new Error("주차장 상세 조회 실패" + error.message);
   }

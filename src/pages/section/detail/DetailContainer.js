@@ -4,20 +4,11 @@ import ReservationDetail from "./ReservationDetail";
 import "./Detail.scss";
 
 import Detailbar from "./Detailbar";
-import{ useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-
-
-
-const DetailContainer = () => { 
-
-    const {
-    lotDetail,
-    spaces,
-    loadingDetail,
-    error,
-    fetchLotDetailAll,
-  } = useParking();
+const DetailContainer = ({onReserve}) => {
+  const { lotDetail, spaces, loadingDetail, error, fetchLotDetailAll } =
+    useParking();
   const { parkingId } = useParams();
   const navigate = useNavigate();
 
@@ -28,11 +19,11 @@ const DetailContainer = () => {
 
   const [selectedBox, setSelectedBox] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
+
   // ✅ 중복 fetch 방지용 ref
   const lastFetchedRef = useRef(null);
 
-useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -49,12 +40,11 @@ useEffect(() => {
     fetchLotDetailAll(parkingId);
   }, [parkingId, fetchLotDetailAll]);
 
-
-
-
   // 자리 클릭
   const handleSelectBox = (box) => {
     setSelectedBox(box);
+    sessionStorage.setItem("selectedBox", JSON.stringify(box)); //
+    window.dispatchEvent(new Event("selectedBoxChanged")); //
 
     // 모바일일 때만 팝업 열기
     if (isMobile) {
@@ -66,31 +56,24 @@ useEffect(() => {
     setIsPopupOpen(false);
   };
 
-  const onReserve = () => {
-  if (!selectedBox) return;
-
-  if (isMobile) setIsPopupOpen(false);
-  navigate("/payment", {
-  state: {
-    parkingId,
-    lotDetail,
-    selectedBox,
-  },
-});
-
-};
-
+  const handleReserve = () => {
+    if (!selectedBox) return;
+    if (typeof onReserve === "function") {
+      onReserve(selectedBox, lotDetail);
+    } else {
+      navigate("/payment");
+    }
+    if (isMobile) setIsPopupOpen(false);
+  };
 
   if (loadingDetail) {
     return <div className="detail-page detail-page--center">로딩중...</div>;
   }
 
   if (error) {
-    return (
-      <div className="detail-page detail-page--center">에러: {error}</div>
-    );
+    return <div className="detail-page detail-page--center">에러: {error}</div>;
   }
-   if (!parkingId) {
+  if (!parkingId) {
     return (
       <div className="detail-page detail-page--center">
         주차장을 선택해주세요.
@@ -102,13 +85,14 @@ useEffect(() => {
     <div className="detail-page">
       <section className="detail-page-map">
         <div className="parking-scroll">
-          
-          {(loadingDetail==false) && <ReservationDetail
-            spaces={spaces}
-            selectedCode={selectedBox?.space_code}
-            onSelect={handleSelectBox}
-          />
-          }
+          {loadingDetail == false && (
+            <ReservationDetail
+              selectedBox={selectedBox}
+              spaces={spaces}
+              selectedCode={selectedBox?.space_code}
+              onSelect={handleSelectBox}
+            />
+          )}
           <Detailbar />
         </div>
       </section>
@@ -146,7 +130,7 @@ useEffect(() => {
               <button
                 className="reserve-popup-button"
                 type="button"
-                onClick={onReserve}
+                onClick={handleReserve}
                 disabled={!selectedBox}
               >
                 예약하기
@@ -156,7 +140,6 @@ useEffect(() => {
         </div>
       )}
     </div>
-    
   );
 };
 
