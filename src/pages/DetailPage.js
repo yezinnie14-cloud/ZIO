@@ -5,7 +5,7 @@ import { useParking } from "../contexts/ParkingContext";
 const DetailPage = ({ selectedBox }) => {
   const navigate = useNavigate();
   const { lotDetail } = useParking();
-  const goPayment = () => {
+  const goPayment = (selectedBox) => {
     if (!lotDetail || !selectedBox) return;
     navigate("/payment", {
       state: {

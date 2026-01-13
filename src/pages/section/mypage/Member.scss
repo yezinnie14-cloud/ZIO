@@ -114,8 +114,11 @@
                 background: $color-white;
                 border-radius: 1rem;
                 padding: 1rem;
-                cursor: pointer;
                 @include flex-layout($just: space-between);
+                cursor: pointer;
+                &:hover{
+                    background-color: rgba($color: $color-555, $alpha: 0.4);
+                }
             }
 
             .member-history__right {

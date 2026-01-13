@@ -3,11 +3,16 @@ import supabase from './supabaseClient.js';
 // 메인 페이지 
 // 주차장 목록 , 키워드 목록 
 export const getMainInfo = async () => {
+
+  // 현재 시간 => 혼잡도 계산을 위해 
+  const nowISO = new Date().toISOString();
+
+
   // 주차장 테이블 정보 가져오기 
   const {data, error} = await supabase
     .from("parking_lots")
     .select(
-      ' id, parking_name, address, lat, lon, price_per_1h, photo_urls, keywords(keyword)'
+      `id, parking_name, address, lat, lon, price_per_1h, photo_urls, keywords( keyword )`
     )
     .order("price_per_1h", { ascending:true})
 
@@ -15,11 +20,43 @@ export const getMainInfo = async () => {
       throw new Error("주차장 조회 실패:" + error.message);
     }
 
-    const lots = (data || []).map((lot) => ({
-      ...lot,keywords: (lot.keywords || []).map((i) => i.keyword),
-    }));
+  const lots = (data || []).map((lot) => ({
+    ...lot,keywords: (lot.keywords || []).map((i) => i.keyword),
+  }));
 
-    return lots;
+  // status가 USING/RESERVED 이면서 start_at <= now < end_at인 주차장만 카운트 
+  // 
+  const {data:occRows, error:occErr} = await supabase
+    .from("reservation") 
+    .select("lot_id")
+    .in("status", ["RESERVED", "USING"])
+    .lte("start_at", nowISO)
+    .gt("end_at", nowISO);
+
+    if(occErr) throw new Error("혼잡도 계산 실패.. " + occErr.message);
+
+    // 주차장별(lot_id) 점유 수 집계 
+    // 점유 수 구해서 혼잡도 계산에 사용하기 위함 
+    const occMap = new Map();
+    (occRows || []).forEach((i) => {
+      occMap.set(i.lot_id, (occMap.get(i.lot_id) || 0) + 1);
+    });
+
+  // 혼잡도 계산하기.. 
+  //  여유 : 0~5, 보통: 6~15, 혼잡:16~20
+  const Congestion = lots.map((lot) => {
+    const total = Number(lot.total_space || 20) || 20; 
+    const occupied = occMap.get(lot.id) || 0;
+    const available = Math.max(total - occupied, 0 );
+
+    let congestion = "GREEN"
+    if(occupied >= 16) congestion = "RED";
+    else if (occupied >= 6) congestion = "YELLOW"
+
+    return {...lot, occupied, available, congestion};
+  })
+
+  return Congestion;
 };
 
 // 상세 페이지 
@@ -28,16 +65,18 @@ export const getDetailInfo = async (lotId) => {
   const {data, error} = await supabase
     .from("parking_lots")
     .select(
-      "id, parking_name,address, lat, lon, price_per_1h, total_space, photo_urls"
+      `id, parking_name,address, lat, lon, price_per_1h, total_space, total_space, photo_urls, keywords( keyword )`
     )
     .eq("id", lotId)
     .single();
-
   if(error){
     throw new Error("주차장 상세 조회 실패" + error.message);
   }
-
-  return data;
+  return {
+    ...data,
+    keywords: (data.keywords ?? []).map((r) => r.keyword),
+  };
+  
 }
 
 // 선택한 주차장의 주차면 목록 
@@ -296,9 +335,8 @@ export const getLittleReservation = async(userId) => {
 // 1) guests 테이블에 (g_phone, g_car_num) insert (이미 있으면 그대로 사용)
 // 2) return: { g_id, g_phone, g_car_num }  -> Context 저장용
 export const guestLogin = async ({phone, carNum}) => {
-  
-  if(!carNum) throw new Error("차량번호를 입력해주세요");
-  if(!phone) throw new Error("연락처를 입력해주세요");
+  if(!phone) throw new Error("연락처 없음");
+  if(!carNum) throw new Error("차량번호 없음");
 
   // 데이터 있는지 조회 
   const {data : exiting, error : findError} = await supabase
@@ -347,12 +385,12 @@ export const userLogin = async ({userId, password}) => {
 export const signUpUser = async ({ userId, password, phone, email, carNum }) => {
 
   // 사용자가 입력 안했을 경우 
-  if (!userId) throw new Error("아이디를 입력해주세요");
-  if (!password) throw new Error("비밀번호를 입력해주세요");
-  if (!phone) throw new Error("연락처를 입력해주세요");
-  if (!carNum) throw new Error("차량번호를 입력해주세요");
+  if (!userId) throw new Error("아이디 없음");
+  if (!password) throw new Error("비밀번호 없음");
+  if (!phone) throw new Error("연락처 없음");
+  if (!carNum) throw new Error("차량번호 없음");
   // email은 NOT NULL이 아니라서 비워도 되지만, UI상 입력 받으니까 일단 검사
-  if (!email) throw new Error("이메일를 입력해주세요");
+  if (!email) throw new Error("이메일 없음");
 
   // 이미 등록된 어쩌구 처리하기 (중복 체크)
   // duplicate id, phone, carNum 

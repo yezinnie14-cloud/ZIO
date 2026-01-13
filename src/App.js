@@ -7,10 +7,6 @@ import MyPage from "./pages/MyPage";
 import Tip from "./pages/Tip";
 import AuthPage from "./pages/AuthPage";
 
-import { AuthProvider } from "./contexts/AuthContext";
-import { ParkingProvider } from "./contexts/ParkingContext";
-import { ReservationProvider } from "./contexts/ReservationContext";
-
 import "./App.scss";
 import DetailPage from "./pages/DetailPage";
 import SignupPage from "./pages/SignupPage";
@@ -23,7 +19,7 @@ const App = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<MainPage />} />
-          <Route path="/detail" element={<DetailPage />} />
+          <Route path="/detail/:parkingId" element={<DetailPage />} />
           <Route path="/reservations" element={<ReservationPage />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/mypage" element={<MyPage />} />

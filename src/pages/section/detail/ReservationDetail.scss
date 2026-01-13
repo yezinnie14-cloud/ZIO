@@ -2,7 +2,6 @@
 @use "../../../assets/scss/variables" as *;
 @use "../../../assets/scss/mixins" as *;
 
-
 .parking-map {
   position: relative;
   width: 100%;
@@ -23,18 +22,35 @@
   .lane {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0.8rem;
     margin-top: 26px;
 
-    &.lane-left  { margin-right: 16px; }
-    &.lane-right { margin-left: 16px; }
+    &.lane-left {
+      margin-right: 16px;
+    }
+    &.lane-right {
+      margin-left: 16px;
+    }
 
     .parking-box {
-      padding: 1rem 2rem;
+      padding: 1rem 3rem;
       border-radius: 0.4rem;
       background: $color-555;
       cursor: pointer;
       @include flex-layout();
+
+      &.selected {
+        color: #fff;
+      }
+
+      &.taken {
+        background: $color-bbb;
+      }
+
+      &.taken::after {
+        // content: "사용중";
+        color: $color-555;
+      }
 
       .box-code {
         @include caption-b();
@@ -42,10 +58,18 @@
       }
     }
 
-    .parking-box.box-일반   { border: 4px solid $color-white; }
-    .parking-box.box-장애인 { border: 4px solid $color-yellow; }
-    .parking-box.box-경차   { border: 4px solid #FF5E5E; }
-    .parking-box.box-전기차 { border: 4px solid $color-green; }
+    .parking-box.box-일반 {
+      border: 4px solid $color-white;
+    }
+    .parking-box.box-장애인 {
+      border: 4px solid $color-yellow;
+    }
+    .parking-box.box-경차 {
+      border: 4px solid #ff5e5e;
+    }
+    .parking-box.box-전기차 {
+      border: 4px solid $color-green;
+    }
 
     .parking-box.selected {
       background: $color-red;

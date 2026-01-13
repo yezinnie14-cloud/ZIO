@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useMemo } from "react";
+import { createContext, useContext, useState, useMemo, useCallback } from "react";
 import { getDetailInfo, getMainInfo, getParked, getParkingSpace } from "../api/zioApi";
 
 
@@ -30,7 +30,7 @@ export const ParkingProvider = ({children}) => {
   // if (loadingMap) return <div>지도 로딩중...</div>
   // if (errorMap) return <div>지도 SDK 에러: {String(errorMap)}</div>
   /* 메인페이지 */ 
-  const fatchParkingLots = async () => {
+  const fetchParkingLots = async () => {
     setLoadingMain(true);
     setError(null);
 
@@ -62,28 +62,32 @@ export const ParkingProvider = ({children}) => {
 
   // 상세데이터 3개 불러오기 
   const fetchLotDetailAll = async (lotId) => {
-    if (!lotId) throw new Error("주차장 정보(id) 없음");
-    setLoadingDetail(true);
+  try {
+    // setLoadingDetail(true);  
+    
     setError(null);
 
-    try {
-      const [detail, spaceList, parkedList] = await Promise.all([
-        getDetailInfo(lotId),
-        getParkingSpace(lotId),
-        getParked(lotId),
-      ])
-      setLotDetail(detail || null);
-      setSpaces(spaceList || []);
-      console.log( "spaceList=>", spaceList );
-      setParked(parkedList || []);      
-      return {detail, spaceList, parkedList}
-    } catch (error) {
-      setError(error.message);
-      throw error
-    }finally{
-      setLoadingDetail(false)
-    }
+    const [detailRes, spacesRes, parkedRes] = await Promise.allSettled([
+      getDetailInfo(lotId),
+      getParkingSpace(lotId),
+      getParked(lotId), // <- 얘는 실패해도 OK 처리
+    ]);
+
+    if (detailRes.status === "rejected") throw detailRes.reason;
+    if (spacesRes.status === "rejected") throw spacesRes.reason;
+
+    setLotDetail(detailRes.value);
+    setSpaces(spacesRes.value);
+
+    // ✅ 점유 조회는 실패해도 빈 배열
+    setParked(parkedRes.status === "fulfilled" ? parkedRes.value : []);
+
+  } catch (e) {
+    setError(e?.message ?? String(e));
+  } finally {
+    setLoadingDetail(false);
   }
+};
 
   // 자리 있는지 확인용 함수 
   const isSpaceTaken = (spaceId) => {
@@ -115,7 +119,7 @@ export const ParkingProvider = ({children}) => {
         error,
 
         //actions
-        fatchParkingLots,
+        fetchParkingLots,
         selectParkingLots,
         fetchLotDetailAll,
 

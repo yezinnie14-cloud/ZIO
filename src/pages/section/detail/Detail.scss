@@ -6,7 +6,7 @@
   box-sizing: border-box;
   @include caption-r();
   @include respond{
-    padding: 2rem 2.5rem;
+    padding: 2rem 0;
   }
 
   &--center {

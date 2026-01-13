@@ -4,34 +4,60 @@ import "./popup.scss"
 import parking from "../../assets/images/detail img/parking.png"
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
-import { userLogin } from '../../api/zioApi'
+import { useParking } from '../../contexts/ParkingContext'
+import { FaRegCopy } from 'react-icons/fa'
 
 const Popup = ({
   open,
   onClose,
   view,
   selected,
-  setSelected,
   keyword,
   setKeyword,
   onSelectItem,
   onBack,
   list = [],
 }) => {
+  const {
+    lotDetail,
+  } = useParking();
+  const address = {lotDetail};
+ 
+   const [showToast, setShowToast] = useState(false);
+     const toastTimer = useRef(null);
   const [mounted, setMounted] = useState(open);
   const [visible, setVisible] = useState(false);
   const navigate=useNavigate();
   const { user } = useAuth();
   const sheetRef = useRef(null);
+  
   const goDetail =()=>{
-     navigate("/detail");
+    if (!selected) return;
+
+  navigate(`/detail/${selected.id ?? selected.parking_id}`, {
+    state: {
+      parking: selected,   // ✅ 주차장 정보
+      user: user ?? null,  // ✅ 로그인 유저 정보
+      from: "popup",
+    },
+  });
   }
   const goGuest = () => {
     navigate("/guest-login", { state: { parking: selected } })
   }
   
 const goLogin = () => {
-  navigate(`/auth?redirect=/detail&parkingId=${selected.id}`)
+  if (!selected) return;
+
+  const parkingId = selected.id ?? selected.parking_id;
+
+  navigate("/auth", {
+    state: {
+      redirectTo: `/detail/${parkingId}`,
+      parking: selected,
+      from: "popup",
+    },
+  });
 }
   useEffect(() => {
     if (open) {
@@ -52,6 +78,23 @@ const goLogin = () => {
       setMounted(false)
     }
   }
+  const handleCopy = async () => {
+    if (!address) return;
+    
+    try {
+      await navigator.clipboard.writeText(address);
+
+      // 토스트 1초간 보이기
+      setShowToast(true);
+        toastTimer.current = setTimeout(() => {
+          setShowToast(false);
+          toastTimer.current = null;
+        }, 1000);
+    } catch (e) {
+      // 복사가 실패했을 때
+      console.error(e);
+    }
+  };
 
   const isLoggedIn = !!user; 
   const filtered = useMemo(() => {
@@ -63,6 +106,12 @@ const goLogin = () => {
 
   if (!mounted) return null
 
+  console.log("[Popup props typeof]",
+  "onBack:", typeof onBack, onBack,
+  "onClose:", typeof onClose, onClose,
+  "onSelectItem:", typeof onSelectItem, onSelectItem,
+  "setKeyword:", typeof setKeyword, setKeyword
+);
   return (
     <div
       className={`popup-overlay ${visible ? "is-open" : ""}`}
@@ -134,7 +183,10 @@ const goLogin = () => {
               <img className="thumb" src={selected.photo_urls?.[0] ?? parking} alt="" />
               <div className="txt">
                 <h3>{selected.parking_name}</h3>
+                <div className='address'>
                 <p>{selected.address ?? selected.addr ?? "주소 없음"}</p>
+                <FaRegCopy className="icon-copy" onClick={handleCopy} />
+                </div>
                 <p style={{ marginTop: 8 }}>
                   시간당: {selected.price_per_1h ?? "-"}원
                 </p>
@@ -143,7 +195,13 @@ const goLogin = () => {
 
             <div className="keyword">
               <p>주차장 설명</p>
-              <button>리뷰키워드</button>
+              <div className='key'>
+              {(selected?.keywords ?? []).length ? (
+              selected.keywords.map((k, idx) => <button key={idx}>{k}</button>)
+                    ) : (
+                <span className="empty">키워드 없음</span>
+              )}
+              </div>
             </div>
 
             {isLoggedIn ? (
@@ -153,7 +211,7 @@ const goLogin = () => {
             ) : (
               <div className="btn">
                 <button onClick={goGuest}>비회원 예약</button>
-                 <button onClick={goLogin}>로그인</button>
+                <button onClick={goLogin}>로그인</button>
               </div>
             )}
           </>

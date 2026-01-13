@@ -3,7 +3,7 @@
 @use "../../../assets/scss/mixins" as *;
 
 .reservation-card {
-  width: 100%;
+  width: 85%;
   background: $color-white;
   border-radius: 18px;
   padding: 1rem 1.5rem;
@@ -24,13 +24,14 @@
     .badge {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       line-height: 1;
       white-space: nowrap;
     }
 
     // 좌측 "정기권/시간권"
-    .badge-type {
-      @include caption-b;
+    .badge-subs {
+      @include caption-r;
       padding: 0.5rem 1rem;
       border-radius: 1rem;
       background: $color-main;
@@ -68,17 +69,16 @@
 
     .row {
       @include flex-layout(row, space-between, flex-start, 14px);
+      @include caption-r;
       padding: 7px 0;
 
       .label {
-        @include body-r;
         color: $color-555;
         min-width: 88px;
         letter-spacing: -0.2px;
       }
 
       .value {
-        @include body-b;
         color: $color-black;
         text-align: right;
         letter-spacing: -0.2px;
@@ -122,6 +122,7 @@
 
       .row {
         padding: 8px 0;
+        @include body-r;
 
         .label {
           min-width: 120px;

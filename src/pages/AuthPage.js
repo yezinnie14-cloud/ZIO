@@ -1,6 +1,6 @@
 // AuthPage.js
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 import kakao from "../assets/images/social_logo/kakao.png";
@@ -10,32 +10,44 @@ import naver from "../assets/images/social_logo/naver.png";
 import "./AuthPage.scss";
 
 const AuthPage = () => {
+  
   const navigate = useNavigate();
-  const [params] = useSearchParams()
   const { loginUser, loading } = useAuth();
-
-  const redirect = params.get("redirect");   
-  const parkingId = params.get("parkingId"); 
+  const location = useLocation();
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const { redirectTo, parking, from } = location.state || {};
 
   const handleLogin = async () => {
-      try {
-      await loginUser({ userId: userId.trim(), password: password.trim() })
+  try {
+    const loggedInUser = await loginUser({
+      userId: userId.trim(),
+      password: password.trim(),
+    });
 
-      // ✅ 팝업에서 온 케이스만 디테일로
-      if (redirect === "/detail" && parkingId) {
-        navigate(`/detail?parkingId=${parkingId}`, { replace: true })
-      } else {
-        // ✅ 헤더에서 온 케이스는 메인
-        navigate("/", { replace: true })
-      }
-    } catch (error) {
-      alert(error.message)
+    // 팝업에서 온 로그인만 디테일로
+    if (from === "popup" && redirectTo) {
+      navigate(redirectTo, {
+        replace: true,
+        state: { parking, user: loggedInUser, from: "popup" },
+      });
+      return;
     }
-    
-  };
-  
+
+    navigate("/", { replace: true });
+  } catch (err) {
+    const msg =
+      err?.message ||
+      err?.response?.data?.message ||
+      "아이디 또는 비밀번호가 틀림";
+
+    // ✅ 브라우저 기본 팝업
+    alert(msg);
+  }
+};
+
   return (
     <div className="auth-page">
       <h2>로그인</h2>
