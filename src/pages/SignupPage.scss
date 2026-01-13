@@ -44,7 +44,6 @@
         outline: none;
         background: rgba($color-bbb, 0.25);
         color: $color-black;
-        @include caption-r();
         &::placeholder {
           color: rgba($color-555, 0.6);
         @include caption-r();

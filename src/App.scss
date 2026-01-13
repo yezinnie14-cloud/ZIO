@@ -4,6 +4,7 @@
 *{margin: 0;padding: 0;}
 .mainpage{
     width: 100%;
+    
     .search{
         @include flex-layout(row,center);
         overflow: visible;
@@ -64,7 +65,9 @@
   .layout-main {    
     @include flex-layout(row,space-around,flex-start,none);
     .layout-outlet {
-    min-width: 360px;
+    min-width: 100%;
+    padding-left: 1rem;
+    padding-bottom: 0;
     margin: 0 auto;
   }
   .sec1{
@@ -79,4 +82,10 @@
     padding-right:5rem ;
   }
   }
+  .mainpage{
+    transform: translateY(8%);
+    .search{
+    display: none;
+  }
+}
 }
