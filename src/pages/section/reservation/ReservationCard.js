@@ -1,9 +1,15 @@
 // reservation 1건을 받아서 화면에 “보여주기만” 하는 공통 카드 컴포넌트
 import "./ReservationCard.scss";
-const ReservationCard = ({ reservation,authType }) => {
-    // 예약 데이터가 없으면 아무것도 띄우지 않게
+import { getParkingSpace } from "../../../api/zioApi";
+import { useState } from "react";
+
+const ReservationCard = ({ reservation, authType }) => {
+  //주차장 자리 정보 불러오기
+  const [spaceCode, setSpaceCode] = useState("-");
+
+  // 예약 데이터가 없으면 아무것도 띄우지 않게
   if (!reservation) return null;
-  
+
   const statusLabel = (status) => {
     if (status === "USING") return "이용 중";
     if (status === "DONE") return "이용 완료";
@@ -14,14 +20,31 @@ const ReservationCard = ({ reservation,authType }) => {
 
   const pad2 = (n) => String(n).padStart(2, "0");
   const toDate = (iso) => new Date(iso);
-  const formatDate = (d) => `${d.getFullYear()}.${pad2(d.getMonth() + 1)}.${pad2(d.getDate())}`;
+  const formatDate = (d) =>
+    `${d.getFullYear()}.${pad2(d.getMonth() + 1)}.${pad2(d.getDate())}`;
   const formatTime = (d) => `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+
+  const formatPaidAt = (iso) => {
+    if (!iso) return "-";
+
+    const d = new Date(iso);
+    if (isNaN(d)) return "-";
+
+    const pad = (n) => String(n).padStart(2, "0");
+
+    return (
+      `${d.getFullYear()}. ${pad(d.getMonth() + 1)}. ${pad(d.getDate())} ` +
+      `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+    );
+  };
 
   const start = reservation.start_at ? toDate(reservation.start_at) : null;
   const end = reservation.end_at ? toDate(reservation.end_at) : null;
 
-  const dateRange = start && end ? `${formatDate(start)} ~ ${formatDate(end)}` : "-";
-  const timeRange = start && end ? `${formatTime(start)} ~ ${formatTime(end)}` : "-";
+  const dateRange =
+    start && end ? `${formatDate(start)} ~ ${formatDate(end)}` : "-";
+  const timeRange =
+    start && end ? `${formatTime(start)} ~ ${formatTime(end)}` : "-";
 
   const periodLabel = (() => {
     if (reservation.pay_type === "정기권") {
@@ -38,16 +61,18 @@ const ReservationCard = ({ reservation,authType }) => {
   return (
     <div className="reservation-card">
       <div className="card-badges">
-        <p className="badge badge-type">{reservation.pay_type}</p>
-        <p className={`badge badge-status ${reservation.status}`}>
+        {/* 정기권, 시간권 */}
+        <p className="badge-subs">{reservation.pay_type}</p>
+        {/* 이용중, 이용완료 */}
+        <p className={`badge-status ${reservation.status}`}>
           {statusLabel(reservation.status)}
         </p>
       </div>
 
       <div className="card-rows">
         <div className="row">
-          <p className="label">주차 유형</p>
-          <p className="value">{periodLabel}</p>
+          <p className="label">주차 구역</p>
+          <p className="value">{spaceCode}</p>
         </div>
 
         <div className="row">
@@ -66,8 +91,20 @@ const ReservationCard = ({ reservation,authType }) => {
         </div>
 
         <div className="row">
+          <p className="label">결제 방식</p>
+          <p className="value">{reservation?.pay_method ?? "-"}</p>
+        </div>
+
+        <div className="row">
           <p className="label">결제 금액</p>
-          <p className="value">{Number(reservation.amount ?? 0).toLocaleString()}원</p>
+          <p className="value">
+            {Number(reservation.amount ?? 0).toLocaleString()}원
+          </p>
+        </div>
+
+        <div className="row">
+          <p className="label">결제 일시</p>
+          <p className="value">{formatPaidAt(reservation?.created_at)}</p>
         </div>
       </div>
     </div>
