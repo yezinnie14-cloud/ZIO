@@ -1,9 +1,40 @@
 @use "./assets/scss/fonts" as *;
 @use "./assets/scss/variables" as *;
 @use "./assets/scss/mixins" as *;
-* {
-  margin: 0;
-  padding: 0;
+*{margin: 0;padding: 0;}
+.mainpage{
+    width: 100%;
+    
+    .search{
+        @include flex-layout(row,center);
+        overflow: visible;
+        
+        .input{
+            position: relative;
+            transition: transform 0.3s ease;
+            text-align: center;
+            transform: translateY(-350%);
+            @include flex-layout(row,center);
+            width: 200px;
+            z-index: 9999; // 지도 위로
+            padding: 0.5rem;
+            @include caption-r();
+            border-radius: 15px;
+            border: none;
+            background-color: rgba(148, 148, 148, 0.25);
+            box-shadow: 0 3px 3px rgba($color: #000000, $alpha: 0.33);
+            backdrop-filter: saturate(100%) blur(5px);
+            &.active {
+            transform: translateY(-325px);
+            opacity: 0;
+            }
+        &:focus{
+            width: 250px;
+            outline: none;
+            border: 0.3px solid rgba(148, 148, 148, 0.45);
+        }
+    }
+}
 }
 .mainpage {
   width: 100%;
@@ -68,7 +99,9 @@
   .layout-main {    
     @include flex-layout(row,space-around,flex-start,none);
     .layout-outlet {
-    min-width: 360px;
+    min-width: 100%;
+    padding-left: 1rem;
+    padding-bottom: 0;
     margin: 0 auto;
   }
   .sec1{
@@ -83,4 +116,10 @@
     padding-right:5rem ;
   }
   }
+  .mainpage{
+    transform: translateY(8%);
+    .search{
+    display: none;
+  }
+}
 }
