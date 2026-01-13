@@ -37,7 +37,6 @@
       @include flex-layout();
       
   &.selected {
-    background: $color-green; 
     color: #fff;
   }
 
@@ -48,7 +47,7 @@
   &.taken::after {
     content: "사용중";
     color: $color-555;
-    display: block;
+    // display: block;
   }
 
       .box-code {
