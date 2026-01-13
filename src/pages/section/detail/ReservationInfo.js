@@ -74,6 +74,7 @@ const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
             className="reserve-popup-button"
             onClick={onReserve}
             disabled={!selectedBox}
+            
           >
             예약하기
           </button>

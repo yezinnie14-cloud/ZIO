@@ -23,6 +23,7 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
     setLaneA(arrA);
     setLaneB(arrB);
   },[]);
+  
   return (
     <div className="parking-map">
       <span className="parking-direction">
