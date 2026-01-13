@@ -195,13 +195,13 @@ const goLogin = () => {
 
             <div className="keyword">
               <p>주차장 설명</p>
-              {(lotDetail?.keyword ?? []).length ? (
-                lotDetail.keyword.map((k) => (
-              <button onClick={() => console.log(k)}>{k}</button> 
-              ))
-              ) : (
-              <span className="empty">키워드 없음</span>
+              <div className='key'>
+              {(selected?.keywords ?? []).length ? (
+              selected.keywords.map((k, idx) => <button key={idx}>{k}</button>)
+                    ) : (
+                <span className="empty">키워드 없음</span>
               )}
+              </div>
             </div>
 
             {isLoggedIn ? (

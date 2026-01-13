@@ -12,7 +12,7 @@ export const getMainInfo = async () => {
   const {data, error} = await supabase
     .from("parking_lots")
     .select(
-      ' id, parking_name, address, lat, lon, price_per_1h, photo_urls, keywords(keyword)'
+      `id, parking_name, address, lat, lon, price_per_1h, photo_urls, keywords( keyword )`
     )
     .order("price_per_1h", { ascending:true})
 
@@ -65,15 +65,18 @@ export const getDetailInfo = async (lotId) => {
   const {data, error} = await supabase
     .from("parking_lots")
     .select(
-      "id, parking_name,address, lat, lon, price_per_1h, total_space, photo_urls"
+      `id, parking_name,address, lat, lon, price_per_1h, total_space, total_space, photo_urls, keywords( keyword )`
     )
     .eq("id", lotId)
     .single();
   if(error){
     throw new Error("주차장 상세 조회 실패" + error.message);
   }
-
-  return data;
+  return {
+    ...data,
+    keywords: (data.keywords ?? []).map((r) => r.keyword),
+  };
+  
 }
 
 // 선택한 주차장의 주차면 목록 
