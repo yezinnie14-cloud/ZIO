@@ -3,7 +3,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 import { useReservation } from "../../../contexts/ReservationContext";
 import ReservationCard from "./ReservationCard";
 
-const MemberReservation = () => {
+const MemberReservation = ({selectedReservation}) => {
   const { user } = useAuth();
   const { reservations, fetchUserReservation, loadingList, error } = useReservation();
 
@@ -20,8 +20,17 @@ const MemberReservation = () => {
     fetchUserReservation({ userId });
   }, [user?.id]); // fetchUserReservation은 의존성에서 제외(무한 호출 방지)
 
-  const currentReservation =
-    reservations && reservations.length > 0 ? reservations[0] : null;
+  //"id"로 reservations에서 다시 찾기
+  const selectedID = selectedReservation?.id;
+
+  let currentReservation = null;
+  //마이페이지에서 클릭해서 넘어온 예약이 있으면 최우선으로 보여지기
+  if (selectedID && reservations && reservations.length > 0) {
+    const found = reservations.find((r) => r.id === selectedID);
+    currentReservation = found ?? selectedReservation; // 찾으면 상세, 없으면 넘어온 값
+  } else if (reservations && reservations.length > 0) {
+    currentReservation = reservations[0]; // 기본은 최신
+  }
 
   return (
     <section className="reservation-section">
