@@ -21,6 +21,7 @@ const GuestPopup = ({ onSubmit, errorMessage }) => {
   return (
     <div className="guest-popup">
       <h2>비회원 예약 확인</h2>
+      <div className="phone-num">
       <label>연락처</label>
       <input
         id="phone"
@@ -28,6 +29,7 @@ const GuestPopup = ({ onSubmit, errorMessage }) => {
         onChange={(e) => setPhone(e.target.value)}
         placeholder="010-XXXX-XXXX"
       />
+      </div>
       {/* 조회 실패 메세지 */}
       {errorMessage && (
         <p className="guestpopup-error">
