@@ -63,7 +63,8 @@ export const ParkingProvider = ({children}) => {
   // 상세데이터 3개 불러오기 
   const fetchLotDetailAll = async (lotId) => {
   try {
-    // setLoadingDetail(true);
+    // setLoadingDetail(true);  
+    
     setError(null);
 
     const [detailRes, spacesRes, parkedRes] = await Promise.allSettled([
