@@ -4,7 +4,6 @@ import "./popup.scss"
 import parking from "../../assets/images/detail img/parking.png"
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
-import { userLogin } from '../../api/zioApi'
 import { useParking } from '../../contexts/ParkingContext'
 import { FaRegCopy } from 'react-icons/fa'
 
@@ -13,7 +12,6 @@ const Popup = ({
   onClose,
   view,
   selected,
-  setSelected,
   keyword,
   setKeyword,
   onSelectItem,
