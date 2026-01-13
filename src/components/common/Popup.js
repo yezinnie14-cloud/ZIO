@@ -4,7 +4,6 @@ import "./popup.scss"
 import parking from "../../assets/images/detail img/parking.png"
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
-import { userLogin } from '../../api/zioApi'
 import { useParking } from '../../contexts/ParkingContext'
 import { FaRegCopy } from 'react-icons/fa'
 
@@ -13,7 +12,6 @@ const Popup = ({
   onClose,
   view,
   selected,
-  setSelected,
   keyword,
   setKeyword,
   onSelectItem,
@@ -21,12 +19,7 @@ const Popup = ({
   list = [],
 }) => {
   const {
-    selectedId,
     lotDetail,
-    spaces,
-    loadingDetail,
-    error,
-    fetchLotDetailAll,
   } = useParking();
   const address = {lotDetail};
  
@@ -113,6 +106,12 @@ const goLogin = () => {
 
   if (!mounted) return null
 
+  console.log("[Popup props typeof]",
+  "onBack:", typeof onBack, onBack,
+  "onClose:", typeof onClose, onClose,
+  "onSelectItem:", typeof onSelectItem, onSelectItem,
+  "setKeyword:", typeof setKeyword, setKeyword
+);
   return (
     <div
       className={`popup-overlay ${visible ? "is-open" : ""}`}
