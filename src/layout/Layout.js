@@ -28,7 +28,6 @@ const Layout = () => {
         </section>
       </main>
       
-      
       {/* 모바일일 때 아래 탭 */}
         <GnbMobile />
     </div>

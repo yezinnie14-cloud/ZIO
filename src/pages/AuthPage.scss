@@ -47,7 +47,7 @@
         color: $color-black;    
         &::placeholder {
           color: rgba($color-555, 0.6);
-          @include caption-r();
+
         }
       }
     }
