@@ -4,37 +4,13 @@ import ReservationDetail from "./ReservationDetail";
 import "./Detail.scss";
 
 import Detailbar from "./Detailbar";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
+import{ useNavigate, useParams } from "react-router-dom";
 
-const DetailContainer = ({ onReserve }) => {
-  const { lotDetail, spaces, loadingDetail, error, fetchLotDetailAll } =
-    useParking();
-  const { parkingId } = useParams();
-  const navigate = useNavigate();
 
-//  모바일인지 아닌지
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return window.innerWidth < 768;
-  });
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
-  return isMobile;
-};
+const DetailContainer = () => { 
 
-const DetailContainer = () => {
-  
-  
-const { user } = useAuth();
     const {
     lotDetail,
     spaces,
@@ -43,16 +19,26 @@ const { user } = useAuth();
     fetchLotDetailAll,
   } = useParking();
   const { parkingId } = useParams();
-  const { state } = useLocation();
   const navigate = useNavigate();
+
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return window.innerWidth < 768;
+  });
 
   const [selectedBox, setSelectedBox] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   
-  const isMobile = useIsMobile();
-
   // ✅ 중복 fetch 방지용 ref
   const lastFetchedRef = useRef(null);
+
+useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // ✅ 디테일 진입 시 딱 1번만 호출
   useEffect(() => {
@@ -61,7 +47,9 @@ const { user } = useAuth();
 
     lastFetchedRef.current = parkingId;
     fetchLotDetailAll(parkingId);
-  }, [parkingId]);
+  }, [parkingId, fetchLotDetailAll]);
+
+
 
 
   // 자리 클릭
@@ -79,21 +67,30 @@ const { user } = useAuth();
   };
 
   const onReserve = () => {
-    if (!selectedBox) return;
-    navigate("/payment");
-    if (isMobile) {
-      setIsPopupOpen(false);
-    }
-  };
+  if (!selectedBox) return;
+
+  if (isMobile) setIsPopupOpen(false);
+  navigate("/payment", {
+  state: {
+    parkingId,
+    lotDetail,
+    selectedBox,
+  },
+});
+
+};
+
 
   if (loadingDetail) {
     return <div className="detail-page detail-page--center">로딩중...</div>;
   }
 
   if (error) {
-    return <div className="detail-page detail-page--center">에러: {error}</div>;
+    return (
+      <div className="detail-page detail-page--center">에러: {error}</div>
+    );
   }
-  if (!parkingId) {
+   if (!parkingId) {
     return (
       <div className="detail-page detail-page--center">
         주차장을 선택해주세요.
@@ -106,7 +103,7 @@ const { user } = useAuth();
       <section className="detail-page-map">
         <div className="parking-scroll">
           
-          <ReservationDetail
+          {(loadingDetail==false) && <ReservationDetail
             spaces={spaces}
             selectedCode={selectedBox?.space_code}
             onSelect={handleSelectBox}
@@ -149,7 +146,7 @@ const { user } = useAuth();
               <button
                 className="reserve-popup-button"
                 type="button"
-                onClick={handleReserve}
+                onClick={onReserve}
                 disabled={!selectedBox}
               >
                 예약하기
@@ -159,6 +156,7 @@ const { user } = useAuth();
         </div>
       )}
     </div>
+    
   );
 };
 
