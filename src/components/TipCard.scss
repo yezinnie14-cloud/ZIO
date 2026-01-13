@@ -1,5 +1,6 @@
 @use "../assets/scss/variables" as *;
 @use "../assets/scss/mixins" as *;
+@use "../assets/scss/fonts" as *;
 
 .tip-card {
   width: 100%;
@@ -8,16 +9,14 @@
 
   /*모든 카드 높이 통일 */
   height: 140px;             
-  padding: 18px 16px;
+  padding: 1.1rem 1rem;
   box-sizing: border-box;
 
-  margin-top: 0.5rem;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  margin-top: 1rem;
+  box-shadow: 0 6px 1rem rgba(0,0,0,0.06);
 
   /*내용 세로 중앙 정렬 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-layout(column, center, center, 0);
 
   position: relative;
 }
@@ -45,7 +44,7 @@
 .tip-title {
   font-size: 1.2rem;
   font-weight: 900;
-  margin: 0 0 8px;
+  margin: 0 0 0.5rem;
   word-break: keep-all;
   overflow-wrap: break-word;
   width: 65%;

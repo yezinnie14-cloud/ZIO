@@ -61,14 +61,15 @@
 }
 
 @include respond {
-  .layout-main {
-
-    @include flex-layout(row,center,center,none);
+  .layout-main {    
+    @include flex-layout(row,space-around,flex-start,none);
     .layout-outlet {
-    min-width: 0;
+    min-width: 360px;
+    margin: 0 auto;
   }
   .sec1{
     display: inline-block;
+    height: 100vh;
   }
      .sec3 {
     display: inline-block;

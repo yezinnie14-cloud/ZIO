@@ -7,10 +7,6 @@ import MyPage from "./pages/MyPage";
 import Tip from "./pages/Tip";
 import AuthPage from "./pages/AuthPage";
 
-import { AuthProvider } from "./contexts/AuthContext";
-import { ParkingProvider } from "./contexts/ParkingContext";
-import { ReservationProvider } from "./contexts/ReservationContext";
-
 import "./App.scss";
 import DetailPage from "./pages/DetailPage";
 import SignupPage from "./pages/SignupPage";
