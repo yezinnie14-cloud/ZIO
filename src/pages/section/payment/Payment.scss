@@ -7,12 +7,31 @@ section#pay-box{
   background-color: $color-white;
   width: 100%;
   margin: 0.5rem auto;
-  display: grid;
-  padding: 1rem;
-  grid-template-columns: repeat(3,1fr);
-  gap: 1rem; 
   border-radius: 1rem;
+  @include flex-layout(column, center, flex-start, 0);
+
+  // 시간권, 정기권 선택하는 grid
+  div.paytype-row {
+    display: grid;
+    padding: 1rem;
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem; 
+    button {
+      width: 60px;
+    }
+  }
   
+  // 시간권 선택 시, 결제수단 선택 grid
+  div.method-row {
+    display: grid;
+    padding: 1rem;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1rem; 
+    button {
+      width: 100px;
+    }
+  }
+
   // 버튼
   button{
     background-color: #fff;
