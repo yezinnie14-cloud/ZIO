@@ -19,7 +19,7 @@ const DetailAsidePage = ({selectedBox}) => {
       },
     });
   };
-  console.log("selectedBox:", selectedBox);
+  
   return (
     <ReservationInfo
       selectedBox={selectedBox}

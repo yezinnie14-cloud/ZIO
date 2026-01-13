@@ -159,6 +159,13 @@
       @include caption-r;
       font-size: 12px;
       width: 100%;
+      .address{
+        @include flex-layout(row,space-arounds);
+      .icon-copy{
+        cursor: pointer;
+        z-index: 9999;
+      }
+    }
     }
   }
   .keyword{

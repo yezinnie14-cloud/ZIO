@@ -8,7 +8,7 @@ export default function MyPage() {
   // AuthContext에서 authType 가져옴
   // authType: "user" | "guest" | null
   const { authType } = useAuth();
-  // console.log( authType );
+  
 
 
   /**
