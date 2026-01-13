@@ -1,3 +1,5 @@
+// CSS
+import "./PaymentPage.scss";
 // 기능
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -138,7 +140,7 @@ const PaymentPage = () => {
 
 
   return (
-    <div className="payment-page">
+    <div id="payment-page">
       <ParkingInfo lot={lotInfo} />
       <Clock />
       <Ad />
