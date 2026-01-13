@@ -7,24 +7,31 @@ const sortBySpaceCode = (a, b) => {
   const [bPrefix, bNum] = (b.space_code || "").split("-");
 
   if (aPrefix === bPrefix) {
-    return Number(aNum) - Number(bNum); 
+    return Number(aNum) - Number(bNum);
   }
   return aPrefix.localeCompare(bPrefix);
 };
 const ReservationDetail = ({ selectedCode, onSelect }) => {
-  const{lotDetail, spaces, isSpaceTaken,fetchLotDetailAll}= useParking();
+  const { lotDetail, spaces, isSpaceTaken, fetchLotDetailAll ,parked} = useParking();
   const [laneA, setLaneA] = useState([]);
   const [laneB, setLaneB] = useState([]);
-  useEffect(()=>{
-    console.log(useEffect)
+  useEffect(() => {
+    console.log("hhh",parked);
     fetchLotDetailAll(lotDetail?.id);
-    console.log( "spaces==>", spaces );
-    const arrA = spaces.filter((item) => (item.space_code || "").startsWith("A-")).slice().sort(sortBySpaceCode);
-    const arrB = spaces.filter((item) => (item.space_code || "").startsWith("B-")).slice().sort(sortBySpaceCode);
+    const arrA = spaces
+      .filter((item) => (item.space_code || "").startsWith("A-"))
+      .slice()
+      .sort(sortBySpaceCode);
+    const arrB = spaces
+      .filter((item) => (item.space_code || "").startsWith("B-"))
+      .slice()
+      .sort(sortBySpaceCode);
     setLaneA(arrA);
     setLaneB(arrB);
-  },[]);
-  
+    console.log("A",arrA);
+    console.log("B",arrB);
+  }, []);
+
   return (
     <div className="parking-map">
       <span className="parking-direction">
@@ -32,10 +39,11 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
       </span>
 
       <div className="lane lane-left">
-        {laneA?.map((space) => {
+        {laneA?.map((space,idx) => {
           const isSelected = space.space_code === selectedCode;
 
-          const takenStatus = isSpaceTaken?.(space.id); 
+          const takenStatus = isSpaceTaken(space.id);
+           console.log("aaa",takenStatus, idx);
           const isTaken = Boolean(takenStatus);
 
           const classes = [
@@ -54,7 +62,7 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
               className={classes}
               onClick={() => onSelect(space)}
               disabled={!space.is_active || isTaken}
-              data-status={takenStatus || ""} 
+              data-status={takenStatus || ""}
             >
               <span className="box-code">{space.space_code}</span>
             </button>
@@ -65,10 +73,11 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
       <div className="road" />
 
       <div className="lane lane-right">
-        {laneB?.map((space) => {
+        {laneB?.map((space,idx) => {
           const isSelected = space.space_code === selectedCode;
 
-          const takenStatus = isSpaceTaken?.(space.id);
+          const takenStatus = isSpaceTaken(space.id);
+          console.log("bbb",takenStatus, idx);
           const isTaken = Boolean(takenStatus);
           const classes = [
             "parking-box",
@@ -95,10 +104,7 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
         })}
       </div>
     </div>
-
-    
   );
 };
-
 
 export default ReservationDetail;

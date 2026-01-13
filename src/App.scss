@@ -40,6 +40,7 @@
 // layout -sec3 처리 
 .layout-main {
   width: 100%;
+  height: 100vh;
   @include flex-layout("","",stretch,"");
   padding: 0;
   .sec1{
@@ -50,7 +51,7 @@
   }
   .layout-outlet {
       flex: 1 1 auto;      
-      min-width: 400px;         
+      min-width: 400px;        
     }
   .sec3 {
     display: none;
@@ -62,10 +63,11 @@
 
 @include respond {
   .layout-main {    
-    @include flex-layout(row,space-around,flex-start,none);
+    @include flex-layout(row,space-around,stretch,none);
     .layout-outlet {
     min-width: 360px;
     margin: 0 auto;
+    height: 100vh;
   }
   .sec1{
     display: inline-block;
@@ -77,6 +79,7 @@
     max-width: 360px;
     justify-self: end;
     padding-right:5rem ;
+    padding-top: 3rem;
   }
   }
 }
