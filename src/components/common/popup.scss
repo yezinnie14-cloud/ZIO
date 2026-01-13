@@ -22,7 +22,7 @@
   width: 380px;         
   margin: 0 auto;     
   max-width: calc(100vw - 32px);       
-  height: 38vh;              
+  height: 40vh;              
   background: #fff;
   border-radius: 16px;
   padding: 16px;
@@ -146,8 +146,13 @@
 }
 
 .popup-detail{
+  
   @include flex-layout(column,center);
   width: 100%;
+  .b{
+    left: 10%;
+    transform: translateX(10%)
+  }
   .detail{
     @include flex-layout(row,space-around);
     padding: 0.5rem;
@@ -160,7 +165,7 @@
       font-size: 12px;
       width: 100%;
       .address{
-        @include flex-layout(row,space-arounds);
+        @include flex-layout(row,space-around);
       .icon-copy{
         cursor: pointer;
         z-index: 9999;
@@ -169,11 +174,19 @@
     }
   }
   .keyword{
-    @include flex-layout(column,left);
+    @include flex-layout(column,space-around);
     width: 80%;
     transform: translateX(-26%);
     padding: 0 2rem;
     // p{padding: 1rem}
+    .key{
+    position: relative;
+    @include flex-layout(row,space-around);
+    width: 90%;
+    left: -5%;
+    transform: translateX(130px);
+    overflow: scroll;
+    scrollbar-width: none;
     button{
     border: none;
     border-radius: 16px;
@@ -181,7 +194,7 @@
     color: #eee;
     width: 86px;
     height: 34px;
-    }
+    }}
 }
   .b{
     width: 70%;
