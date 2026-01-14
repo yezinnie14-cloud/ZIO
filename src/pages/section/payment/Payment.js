@@ -8,6 +8,7 @@ import paycoImg from "../../../assets/images/pay_payco.png";
 // DB 불러오기
 import { useAuth } from "../../../contexts/AuthContext";
 import { useReservation } from "../../../contexts/ReservationContext";
+// 기능
 
 
 const Payment = ({ hasSubscription }) => {
@@ -49,13 +50,13 @@ const Payment = ({ hasSubscription }) => {
           시간권 , 정기권만 있는 grid */}
       <div className="paytype-row">
         <button type="button"
-          className={draft.payType === "시간권" ? "active" : ""}
+          className={`pay-btn ${draft.payType === "시간권" ? "active" : ""}`}
           onClick={() => selectPayType("시간권")}
         >
           시간권
         </button>
         <button type="button"
-          className={draft.payType === "정기권" ? "active" : ""}
+          className={`pay-btn ${draft.payType === "정기권" ? "active" : ""}`}
           onClick={() => selectPayType("정기권")}
           disabled={!(authType === "user" && hasSubscription)}
           title={authType === "user" && !hasSubscription ? "회원만 가능해요." : ""}
