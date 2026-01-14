@@ -1,7 +1,7 @@
 @use "../assets/scss/variables" as *;
 @use "../assets/scss/mixins" as *;
 
-.tip-page {
+.tip-page{
   width: 100%;
   min-width: 430px;
   height: 100vh;
@@ -13,5 +13,4 @@
     width: 80%;
     margin: 0 auto;
     }
-  }
 }
