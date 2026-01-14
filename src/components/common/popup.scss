@@ -109,7 +109,7 @@
   @include flex-layout(column,center);
   position: static;
   // padding: 1rem;
-  transform: translateY(410%);     // ✅ 제거
+  transform: translateY(420%);     // ✅ 제거
   top: 0;
   height: 100px;
   @include caption-r();
