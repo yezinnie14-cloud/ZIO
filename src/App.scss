@@ -80,5 +80,12 @@
     padding-right: 5rem;
     padding-top: 4rem;
   }
+  .mainpage{
+    transform: translateY(8%);
+
+    .search{
+    display: none;
+  }
+}
   }
 }

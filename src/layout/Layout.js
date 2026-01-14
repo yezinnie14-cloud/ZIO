@@ -16,7 +16,8 @@ const Layout = () => {
     const [keyword, setKeyword] = useState("")
     const [view, setView] = useState("list")
     const [selected, setSelected] = useState(null)
-    
+    const isMain = pathname === "/"
+
   
     const openPopup = () => {
       setOpen(true)
@@ -81,9 +82,11 @@ const Layout = () => {
         onSelectItem={handleSelectItem}
         onBack={() => setView("list")}
       />
+      {!isMain &&
         <section className="sec3">
           {isDetail ? <DetailAsidePage /> : null}
         </section>
+        }
       </main>
 
       {/* 모바일일 때 아래 탭 */}
