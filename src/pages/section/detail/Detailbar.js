@@ -1,14 +1,22 @@
 import "./ReservationInfo.scss";
 import { useParking } from "../../../contexts/ParkingContext";
 import { FaRegCopy } from "react-icons/fa";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const Detailbar = () => {
   const { lotDetail } = useParking();
-  const address = { lotDetail };
+
+
+  const address = lotDetail?.address || "";
 
   const [showToast, setShowToast] = useState(false);
   const toastTimer = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    };
+  }, []);
 
   const handleCopy = async () => {
     if (!address) return;
@@ -16,14 +24,12 @@ const Detailbar = () => {
     try {
       await navigator.clipboard.writeText(address);
 
-      // 토스트 1초간 보이기
       setShowToast(true);
       toastTimer.current = setTimeout(() => {
         setShowToast(false);
         toastTimer.current = null;
       }, 1000);
     } catch (e) {
-      // 복사가 실패했을 때
       console.error(e);
     }
   };
@@ -36,7 +42,7 @@ const Detailbar = () => {
         <div className="info-address">
           <p>
             {lotDetail?.address || "주차장 주소"}
-             <FaRegCopy className="icon-copy" onClick={handleCopy} />
+            <FaRegCopy className="icon-copy" onClick={handleCopy} />
           </p>
         </div>
         <div className={`copy-toast ${showToast ? "show" : ""}`}>Copy!</div>
@@ -46,3 +52,4 @@ const Detailbar = () => {
 };
 
 export default Detailbar;
+
