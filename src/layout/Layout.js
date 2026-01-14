@@ -69,22 +69,11 @@ const Layout = () => {
         }}
 />
         </section>
-        <Popup
-        open={open}
-        onClose={closePopup}
-        keyword={keyword}
-        setKeyword={setKeyword}
-        view={view}
-        selected={selected}
-        list={lots}                 
-        onSelectItem={handleSelectItem}
-        onBack={() => setView("list")}
-      />
+        <Popup open={isPopupOpen} onClose={setIsPopupOpen(false)}/>
         <section className="sec3">
           {isDetail ? <DetailAsidePage /> : null}
         </section>
       </main>
-      
       
       {/* 모바일일 때 아래 탭 */}
         <GnbMobile />
