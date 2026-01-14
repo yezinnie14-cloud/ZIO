@@ -79,7 +79,7 @@ export default function ParkingMap({ keyword, selected, onSelectItem }) {
     fetchParkingLots();
     const t = setInterval(() => fetchParkingLots(), 60000); 
     return () => clearInterval(t);
-  }, []);
+  }, [fetchParkingLots]);
 
   // zioApi에서 설정한 congestion의 값으로 마커 지정 
   const getMarkerColor = (congestion) => {
