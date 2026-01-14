@@ -1,5 +1,5 @@
 import "./Header.scss";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { CgProfile } from "react-icons/cg"
 import { useAuth } from "../../contexts/AuthContext";
 import Logo from "../../assets/images/logo/zio-logo.png"; // 경로는 너 프로젝트 맞춰
@@ -12,7 +12,9 @@ const Header = ({ onOpenPopup, keyword, setKeyword }) => {
     logout()
     navigate("/", { replace: true })
   }
+  const location = useLocation()
 
+  const isMain = location.pathname === "/"
 
   return (
     <header>
@@ -22,7 +24,7 @@ const Header = ({ onOpenPopup, keyword, setKeyword }) => {
           <img src={Logo} alt="logo" />
         </div>
       </Link>
-      
+       {isMain && (
      <input
       placeholder="주차장을 찾아보세요"
       value={keyword}
@@ -30,6 +32,7 @@ const Header = ({ onOpenPopup, keyword, setKeyword }) => {
       onFocus={onOpenPopup}
       // 또는 onClick={onOpenPopup}
     />
+     )}
       {/* 로그인 상태 분기 */}
       {user ? (
         <div className="login">
