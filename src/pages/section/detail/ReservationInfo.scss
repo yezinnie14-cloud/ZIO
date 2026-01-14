@@ -6,12 +6,7 @@
 
   .parking-scroll {
     position: relative;
-    height: calc(100vh - 120px);
     overflow-y: auto;
-  }
-
-  .parking-map {
-    padding-bottom: 110px;
   }
 
   .parking-card {
