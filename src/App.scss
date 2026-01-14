@@ -158,6 +158,13 @@
 }
 
 @include respond {
+  .mainpage{
+    .search{
+    .input{
+      display: none;
+    }
+  }
+  }
   .layout-main {    
     @include flex-layout(row,space-around,flex-start,none);
     .layout-outlet {
