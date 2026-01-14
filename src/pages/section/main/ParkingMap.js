@@ -14,6 +14,7 @@ export default function ParkingMap({ keyword, selected, onSelectItem }) {
   const [loadingMap, errorMap] = useKakaoLoader({
     appkey: process.env.REACT_APP_KAKAO_MAP_KEY,
     libraries: ["services"],
+    
   });
 
   useEffect(() => {
@@ -35,7 +36,6 @@ export default function ParkingMap({ keyword, selected, onSelectItem }) {
       lng: Number(p.lon ?? p.lng ?? p.longitude),
     }));
   }, [lots]);
-
   // ✅ 2) 검색 필터
   const filteredLots = useMemo(() => {
     const q = (keyword ?? "").trim().toLowerCase();
