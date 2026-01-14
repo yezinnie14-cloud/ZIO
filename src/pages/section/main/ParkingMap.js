@@ -62,6 +62,18 @@ export default function ParkingMap({ keyword, selected, onSelectItem }) {
     mapRef.current.panTo(moveLatLng);
   }, [selected]);
 
+  useEffect(() => {
+    if (!selected) return
+    if (!mapRef.current) return
+
+    const lat = selected.lat ?? selected.latitude
+    const lng = selected.lon ?? selected.lng ?? selected.longitude
+    if (lat == null || lng == null) return
+
+    // ✅ 선택된 항목 위치로 지도 이동
+    mapRef.current.panTo(new window.kakao.maps.LatLng(lat, lng))
+  }, [selected])
+  
   // 자동 새로고침 ( 실시간 혼잡도를 보여주는 척)
   useEffect(() => {
     fetchParkingLots();

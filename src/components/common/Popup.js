@@ -41,7 +41,7 @@ const Popup = ({
   const parkingLot = [parkingLot1,parkingLot2,parkingLot3,parkingLot4,parkingLot5,parkingLot6,parkingLot7,parkingLot8,parkingLot9]
   const goDetail =()=>{
     if (!selected) return;
-
+     onClose()  
   navigate(`/detail/${selected.id ?? selected.parking_id}`, {
     state: {
       parking: selected,   // ✅ 주차장 정보
@@ -51,9 +51,11 @@ const Popup = ({
   });
   }
   const goGuest = () => {
+     onClose()  
     navigate("/guest-login", { state: { parking: selected } })
   }
 const goLogin = () => {
+   onClose()  
   if (!selected) return;
 
   const parkingId = selected.id ?? selected.parking_id;

@@ -35,7 +35,7 @@
   &.is-open {
     transform: translateY(-30%); 
   }
-
+   
 
       input{
             position: fixed;
@@ -238,6 +238,14 @@
   @include btn-theme;
   width: 135px;
   height: 35px;
+  }
+}
+}
+@include respond{
+  .popup{
+    
+  input{
+    display: none;
   }
 }
 }
