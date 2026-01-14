@@ -11,7 +11,7 @@ const initialDraft = {
   startAt : null, 
   endAt : null, 
   payType : "시간권",
-  Paymethod : null,
+  payMethod : null,
   amount :0
 };
 
@@ -57,7 +57,7 @@ export const ReservationProvider = ({children}) => {
   // 사용자의 payType (시간권/정기권) 저장
   const setPayType = (payType) => setDraft((i) => ({...i,payType}))
   // 사용자가 선택한 결제수단 저장
-  const setPayMethod = (paymethod) => setDraft((i) => ({...i,paymethod}))
+  const setPayMethod = (payMethod) => setDraft((i) => ({...i,payMethod}))
   // 최종 계산된 금액 저장
   const setAmount = (amount) => setDraft((i) => ({...i,amount}))
   // 결제 완료 시 초기 상태로 돌려놓는 함수 

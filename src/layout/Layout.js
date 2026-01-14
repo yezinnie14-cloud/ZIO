@@ -9,7 +9,6 @@ import { useState } from "react";
 import { useParking } from "../contexts/ParkingContext";
 import Popup from "../components/common/Popup";
 
-  
 const Layout = () => {
   const { pathname } = useLocation();
   const { lots } = useParking()
@@ -47,11 +46,13 @@ const Layout = () => {
     <div id="app">
       <Header  onOpenPopup={openPopup} keyword={keyword} setKeyword={setKeyword}/>
       {/* 데스크탑일 때  */}
-        
+
       <main className="layout-main">
         <section className="sec1">
-        <GnbDesktop /> 
-        <Footer/>
+          <GnbDesktop />
+          <div className="layout-footer">
+            <Footer />
+          </div>
         </section>
         <section className="layout-outlet">
         <Outlet         
@@ -84,10 +85,9 @@ const Layout = () => {
           {isDetail ? <DetailAsidePage /> : null}
         </section>
       </main>
-      
-      
+
       {/* 모바일일 때 아래 탭 */}
-        <GnbMobile />
+      <GnbMobile />
     </div>
   );
 };

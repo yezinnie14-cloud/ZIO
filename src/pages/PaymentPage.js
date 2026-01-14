@@ -48,10 +48,10 @@ const PaymentPage = () => {
   useEffect(() => {
     const state = location.state || {};
     if (!state.lotId || !state.spaceId) return;
-      setLotId(state.lotId);
-      setSpaceId(state.spaceId);
+      if (draft.lotId !== state.lotId) setLotId(state.lotId);
+      if (draft.spaceId !== state.spaceId) setSpaceId(state.spaceId);
   }, [location.state, setLotId, setSpaceId]);
-
+  
   // 2. 주차장 정보 불러오기(price_per_1h 포함)
   // 시간권 금액 계산에 price_per_1h가 필요!
   useEffect(() => {
@@ -68,33 +68,30 @@ const PaymentPage = () => {
   }, [draft.lotId]);
 
   // 3. 금액 계산
-  // 시간권 -> 시간 × price_per_1h 계산해서 draft.amount에 저장
-  // 정기권 -> amount는 0으로 저장
+  // 시간권 -> 시간 * price_per_1h 계산해서 draft.amount에 저장
+  // 정기권 -> amount = 0 으로 저장
   useEffect(() => {
     const pricePerHour = Number(lotInfo?.price_per_1h || 0);
-    // 정기권 → 0원 처리
+    let newAmount = 0;
+    // 정기권 0원 처리
     if (draft.payType === "정기권") {
-      setAmount(0);
-      return;
-    }
-    // 시간권인데 시간 선택 없으면 0원
-    if (!pricePerHour || !draft.startAt || !draft.endAt) {
-      setAmount(0);
-      return;
-    }
+      newAmount = 0;
 
-    // 입출차 시간, 예약하려는 시간 받기
-    const start = new Date(draft.startAt);
-    const end = new Date(draft.endAt);
-    const diffMs = end - start;
-    if (diffMs <= 0) {
-      setAmount(0);
-      return;
+    } else if (pricePerHour && draft.startAt && draft.endAt) {
+      // 입출차 시간 받기
+      const start = new Date(draft.startAt);
+      const end = new Date(draft.endAt);
+      const diffMs = end - start;
+      // diffMs에 따라 결제 금액 계산
+      if (diffMs > 0) {
+        const hours = Math.ceil(diffMs / (1000 * 60 * 60));
+        newAmount = hours * pricePerHour;
+      }
     }
-    // diffMs에 따라 결제 금액 계산하기
-    const hours = Math.ceil(diffMs / (1000 * 60 * 60));
-    setAmount(hours * pricePerHour);
-  }, [lotInfo?.price_per_1h, draft.startAt, draft.endAt, draft.payType, setAmount]);
+    // 시간권
+    if (draft.amount !== newAmount) {
+      setAmount(newAmount);
+    }}, [lotInfo?.price_per_1h, draft.startAt, draft.endAt, draft.payType, draft.amount, setAmount]);
 
   // 4. 결제하기 클릭 -> draft로 payload 생성 -> PayReservation로 DB insert
   // 성공하면 팝업 띄우기
@@ -147,9 +144,9 @@ const PaymentPage = () => {
       <Payment hasSubscription={hasSubscription} />
       <Price />
 
-      <button className="price-btn" onClick={handlePay} disabled={loadingPay}>
-        {loadingPay ? "결제 중..." : "결제하기"}
-      </button>
+        <button className="price-btn" onClick={handlePay} disabled={loadingPay}>
+          {loadingPay ? "결제 중..." : "결제하기"}
+        </button>
 
       {isPopupOpen && <PaymentPopup onConfirm={goReservations} />}
     </div>

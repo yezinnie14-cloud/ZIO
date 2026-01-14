@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect, useRef, useState, useMemo } from "react"
 import "./popup.scss"
 import parking from "../../assets/images/detail img/parking.png"

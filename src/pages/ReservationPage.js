@@ -14,7 +14,7 @@ const ReservationPage = () => {
   // 팝업 조회 실패 메세지 (truthy면 GuestPopup이 에러 문구 표시 + input 초기화)
   const [guestErrorMessage, setGuestErrorMessage] = useState('');
 
-  //마이페이지엔서 넘어온 "클릭한 예약 1건"
+  //마이페이지에서 넘어온 "클릭한 예약 1건"
   const selectedReservation = state?.reservation ?? null
 
   const handleGuestSubmit = ({ phone }) => {

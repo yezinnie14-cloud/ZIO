@@ -146,17 +146,17 @@ export const createReservation = async (payload) => {
 
   // 총 금액은 숫자로 변환
   const amountInt = Number(amount);
-  if (!Number.isFinite(amountInt)) throw new Error("amount가 숫자가 아님");
+  if (!Number.isFinite(amountInt)) throw new Error("amount가 숫자가 아닙니다.");
 
   // 회원 비회원 구분 
   const isMember = Boolean(userId);
   const isGuest = Boolean(guestPhone && guestCarNum);
 
   if (!isMember && !isGuest) {
-    throw new Error("사용자 정보가 필요함");
+    throw new Error("사용자 정보가 필요합니다.");
   }
   if (isMember && isGuest) {
-    throw new Error("회원, 비회원 둘 중 하나만 들어와주세요");
+    throw new Error("회원, 비회원 둘 중 하나만 들어와주세요.");
   }
 
   //입차, 출차 문자열로 변환 
@@ -165,7 +165,7 @@ export const createReservation = async (payload) => {
 
   // 입차 출차 에러 방지 로직 
   if(new Date(startISO) >= new Date(endISO)){
-    throw new Error("입차시간이 출차시간보다 빨라야함.");
+    throw new Error("입차시간이 출차시간보다 빨라야합니다.");
   }
 
   //reservation에 들어갈 정보 로직 
@@ -197,7 +197,7 @@ export const createReservation = async (payload) => {
     .limit(1);
 
   if (dupErr) throw new Error("중복 예약 체크 실패: " + dupErr.message);
-  if (dup && dup.length > 0) throw new Error("이미 예약된 자리임");
+  if (dup && dup.length > 0) throw new Error("이미 예약된 자리입니다.");
 
   // 진짜 예약. 
   const { data, error } = await supabase
@@ -218,7 +218,7 @@ export const createReservation = async (payload) => {
 //이용내역 페이지 
 // 비회원-> 전번 입력 시 조회가능
 export const guestReservationInfo = async ({phone}) => {
-  if(!phone) throw new Error("비회원 정보 없음");
+  if(!phone) throw new Error("비회원 정보가 없습니다.");
 
   let query = supabase
     .from("reservation")
@@ -236,7 +236,7 @@ export const guestReservationInfo = async ({phone}) => {
 
 // 회원 -> 바로 조회 가능 
 export const userReservationInfo = async(userId) =>{
-  if (!userId) throw new Error("사용자 정보 없음");
+  if (!userId) throw new Error("사용자 정보가 없습니다.");
 
   const {data, error} = await supabase
     .from("reservation")
@@ -299,7 +299,7 @@ export const getProfile = async (userId) => {
 //차량 정보 수정 
 export const updateCarNum = async ({ userId, carNum }) => {
   if (!userId) throw new Error("사용자 정보 없음");
-  if (!carNum) throw new Error("차량번호를 입력해주세요");
+  if (!carNum) throw new Error("차량번호를 입력해주세요.");
 
   const { data, error } = await supabase
     .from("users")
@@ -376,7 +376,7 @@ export const userLogin = async ({userId, password}) => {
     .maybeSingle();
 
   if (error) throw new Error("회원 조회 실패: " + error.message);
-  if (!data) throw new Error("아이디 또는 비밀번호가 틀림");
+  if (!data) throw new Error("아이디 또는 비밀번호가 틀립니다.");
 
   return data;
 }
@@ -399,21 +399,21 @@ export const signUpUser = async ({ userId, password, phone, email, carNum }) => 
     .select("id")
     .eq("id", userId)
     .maybeSingle();
-  if (dupId) throw new Error("이미 사용중인 아이디");
+  if (dupId) throw new Error("이미 사용중인 아이디입니다.");
 
   const { data: dupPhone } = await supabase
     .from("users")
     .select("phone")
     .eq("phone", phone)
     .maybeSingle();
-  if (dupPhone) throw new Error("이미 등록된 연락처");
+  if (dupPhone) throw new Error("이미 등록된 연락처입니다.");
 
   const { data: dupCar } = await supabase
     .from("users")
     .select("car_num")
     .eq("car_num", carNum)
     .maybeSingle();
-  if (dupCar) throw new Error("이미 등록된 차량번호");
+  if (dupCar) throw new Error("이미 등록된 차량번호입니다.");
 
   const { data, error } = await supabase
     .from("users")
