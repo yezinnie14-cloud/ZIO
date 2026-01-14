@@ -184,7 +184,7 @@ export const createReservation = async (payload) => {
     input.guest_phone = guestPhone;
     input.guest_car_num = guestCarNum;
   }
-  
+
   // 중복 예약 체크 
   const {data:dup, error:dupErr} = await supabase
     .from("reservation")

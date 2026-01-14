@@ -26,7 +26,7 @@ const Header = ({ onOpenPopup }) => {
           <img src={Logo} alt="logo" />
         </div>
       </Link>
-      {}
+
       {/* 로그인 상태 분기 */}
       <input
           
@@ -37,7 +37,7 @@ const Header = ({ onOpenPopup }) => {
         />
       {user ? (
         <div className="login">
-           
+          
 
           
           {/* <button>{user.userId ?? user.id ?? "USER"}</button> */}

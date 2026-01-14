@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import { useParking } from "../../../contexts/ParkingContext";
-import "./ReservationDetail.scss";
 
+import "./ReservationDetail.scss";
 const sortBySpaceCode = (a, b) => {
   const [aPrefix, aNum] = (a.space_code || "").split("-");
   const [bPrefix, bNum] = (b.space_code || "").split("-");
-  if (aPrefix === bPrefix) return Number(aNum) - Number(bNum);
+
+  if (aPrefix === bPrefix) {
+    return Number(aNum) - Number(bNum);
+  }
   return aPrefix.localeCompare(bPrefix);
 };
-
 const ReservationDetail = ({ selectedCode, onSelect }) => {
-  const { selectedId, spaces, isSpaceTaken, fetchLotDetailAll } = useParking(); // ✅ selectedId 가져오기
+  const { selectedId,  spaces, isSpaceTaken, fetchLotDetailAll} = useParking();
   const [laneA, setLaneA] = useState([]);
   const [laneB, setLaneB] = useState([]);
-
-  // 1) ✅ 선택된 주차장 id가 생기면 그때 상세 데이터 호출
+ 
+ // 1) ✅ 선택된 주차장 id가 생기면 그때 상세 데이터 호출
   useEffect(() => {
     if (!selectedId) return;
     fetchLotDetailAll(selectedId);
@@ -43,18 +45,21 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
       </span>
 
       <div className="lane lane-left">
-        {laneA.map((space) => {
+        {laneA?.map((space,idx) => {
           const isSelected = space.space_code === selectedCode;
-          const takenStatus = isSpaceTaken?.(space.id);
+
+          const takenStatus = isSpaceTaken(space.id);
           const isTaken = Boolean(takenStatus);
 
           const classes = [
             "parking-box",
-            `box-${space.space_type}`,
+            `box-${space.space_type}`, // 전기차/경차/장애인/일반 분리용
             isSelected ? "selected" : "",
             !space.is_active ? "disabled" : "",
             isTaken ? "taken" : "",
-          ].filter(Boolean).join(" ");
+          ]
+            .filter(Boolean)
+            .join(" ");
 
           return (
             <button
@@ -73,18 +78,21 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
       <div className="road" />
 
       <div className="lane lane-right">
-        {laneB.map((space) => {
+        {laneB?.map((space,idx) => {
           const isSelected = space.space_code === selectedCode;
-          const takenStatus = isSpaceTaken?.(space.id);
-          const isTaken = Boolean(takenStatus);
 
+          const takenStatus = isSpaceTaken(space.id);
+          console.log("bbb",takenStatus, idx);
+          const isTaken = Boolean(takenStatus);
           const classes = [
             "parking-box",
             `box-${space.space_type}`,
             isSelected ? "selected" : "",
             !space.is_active ? "disabled" : "",
             isTaken ? "taken" : "",
-          ].filter(Boolean).join(" ");
+          ]
+            .filter(Boolean)
+            .join(" ");
 
           return (
             <button
