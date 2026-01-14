@@ -6,7 +6,15 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useParking } from '../../contexts/ParkingContext'
 import { FaRegCopy } from 'react-icons/fa'
-
+import parkingLot1 from "../../assets/images/parking_lot/parkingLot-01.png";
+import parkingLot2 from "../../assets/images/parking_lot/parkingLot-02.png";
+import parkingLot3 from "../../assets/images/parking_lot/parkingLot-03.png";
+import parkingLot4 from "../../assets/images/parking_lot/parkingLot-04.png";
+import parkingLot5 from "../../assets/images/parking_lot/parkingLot-05.png";
+import parkingLot6 from "../../assets/images/parking_lot/parkingLot-06.png";
+import parkingLot7 from "../../assets/images/parking_lot/parkingLot-07.png";
+import parkingLot8 from "../../assets/images/parking_lot/parkingLot-08.png";
+import parkingLot9 from "../../assets/images/parking_lot/parkingLot-09.png";
 const Popup = ({
   open,
   onClose,
@@ -22,7 +30,7 @@ const Popup = ({
     lotDetail,
   } = useParking();
   const address = {lotDetail};
- 
+  
    const [showToast, setShowToast] = useState(false);
      const toastTimer = useRef(null);
   const [mounted, setMounted] = useState(open);
@@ -30,7 +38,7 @@ const Popup = ({
   const navigate=useNavigate();
   const { user } = useAuth();
   const sheetRef = useRef(null);
-  
+  const parkingLot = [parkingLot1,parkingLot2,parkingLot3,parkingLot4,parkingLot5,parkingLot6,parkingLot7,parkingLot8,parkingLot9]
   const goDetail =()=>{
     if (!selected) return;
      onClose()  
@@ -46,7 +54,6 @@ const Popup = ({
      onClose()  
     navigate("/guest-login", { state: { parking: selected } })
   }
-  
 const goLogin = () => {
    onClose()  
   if (!selected) return;
@@ -114,7 +121,6 @@ const goLogin = () => {
 //   "onSelectItem:", typeof onSelectItem, onSelectItem,
 //   "setKeyword:", typeof setKeyword, setKeyword
 // );
-if(!open) return null
   return (
     <div
       className={`popup-overlay ${visible ? "is-open" : ""}`}
@@ -154,12 +160,14 @@ if(!open) return null
     <section className="popup-panel">
 
       <ul className="popup-list">
-        {filtered.map((item) => (
+        {filtered.map((item,idx) => (
           <li
-            key={item.id}
-            onClick={() => onSelectItem(item)} // 여기서 부모가 view를 detail로 바꾸면 슬라이드 됨
+          key={item.id}
+          onClick={() => onSelectItem(item)} // 여기서 부모가 view를 detail로 바꾸면 슬라이드 됨
           >
-            <img className="thumb" src={item.photo_urls?.[0] ?? parking} alt="" />
+          <div className='img'>
+            <img className="thumb" src={parkingLot[idx % parkingLot.length]}alt="이미지" />
+          </div>
             <div className="meta">
               <h3 className="parking-name">{item.parking_name}</h3>
               <p className="title">{item.name}</p>
@@ -183,7 +191,11 @@ if(!open) return null
         {selected ? (
           <>
             <div className="detail">
-              <img className="thumb" src={selected.photo_urls?.[0] ?? parking} alt="" />
+              <img
+                  className="thumb"
+                  src={selected?.parkingLot?.[0] ?? parking}
+                  alt={selected?.parkingLot ?? "주차장 이미지"}
+                />
               <div className="txt">
                 <h3>{selected.parking_name}</h3>
                 <div className='address'>
