@@ -1,9 +1,18 @@
-import { Link } from "react-router-dom";
+// CSS
 import "./PaymentPopup.scss";
+// 기능
+import { useNavigate } from "react-router-dom";
 
-const PaymentPopup = ({ onClose }) => {
+const PaymentPopup = ({ onConfirm }) => {
+  const navigate = useNavigate();
+
+  const handleGoReservation = () => {
+    navigate("/reservations");
+    onConfirm?.(); // 팝업 닫기 + draft 초기화(부모에서 처리)
+  };
+
   return (
-    <div className="pay-overlay" onClick={onClose}>
+    <div className="pay-overlay" onClick={onConfirm}>
       <section id="pay-popup"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
@@ -11,9 +20,9 @@ const PaymentPopup = ({ onClose }) => {
       >
         <h1>예약이 완료 되었습니다!</h1>
 
-        <Link to="/reservations">
-          <button className="reserv-check-btn">예약 내용 확인하기</button>
-        </Link>
+        <button className="reserve-check-btn" onClick={handleGoReservation}>
+          예약 내용 확인하기
+        </button>
       </section>
     </div>
   );

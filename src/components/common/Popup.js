@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect, useRef, useState, useMemo } from "react"
 import "./popup.scss"
 import parking from "../../assets/images/detail img/parking.png"
@@ -22,9 +21,9 @@ const Popup = ({
     lotDetail,
   } = useParking();
   const address = {lotDetail};
- 
-   const [showToast, setShowToast] = useState(false);
-     const toastTimer = useRef(null);
+
+  const [showToast, setShowToast] = useState(false);
+  const toastTimer = useRef(null);
   const [mounted, setMounted] = useState(open);
   const [visible, setVisible] = useState(false);
   const navigate=useNavigate();
