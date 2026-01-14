@@ -8,16 +8,22 @@ section#pay-box{
   width: 100%;
   margin: 0.5rem auto;
   border-radius: 1rem;
-  @include flex-layout(column, center, flex-start, 0);
+  @include flex-layout(column, center, stretch, 0);
+
+  div.paytype-row, div.method-row {
+    width: 100%;
+    box-sizing: border-box;
+    justify-items: stretch; // 각 버튼이 칸을 꽉 채우도록
+  }
 
   // 시간권, 정기권 선택하는 grid
   div.paytype-row {
     display: grid;
     padding: 1rem;
-    grid-template-columns: repeat(2,1fr);
     gap: 1rem; 
+    grid-template-columns: repeat(2, minmax(0, 1fr)); // 2열 고정
     button {
-      width: 60px;
+      width: 100%;
     }
   }
   
@@ -25,10 +31,14 @@ section#pay-box{
   div.method-row {
     display: grid;
     padding: 1rem;
-    grid-template-columns: repeat(3,1fr);
-    gap: 1rem; 
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
     button {
-      width: 100px;
+      width: 100%;
+    }
+    @include respond {
+      // 데스크탑일 때
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     }
   }
 
