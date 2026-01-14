@@ -93,7 +93,6 @@ export const ParkingProvider = ({children}) => {
   const isSpaceTaken = (spaceId) => {
     const found =  (parked || []).find((item) => (item.space_id ?? item) === spaceId);
     if (!found) return null;
-    console.log("found",found.status);
     return found.status;
   };
   const filteredLots = useMemo(() => {

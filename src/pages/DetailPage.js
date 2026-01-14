@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import DetailContainer from "./section/detail/DetailContainer";
 import { useParking } from "../contexts/ParkingContext";
+import "../pages/section/detail/Detail.scss";
 
 const DetailPage = ({ selectedBox }) => {
   const navigate = useNavigate();
