@@ -33,7 +33,7 @@ const Popup = ({
   
   const goDetail =()=>{
     if (!selected) return;
-
+     onClose()  
   navigate(`/detail/${selected.id ?? selected.parking_id}`, {
     state: {
       parking: selected,   // ✅ 주차장 정보
@@ -43,10 +43,12 @@ const Popup = ({
   });
   }
   const goGuest = () => {
+     onClose()  
     navigate("/guest-login", { state: { parking: selected } })
   }
   
 const goLogin = () => {
+   onClose()  
   if (!selected) return;
 
   const parkingId = selected.id ?? selected.parking_id;
@@ -106,12 +108,13 @@ const goLogin = () => {
 
   if (!mounted) return null
 
-  console.log("[Popup props typeof]",
-  "onBack:", typeof onBack, onBack,
-  "onClose:", typeof onClose, onClose,
-  "onSelectItem:", typeof onSelectItem, onSelectItem,
-  "setKeyword:", typeof setKeyword, setKeyword
-);
+//   console.log("[Popup props typeof]",
+//   "onBack:", typeof onBack, onBack,
+//   "onClose:", typeof onClose, onClose,
+//   "onSelectItem:", typeof onSelectItem, onSelectItem,
+//   "setKeyword:", typeof setKeyword, setKeyword
+// );
+if(!open) return null
   return (
     <div
       className={`popup-overlay ${visible ? "is-open" : ""}`}
