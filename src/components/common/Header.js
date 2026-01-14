@@ -4,8 +4,7 @@ import { CgProfile } from "react-icons/cg"
 import { useAuth } from "../../contexts/AuthContext";
 import Logo from "../../assets/images/logo/zio-logo.png"; // 경로는 너 프로젝트 맞춰
 
-
-const Header = ({ onOpenPopup }) => {
+const Header = ({ onOpenPopup, keyword, setKeyword }) => {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -13,10 +12,7 @@ const Header = ({ onOpenPopup }) => {
     logout()
     navigate("/", { replace: true })
   }
-    
-    
-  
-    
+
 
   return (
     <header>
@@ -26,22 +22,21 @@ const Header = ({ onOpenPopup }) => {
           <img src={Logo} alt="logo" />
         </div>
       </Link>
-
+      
+     <input
+      placeholder="주차장을 찾아보세요"
+      value={keyword}
+      readOnly
+      onFocus={onOpenPopup}
+      // 또는 onClick={onOpenPopup}
+    />
       {/* 로그인 상태 분기 */}
-      <input
-          
-          type="text"
-          placeholder="주차장을 찾아보세요"
-          onFocus={onOpenPopup}
-          
-        />
       {user ? (
         <div className="login">
           
 
           
           {/* <button>{user.userId ?? user.id ?? "USER"}</button> */}
-
 
           <button
             type="button"

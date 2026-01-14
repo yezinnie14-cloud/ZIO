@@ -1,39 +1,15 @@
+import { useOutletContext } from "react-router-dom"
 import ParkingMap from "./section/main/ParkingMap"
-import { useEffect, useState } from "react"
-import Popup from "../components/common/Popup"
-import { useParking } from "../contexts/ParkingContext"
-import "../App.scss"
 
 const MainPage = () => {
-  const { lots } = useParking()
-  const [open, setOpen] = useState(false)
-  const [keyword, setKeyword] = useState("")
-  const [view, setView] = useState("list")
-  const [selected, setSelected] = useState(null)
-  
-
-  const openPopup = () => {
-    setOpen(true)
-    setView("list")
-    setSelected(null)
-  }
-
-  const closePopup = () => {
-    setOpen(false)
-    setView("list")
-    setSelected(null)
-  }
-
-  const handleSelectItem = (item) => {
-    setSelected(item)
-    setView("detail")
-    setOpen(true) // 마커 클릭으로도 팝업 열림
-  }
-
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : ""
-    return () => (document.body.style.overflow = "")
-  }, [open])
+  const {
+    keyword,
+    setKeyword,
+    selected,
+    open,
+    openPopup,
+    handleSelectItem,
+  } = useOutletContext()
 
   return (
     <div className="mainpage">
@@ -56,22 +32,10 @@ const MainPage = () => {
           }}
         />
       </div>
-
-      <Popup
-        open={open}
-        onClose={closePopup}
-        
-        keyword={keyword}
-        setKeyword={setKeyword}
-        view={view}
-        selected={selected}
-        list={lots}                 
-        onSelectItem={handleSelectItem}
-        onBack={() => setView("list")}
-      />
     </div>
   )
 }
 
-export default MainPage;
+export default MainPage
+
 
