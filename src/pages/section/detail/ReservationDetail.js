@@ -27,7 +27,6 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
       .slice()
       .sort(sortBySpaceCode);
 
-    const arrB = (spaces || [])
 
     const arrB = (spaces || [])
       .filter((item) => (item.space_code || "").startsWith("B-"))
@@ -37,7 +36,6 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
 
     setLaneA(arrA);
     setLaneB(arrB);
-  }, [spaces]);
   }, [spaces]);
 
   return (
