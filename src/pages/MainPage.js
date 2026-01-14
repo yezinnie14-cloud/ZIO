@@ -60,6 +60,7 @@ const MainPage = () => {
       <Popup
         open={open}
         onClose={closePopup}
+        
         keyword={keyword}
         setKeyword={setKeyword}
         view={view}

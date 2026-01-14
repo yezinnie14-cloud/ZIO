@@ -106,12 +106,13 @@ const goLogin = () => {
 
   if (!mounted) return null
 
-  console.log("[Popup props typeof]",
-  "onBack:", typeof onBack, onBack,
-  "onClose:", typeof onClose, onClose,
-  "onSelectItem:", typeof onSelectItem, onSelectItem,
-  "setKeyword:", typeof setKeyword, setKeyword
-);
+//   console.log("[Popup props typeof]",
+//   "onBack:", typeof onBack, onBack,
+//   "onClose:", typeof onClose, onClose,
+//   "onSelectItem:", typeof onSelectItem, onSelectItem,
+//   "setKeyword:", typeof setKeyword, setKeyword
+// );
+if(!open) return null
   return (
     <div
       className={`popup-overlay ${visible ? "is-open" : ""}`}
