@@ -115,3 +115,4 @@ export default function ParkingMap({ keyword, selected, onSelectItem }) {
     </Map>
   );
 }
+
