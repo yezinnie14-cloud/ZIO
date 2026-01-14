@@ -6,6 +6,9 @@ div#payment-page {
   margin: 0 2rem;
   margin-top: 60px;
   @include flex-layout($dir:column, $gap:0);
+  @include respond {
+    margin-top: 0;
+  }
 
   button.price-btn {
     cursor: pointer;

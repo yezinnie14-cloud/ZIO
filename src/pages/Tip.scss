@@ -1,3 +1,19 @@
+// @use "../assets/scss/variables" as *;
+// @use "../assets/scss/mixins" as *;
+
+// .tip-page{
+//   width: 100%;
+//   min-width: 430px;
+//   height: 100vh;
+//   margin-top: 60px;
+//   padding-top: 0.5rem;
+//   background-color: $color-white;
+
+//   .tip-list{
+//     width: 80%;
+//     margin: 0 auto;
+//     }
+// }
 @use "../assets/scss/variables" as *;
 @use "../assets/scss/mixins" as *;
 
@@ -8,9 +24,23 @@
   margin-top: 60px;
   padding-top: 0.5rem;
   background-color: $color-white;
+  @include respond {
+    margin-top: 0;
+  }
 
   .tip-list{
     width: 80%;
     margin: 0 auto;
     }
 }
+.tip-footer {
+  display: none;
+}
+@media (max-width: 767px) {
+  .tip-footer {
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 4.5rem;
+    .footer{
+      margin: 0 auto;
+}}}

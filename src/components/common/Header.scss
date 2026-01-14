@@ -1,7 +1,80 @@
+// @use "../../assets/scss/fonts" as *;
+// @use "../../assets/scss/variables" as *;
+// @use "../../assets/scss/mixins" as *;
+
+// header{
+//     width: 100%;
+//     height: 60px;
+//     padding: 1rem;
+//     position: fixed;
+//     top: 0;
+//     z-index: 999;
+//     overflow: hidden;
+//     @include flex-layout($just:space-between);
+//     @include respond {
+//         position: static;
+//     }
+
+//     // 로고 이미지
+//     .logo {
+//         width: 30px;
+//         height: 44px;
+//         cursor: pointer;
+//         img {
+//             width: 100%;
+//             height: 100%;
+//         }
+//     }
+//      input{
+//             display: none
+//     }
+//     .login{
+//         @include flex-layout(row,space-around);
+        
+//         button{
+//             cursor: pointer;
+//             @include btn-theme($bg:#7F31BC,$hover-bg:#B67FDB,$color:#ddd);
+//             width: auto;
+//             height: 15px;      
+//         }
+
+        
+//     }
+// }
+// @include respond{
+//     header{
+//         @include flex-layout(row,space-around,center);
+//         width: 80%;
+//         right: 10%;
+//         input{
+//             position: relative;
+//             transition: transform 0.3s ease;
+//             text-align: center;
+//             @include flex-layout(row,center);
+//             width: 200px;
+//             padding: 0.5rem;
+//             @include caption-r();
+//             border-radius: 15px;
+//             border: none;
+//             background-color: rgba(148, 148, 148, 0.25);
+//             box-shadow: 0 3px 3px rgba($color: #000000, $alpha: 0.33);
+//             backdrop-filter: saturate(100%) blur(5px);
+//             &.active {
+//             transform: translateY(-325px);
+//             opacity: 0;}
+//         &:focus{
+//             width: 250px;
+//             outline: none;
+//             border: 0.3px solid rgba(148, 148, 148, 0.45);
+//         }
+//         }
+//     }
+// }
+
+
 @use "../../assets/scss/fonts" as *;
 @use "../../assets/scss/variables" as *;
 @use "../../assets/scss/mixins" as *;
-
 header{
     width: 100%;
     height: 60px;
@@ -12,10 +85,8 @@ header{
     overflow: hidden;
     @include flex-layout($just:space-between);
     @include respond {
-        position: static;
-    }
-
-    // 로고 이미지
+        position: static;}
+        // 로고 이미지 
     .logo {
         width: 30px;
         height: 44px;
@@ -25,48 +96,42 @@ header{
             height: 100%;
         }
     }
-     input{
-            display: none
+    input{
+        display: none
     }
     .login{
         @include flex-layout(row,space-around);
-        
         button{
             cursor: pointer;
             @include btn-theme($bg:#7F31BC,$hover-bg:#B67FDB,$color:#ddd);
             width: auto;
-            height: 15px;      
+            height: 15px;
         }
-
-        
-    }
-}
-@include respond{
-    header{
-        @include flex-layout(row,space-around,center);
-        width: 80%;
-        right: 10%;
-        input{
-            position: relative;
-            transition: transform 0.3s ease;
-            text-align: center;
-            @include flex-layout(row,center);
-            width: 200px;
-            padding: 0.5rem;
-            @include caption-r();
-            border-radius: 15px;
-            border: none;
-            background-color: rgba(148, 148, 148, 0.25);
-            box-shadow: 0 3px 3px rgba($color: #000000, $alpha: 0.33);
-            backdrop-filter: saturate(100%) blur(5px);
-            &.active {
-            transform: translateY(-325px);
-            opacity: 0;}
-        &:focus{
-            width: 250px;
-            outline: none;
-            border: 0.3px solid rgba(148, 148, 148, 0.45);
-        }
-        }
-    }
-}
+    }}@include respond{
+        header{
+            @include flex-layout(row,space-around,center);
+            width: 80%;
+            right: 10%;
+            input{
+                position: relative;
+                transition: transform 0.3s ease;
+                text-align: center;
+                @include flex-layout(row,center);
+                width: 200px;
+                padding: 0.5rem;
+                @include caption-r();
+                border-radius: 15px;
+                border: none;
+                background-color: rgba(148, 148, 148, 0.25);
+                box-shadow: 0 3px 3px rgba($color: #000000, $alpha: 0.33);
+                backdrop-filter: saturate(100%) blur(5px);
+                &.active {
+                    transform: translateY(-325px);
+                    opacity: 0;}
+                    &:focus{
+                        width: 250px;
+                        outline: none;
+                        border: 0.3px solid rgba(148, 148, 148, 0.45);
+                    }
+                }
+            }}
