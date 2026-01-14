@@ -73,7 +73,7 @@
     margin: 0 auto;
   }
   .sec1{
-  
+
     @include flex-layout(column, space-around, flex-end, 5rem );
     height: 99vh;
   
