@@ -28,12 +28,16 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
       .sort(sortBySpaceCode);
 
     const arrB = (spaces || [])
+
+    const arrB = (spaces || [])
       .filter((item) => (item.space_code || "").startsWith("B-"))
       .slice()
       .sort(sortBySpaceCode);
 
+
     setLaneA(arrA);
     setLaneB(arrB);
+  }, [spaces]);
   }, [spaces]);
 
   return (
