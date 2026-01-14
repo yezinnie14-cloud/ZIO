@@ -1,7 +1,7 @@
 import './TipCard.scss';
 import LightImg from '../assets/images/3d-light.png'
 
-const TipCard = ({title, text, icon}) => {
+const TipCard = ({title, text}) => {
   return (
     <div className='tip-card'>
       <div className='tip-img'>
@@ -10,7 +10,6 @@ const TipCard = ({title, text, icon}) => {
 
       <div className='tip-text'>
         <h3 className='tip-title'>
-          {/* {icon && <div className='tip-icon'>{icon}</div>}{title} */}
           {title}
         </h3>
         <p className='tip-txt'>{text}</p>

@@ -59,4 +59,9 @@
       border-color: rgba($color-main, 0.8);
     }
   }
+
+  @include respond{
+    // display: none;
+    background-color: $color-real-white;
+  }
 }
