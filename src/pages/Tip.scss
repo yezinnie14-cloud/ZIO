@@ -1,14 +1,34 @@
 @use "../assets/scss/variables" as *;
 @use "../assets/scss/mixins" as *;
 
-.tip-page{
+.tip-page {
   width: 100%;
-  min-width: 430px;
-  height: 100vh;
+  min-height: 100vh;     
+  display: flex;         
+  flex-direction: column;
   padding-top: 3rem;
   background-color: $color-white;
-  .tip-list{
-    width: 80%;
-    margin: 0 auto;
+}
+
+.tip-list {
+  width: 80%;
+  margin: 0 auto;
+  flex: 1;               
+}
+
+
+.tip-footer {
+  display: none;
+}
+
+
+@media (max-width: 767px) {
+  .tip-footer {
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 4.5rem;
+    .footer{
+      margin: 0 auto;
     }
+  }
 }

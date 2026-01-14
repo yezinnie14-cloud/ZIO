@@ -70,8 +70,13 @@
       margin: 0 auto;
     }
     .sec1 {
-      @include flex-layout(column, space-around, flex-end, 0 );
+      @include flex-layout(column, space-around, flex-end, 5rem );
       height: 99vh;
+      @media (max-width:768px){
+        .footer{
+          display: none;
+        }
+      }
     }
     .sec3 {
       display: inline-block;
