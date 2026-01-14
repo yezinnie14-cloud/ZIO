@@ -1,4 +1,6 @@
-@use "./assets/scss/fonts" as *;@use "./assets/scss/variables" as *;@use "./assets/scss/mixins" as *;* 
+@use "./assets/scss/fonts" as *;
+@use "./assets/scss/variables" as *;
+@use "./assets/scss/mixins" as *;* 
 {
   margin: 0;
   padding: 0;
@@ -76,6 +78,7 @@
     max-width: 360px;
     justify-self: end;
     padding-right: 5rem;
+    padding-top: 4rem;
   }
   }
 }
