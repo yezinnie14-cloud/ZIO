@@ -1,9 +1,8 @@
 import Footer from "../components/common/Footer";
 import TipCard from "../components/TipCard";
-import './Tip.scss';
+import "./Tip.scss";
 
 const Tip = () => {
-
   const tips = [
     {
       id: 1,
@@ -28,18 +27,21 @@ const Tip = () => {
   ];
   return (
     <div className="tip-page">
-        <div className="tip-list">
-          {tips.map((tip) => (
-            <TipCard
-              key={tip.id}
-              title={tip.title}
-              text={tip.text}
-              icon={tip.icon}
-            />
-          ))}
-        </div>
+      <div className="tip-list">
+        {tips.map((tip) => (
+          <TipCard
+            key={tip.id}
+            title={tip.title}
+            text={tip.text}
+            icon={tip.icon}
+          />
+        ))}
+      </div>
+      <div className="tip-footer">
+        <Footer />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Tip
+export default Tip;
