@@ -53,10 +53,13 @@
     }
 
     .info-pay {
-      width: 100%;
+      width: 50%;
       @include flex-layout($just:space-between);
       p:nth-child(1) {
         color: $color-555;
+      }
+      @include respond {
+        width: 30%;
       }
     }
   }
