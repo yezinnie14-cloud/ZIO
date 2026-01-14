@@ -40,7 +40,6 @@ const ReservationInfo = ({ selectedBox, onReserve, isMobile }) => {
               view="detail"
               selected={lotDetail}
               list={lots}
-              // onSelectItem={handleSelectItem}
               onBack={() => {}}
             />
           </div>
