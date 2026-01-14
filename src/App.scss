@@ -52,6 +52,7 @@
     width: 360px;
     min-width: 360px;
   }
+  
   .layout-outlet {
       flex: 1 1 auto;      
       min-width: 400px;         
@@ -72,8 +73,10 @@
     margin: 0 auto;
   }
   .sec1{
-    display: inline-block;
-    height: 100vh;
+  
+    @include flex-layout(column, space-around, flex-end, 5rem );
+    height: 99vh;
+  
   }
      .sec3 {
     display: inline-block;
