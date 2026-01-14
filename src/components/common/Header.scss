@@ -11,6 +11,9 @@ header{
     z-index: 999;
     overflow: hidden;
     @include flex-layout($just:space-between);
+    @include respond {
+        position: static;
+    }
 
     // 로고 이미지
     .logo {
