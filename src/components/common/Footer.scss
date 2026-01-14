@@ -1,6 +1,67 @@
-@use '../../assets/scss/mixins' as *;
-@use '../../assets/scss/variables' as *;
-@use '../../assets/scss/fonts' as *;
-.footer{
-    display: none;
+@use "../../assets/scss/variables" as *;
+@use "../../assets/scss/mixins" as *;
+@use "../../assets/scss/fonts" as *;
+
+.footer {
+  width: 230px;
+  margin-top: auto;
+  font-size: 12px;
+  line-height: 1.45;
+  color: $color-555;
+  text-align: left;
+
+  h3 {
+    margin: 0 0 6px;
+    @include body-b();
+    color: $color-555;
+    letter-spacing: -0.2px;
+  }
+
+  p {
+    margin: 2px 0;
+    font-size: 0.8rem;
+    font-weight: 100;
+    color: #aaa;
+    letter-spacing: -0.2px;
+  }
+
+  select {
+    margin-top: 10px;
+    width: 150px; 
+    height: 2rem;
+    padding: 0 2rem 0 0.7rem;
+    font-size: 0.8rem;
+    color: $color-555;
+    border: 1px solid rgba($color-bbb, 0.6);
+    border-radius: $radius-btn;
+    background-color: rgba($color-bbb, 0.18);
+
+    cursor: pointer;
+    outline: none;
+
+    // 기본 화살표 사용 안함
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    // 커스텀 화살표 지정
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Cpath fill='%23555' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+
+    &:hover {
+      background-color: rgba($color-bbb, 0.26);
+      border-color: rgba($color-bbb, 0.85);
+    }
+
+    // select 클릭 시 테두리 보라색
+    &:focus {
+      border-color: rgba($color-main, 0.8);
+    }
+  }
+
+  @include respond{
+    // display: none;
+    background-color: $color-real-white;
+  }
 }
