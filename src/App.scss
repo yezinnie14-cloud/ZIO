@@ -1,49 +1,42 @@
-@use "./assets/scss/fonts" as *;
-@use "./assets/scss/variables" as *;
-@use "./assets/scss/mixins" as *;
-* {
+@use "./assets/scss/fonts" as *;@use "./assets/scss/variables" as *;@use "./assets/scss/mixins" as *;* 
+{
   margin: 0;
   padding: 0;
 }
 .mainpage {
   width: 100%;
   .search {
+    @include flex-layout(row, center);overflow: visible;
+  .input {
+    position: relative;
+    transition: transform 0.3s ease;
+    text-align: center;
+    transform: translateY(-350%);
     @include flex-layout(row, center);
-    overflow: visible;
-
-    .input {
-      position: relative;
-      transition: transform 0.3s ease;
-      text-align: center;
-      transform: translateY(-350%);
-      @include flex-layout(row, center);
-      width: 200px;
-      z-index: 9999; // 지도 위로
-      padding: 0.5rem;
-      @include caption-r();
-      border-radius: 15px;
-      border: none;
-      background-color: rgba(148, 148, 148, 0.25);
-      box-shadow: 0 3px 3px rgba($color: #000000, $alpha: 0.33);
-      backdrop-filter: saturate(100%) blur(5px);
-      &.active {
-        transform: translateY(-325px);
-        opacity: 0;
-      }
-      &:focus {
-        width: 250px;
-        outline: none;
-        border: 0.3px solid rgba(148, 148, 148, 0.45);
-      }
+    width: 200px;
+    z-index: 9999; // 지도 위로  
+    padding: 0.5rem;
+    @include caption-r();
+    border-radius: 15px;
+    border: none;
+    background-color: rgba(148, 148, 148, 0.25);
+    box-shadow: 0 3px 3px rgba($color: #000000, $alpha: 0.33);
+    backdrop-filter: saturate(100%) blur(5px);
+    &.active {
+      transform: translateY(-325px);
+      opacity: 0;
+    }
+    &:focus {
+      width: 250px;
+      outline: none;
+      border: 0.3px solid rgba(148, 148, 148, 0.45);
     }
   }
-}
-
-// layout -sec3 처리
-.layout-main {
-  width: 100%;
+}}// layout -sec3 처리
+.layout-main {width: 100%;
   height: 100vh;
   @include flex-layout("","",stretch,"");
+  @include flex-layout("", "", stretch, "");
   padding: 0;
   .sec1 {
     display: none;
@@ -51,47 +44,38 @@
     width: 360px;
     min-width: 360px;
   }
-  
   .layout-outlet {
-      flex: 1 1 auto;      
-      min-width: 400px;         
-    }
-  .sec3 {
+    flex: 1 1 auto;
+    min-width: 400px;
+  }.sec3 {
     display: none;
     flex: 0 0 400px;
     width: 400px;
     min-width: 400px;
   }
 }
-
 @include respond {
-  .layout-main {    
+  .layout-main {
     @include flex-layout(row,space-around,flex-start,none);
     .layout-outlet {
-    min-width: 360px;
-    margin: 0 auto;
+      min-width: 360px;
+      margin: 0 auto;
+    }
+    .sec1 {
+      @include flex-layout(column, space-around, flex-end, 5rem );
+      height: 99vh;
+      @media (max-width:768px){
+        .footer{
+          display: none;
+        }
+      }
+    }
+    .sec3 {
+    display: inline-block;
+    width: 100%;
+    max-width: 360px;
+    justify-self: end;
+    padding-right: 5rem;
   }
-  .sec1{
-
-    @include flex-layout(column, space-around, flex-end, 5rem );
-    height: 99vh;
-  
-  }
-  //    .sec3 {
-  //   display: inline-block;
-  //   width: 100%;
-  //   max-width: 360px;
-  //   justify-self: end;
-  //   padding-right:5rem ;
-  //   padding-top: 4rem;
-  // }
-
-  .mainpage{
-    transform: translateY(8%);
-    
-    .search{
-    display: none;
-  }
-}
   }
 }
