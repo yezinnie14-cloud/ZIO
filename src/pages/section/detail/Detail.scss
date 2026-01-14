@@ -23,9 +23,10 @@
     }
     .parking-scroll {
       width: 100%;
+      max-height: calc(100vh - 140px);
       @include respond {
         flex: 1 1 auto;
-        max-height: calc(100vh - 140px);
+        max-height: calc(100vh - 14px);
         overflow-y: auto;
       }
     }

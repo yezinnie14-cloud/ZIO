@@ -82,7 +82,6 @@ const ReservationDetail = ({ selectedCode, onSelect }) => {
           const isSelected = space.space_code === selectedCode;
 
           const takenStatus = isSpaceTaken(space.id);
-          console.log("bbb",takenStatus, idx);
           const isTaken = Boolean(takenStatus);
           const classes = [
             "parking-box",
