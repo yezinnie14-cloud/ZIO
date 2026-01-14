@@ -7,7 +7,7 @@ import './assets/scss/global.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <HashRouter basename="/ZIO">
+  <HashRouter >
     <App />
   </HashRouter>
 );
