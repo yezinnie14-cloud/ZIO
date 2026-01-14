@@ -67,25 +67,25 @@ const Payment = ({ hasSubscription }) => {
       {/* 시간권일 때 결제수단 선택 -> reservation.pay_method로 저장됨
           시간권 선택 시 결제수단 선택 grid*/}
       <div className={`method-row ${draft.payType === "정기권" ? "disabled" : ""}`}>
-        <button type="button" className={active("CARD")} onClick={() => selectMethod("CARD")}>
+        <button type="button" className={`pay-btn ${active("CARD")}`} onClick={() => selectMethod("CARD")}>
           앱카드
         </button>
-        <button type="button" className={active("PHONE")} onClick={() => selectMethod("PHONE")}>
+        <button type="button" className={`pay-btn ${active("PHONE")}`} onClick={() => selectMethod("PHONE")}>
           휴대폰 결제
         </button>
-        <button type="button" className={active("BANK")} onClick={() => selectMethod("BANK")}>
+        <button type="button" className={`pay-btn ${active("BANK")}`} onClick={() => selectMethod("BANK")}>
           내통장 결제
         </button>
-        <button type="button" className={active("KAKAOPAY")} onClick={() => selectMethod("KAKAOPAY")}>
+        <button type="button" className={`pay-btn ${active("KAKAOPAY")}`} onClick={() => selectMethod("KAKAOPAY")}>
           <img src={kakaoImg} alt="kakao" />
         </button>
-        <button type="button" className={active("NAVERPAY")} onClick={() => selectMethod("NAVERPAY")}>
+        <button type="button" className={`pay-btn ${active("NAVERPAY")}`} onClick={() => selectMethod("NAVERPAY")}>
           <img src={naverImg} alt="naver" />
         </button>
-        <button type="button" className={active("TOSS")} onClick={() => selectMethod("TOSS")}>
+        <button type="button" className={`pay-btn ${active("TOSS")}`} onClick={() => selectMethod("TOSS")}>
           <img src={tossImg} alt="toss" />
         </button>
-        <button type="button" className={active("PAYCO")} onClick={() => selectMethod("PAYCO")}>
+        <button type="button" className={`pay-btn ${active("PAYCO")}`} onClick={() => selectMethod("PAYCO")}>
           <img src={paycoImg} alt="payco" />
         </button>
       </div>

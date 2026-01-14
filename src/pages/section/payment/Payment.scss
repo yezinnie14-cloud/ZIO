@@ -49,4 +49,12 @@ section#pay-box{
       background-color: $color-white;
     }
   }
+
+  /* 선택된 결제 수단 */
+  .pay-btn.active {
+    background-color: $color-black;
+    border: 2px solid $color-main;
+    color: #ffffff;
+    transition: 0.3s;
+  }
 }
