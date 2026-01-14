@@ -33,7 +33,7 @@ const Popup = ({
   
   const goDetail =()=>{
     if (!selected) return;
-
+     onClose()  
   navigate(`/detail/${selected.id ?? selected.parking_id}`, {
     state: {
       parking: selected,   // ✅ 주차장 정보
@@ -43,10 +43,12 @@ const Popup = ({
   });
   }
   const goGuest = () => {
+     onClose()  
     navigate("/guest-login", { state: { parking: selected } })
   }
   
 const goLogin = () => {
+   onClose()  
   if (!selected) return;
 
   const parkingId = selected.id ?? selected.parking_id;
