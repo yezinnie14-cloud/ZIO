@@ -36,9 +36,8 @@ header{
         }
     }}@include respond{
         header{
-            @include flex-layout(row,space-around,center);
-            width: 80%;
-            right: 10%;
+            @include flex-layout(row,space-between,center);
+            // right: 10%;
             input{
                 position: relative;
                 transition: transform 0.3s ease;
