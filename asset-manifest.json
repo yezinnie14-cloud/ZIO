@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ZIO/static/css/main.e0c78ed0.css",
-    "main.js": "/ZIO/static/js/main.9bde0175.js",
+    "main.css": "/ZIO/static/css/main.8378c35a.css",
+    "main.js": "/ZIO/static/js/main.dc2bfb8f.js",
     "static/media/parking-1.jpg": "/ZIO/static/media/parking-1.f78af2d5754103613e90.jpg",
     "static/media/parkingLot-05.png": "/ZIO/static/media/parkingLot-05.3b449acb6276d96399af.png",
     "static/media/parkingLot-06.png": "/ZIO/static/media/parkingLot-06.04d8b09b78dce5080eda.png",
@@ -18,11 +18,11 @@
     "static/media/3d-car-blue.png": "/ZIO/static/media/3d-car-blue.b1df5d0b6ec6e04c4349.png",
     "static/media/zio-logo.png": "/ZIO/static/media/zio-logo.069281ec7bf9d4476904.png",
     "index.html": "/ZIO/index.html",
-    "main.e0c78ed0.css.map": "/ZIO/static/css/main.e0c78ed0.css.map",
-    "main.9bde0175.js.map": "/ZIO/static/js/main.9bde0175.js.map"
+    "main.8378c35a.css.map": "/ZIO/static/css/main.8378c35a.css.map",
+    "main.dc2bfb8f.js.map": "/ZIO/static/js/main.dc2bfb8f.js.map"
   },
   "entrypoints": [
-    "static/css/main.e0c78ed0.css",
-    "static/js/main.9bde0175.js"
+    "static/css/main.8378c35a.css",
+    "static/js/main.dc2bfb8f.js"
   ]
 }
