@@ -2,77 +2,82 @@
 @use "../../../assets/scss/variables" as *;
 @use "../../../assets/scss/mixins" as *;
 
-.guest-popup {
-  @include flex-layout($dir: column, $just: center, $align: center, $gap: 12px);
-  width: 22.5rem;
-  padding: 1rem 1.5rem;
-  background-color: $color-white;
-  border-radius: 1.2rem;
-  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.12);
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
+.guest-wrap {
+  width: 100%;
+  height: 90vh;
+  position: relative;
+  .guest-popup {
+    @include flex-layout($dir: column, $just: center, $align: center, $gap: 12px);
+    width: 22.5rem;
+    padding: 1rem 1.5rem;
+    background-color: $color-white;
+    border-radius: 1.2rem;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.12);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
 
-  h2 {
-    @include title-b;
-    color: $color-black;
-    padding: 0.5rem;
-  }
-  .phone-num {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    gap: 1.6rem;
-    label {
-      @include caption-b;
-      white-space: nowrap;
+    h2 {
+      @include title-b;
       color: $color-black;
+      padding: 0.5rem;
+    }
+    .phone-num {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      gap: 1.6rem;
+      label {
+        @include caption-b;
+        white-space: nowrap;
+        color: $color-black;
+      }
+
+      input {
+        width: 100%;
+        height: 44px;
+        padding: 0 14px;
+        border-radius: 10px;
+        // border: 1px solid $color-bbb;
+        border: none;
+        background-color: $color-real-white;
+        color: $color-black;
+        outline: none;
+
+        &::placeholder {
+          color: rgba($color-555, 0.7);
+        }
+
+        &:focus {
+          // border-color: $color-main;
+          // box-shadow: 0 3px 3px rgba($color-main, 0.15);
+          box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12);
+        }
+      }
     }
 
-    input {
+    .guestpopup-error {
+      @include caption-r;
+      color: $color-red;
+      text-align: center;
+      line-height: 1.35;
+      margin-top: 2px;
+    }
+
+    button {
+      @include btn-theme(
+        $color: $color-black,
+        $bg: $color-btn,
+        $hover-bg: #dadada,
+        $hover-text: $color-black
+      );
       width: 100%;
-      height: 44px;
-      padding: 0 14px;
-      border-radius: 10px;
-      // border: 1px solid $color-bbb;
-      border: none;
-      background-color: $color-real-white;
-      color: $color-black;
-      outline: none;
-
-      &::placeholder {
-        color: rgba($color-555, 0.7);
-      }
-
-      &:focus {
-        // border-color: $color-main;
-        // box-shadow: 0 3px 3px rgba($color-main, 0.15);
-        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12);
-      }
+      max-width: 320px;
+      margin-top: 6px;
+      @include caption-b();
     }
-  }
-
-  .guestpopup-error {
-    @include caption-r;
-    color: $color-red;
-    text-align: center;
-    line-height: 1.35;
-    margin-top: 2px;
-  }
-
-  button {
-    @include btn-theme(
-      $color: $color-black,
-      $bg: $color-btn,
-      $hover-bg: #dadada,
-      $hover-text: $color-black
-    );
-    width: 100%;
-    max-width: 320px;
-    margin-top: 6px;
-    @include caption-b();
   }
 }
 

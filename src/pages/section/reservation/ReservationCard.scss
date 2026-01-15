@@ -2,133 +2,140 @@
 @use "../../../assets/scss/variables" as *;
 @use "../../../assets/scss/mixins" as *;
 
-.reservation-card {
-  width: 85%;
-  background: $color-white;
-  border-radius: 18px;
-  padding: 1rem 1.5rem;
-  box-sizing: border-box;
-  position: fixed;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-
-  // 카드가 너무 넓게 퍼지지 않게
-  max-width: 680px;
-
-  // 뱃지 영역
-  .card-badges {
-    @include flex-layout(row, space-between, center, 12px);
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      white-space: nowrap;
-    }
-
-    // 좌측 "정기권/시간권"
-    .badge-subs {
-      @include caption-r;
-      padding: 0.5rem 1rem;
-      border-radius: 1rem;
-      background: $color-main;
-      color: $color-real-white;
-    }
-
-    // 우측 "이용 중/완료"
-    .badge-status {
-      @include body-b;
-      font-size: 1.2rem;
-      background: transparent;
-      padding: 0;
-      border-radius: 0;
-      color: $color-main;
-
-      // 상태별로 확장 가능 (필요 시)
-      &.USING {
-        color: $color-main;
-      }
-      &.DONE {
-        color: $color-555;
-      }
-      &.RESERVED {
-        color: $color-main;
-      }
-      &.CANCELED {
-        color: $color-red;
-      }
-    }
+.card-wrap {
+  width: 100%;
+  max-width: 500px;
+  @include respond {
+    max-width: 100%;
   }
+  margin: 0 auto;
+  height: 90vh;
+  position: relative;
+  .reservation-card {
+    width: 85%;
+    margin: 1rem auto;
+    background: $color-white;
+    border-radius: 18px;
+    padding: 1rem 1.5rem;
+    box-sizing: border-box;
+    position: absolute;
+    top: 300px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
 
-  // 행 영역
-  .card-rows {
-    margin-top: 18px;
+    // 카드가 너무 넓게 퍼지지 않게
+    max-width: 680px;
 
-    .row {
-      @include flex-layout(row, space-between, flex-start, 14px);
-      @include caption-r;
-      padding: 7px 0;
+    // 뱃지 영역
+    .card-badges {
+      @include flex-layout(row, space-between, center, 12px);
 
-      .label {
-        color: $color-555;
-        min-width: 88px;
-        letter-spacing: -0.2px;
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        white-space: nowrap;
       }
 
-      .value {
-        color: $color-black;
-        text-align: right;
-        letter-spacing: -0.2px;
-
-        // 주소/긴 텍스트 대응
-        max-width: 68%;
-        word-break: keep-all;
-        overflow-wrap: anywhere;
+      // 좌측 "정기권/시간권"
+      .badge-subs {
+        @include caption-r;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        background: $color-main;
+        color: $color-real-white;
       }
 
-      &.amount {
-        padding-top: 10px;
+      // 우측 "이용 중/완료"
+      .badge-status {
+        @include body-b;
+        font-size: 1.2rem;
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+        color: $color-main;
+
+        // 상태별로 확장 가능 (필요 시)
+        &.USING {
+          color: $color-main;
+        }
+        &.DONE {
+          color: $color-555;
+        }
+        &.RESERVED {
+          color: $color-main;
+        }
+        &.CANCELED {
+          color: $color-red;
+        }
+      }
+    }
+
+    // 행 영역
+    .card-rows {
+      margin-top: 18px;
+
+      .row {
+        @include flex-layout(row, space-between, flex-start, 14px);
+        @include caption-r;
+        padding: 7px 0;
 
         .label {
           color: $color-555;
+          min-width: 88px;
+          letter-spacing: -0.2px;
         }
+
         .value {
           color: $color-black;
+          text-align: right;
+          letter-spacing: -0.2px;
+
+          // 주소/긴 텍스트 대응
+          max-width: 68%;
+          word-break: keep-all;
+          overflow-wrap: anywhere;
+        }
+
+        &.amount {
+          padding-top: 10px;
+
+          .label {
+            color: $color-555;
+          }
+          .value {
+            color: $color-black;
+          }
         }
       }
     }
-  }
 
-  // 데스크탑(768px+) 최적화
-  @include respond {
-    border-radius: 22px;
-    padding: 22px 28px;
-    max-width: 760px;
+    // 데스크탑(768px+) 최적화
+    @include respond {
+      border-radius: 22px;
+      padding: 22px 28px;
+      // max-width: 760px;
 
-    .card-badges {
-      .badge-type {
-        padding: 8px 18px;
-      }
-      .badge-status {
-        font-size: 1.3rem;
-      }
-    }
-
-    .card-rows {
-      margin-top: 20px;
-
-      .row {
-        padding: 8px 0;
-        @include body-r;
-
-        .label {
-          min-width: 120px;
+      .card-badges {
+        .badge-type {
+          padding: 8px 18px;
         }
-        .value {
-          max-width: 72%;
+      }
+
+      .card-rows {
+        margin-top: 20px;
+
+        .row {
+          padding: 8px 0;
+
+          .label {
+            min-width: 120px;
+          }
+          .value {
+            max-width: 72%;
+          }
         }
       }
     }
