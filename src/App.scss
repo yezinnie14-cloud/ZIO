@@ -172,8 +172,8 @@
       margin: 0 auto;
     }
     .sec1 {
-      @include flex-layout(column, space-around, flex-end, 5rem );
-      height: 99vh;
+      @include flex-layout(column, space-between, flex-end, 5rem );
+      height: 100vh;
       @media (max-width:768px){
         .footer{
           display: none;
