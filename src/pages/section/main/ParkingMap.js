@@ -210,12 +210,11 @@ export default function ParkingMap({ keyword, selected, onSelectItem }) {
   if (error) return <div>{String(error)}</div>;
 
   return (
-    <Map
-      center={center}
-      style={{ width: "100%", height: "100vh" }}
-      level={4}
-      onCreate={(map) => (mapRef.current = map)}
-    >
+   <Map
+   center={center}
+   style={{ width: "100%", height: "calc(100vh - 60px)" }}
+   level={4}
+   onCreate={(map) => (mapRef.current = map)}>
       {markers.map((p) => (
         <MapMarker
           key={p.id}
