@@ -19,7 +19,6 @@ const GuestPopup = ({ onSubmit, errorMessage }) => {
     onSubmit({ phone: clean }); //객체로 전달
   };
   return (
-    <div className="guest-wrap">
     <div className="guest-popup">
       <h2>비회원 예약 확인</h2>
       <div className="phone-num">
@@ -41,9 +40,7 @@ const GuestPopup = ({ onSubmit, errorMessage }) => {
       )}
       <button onClick={handleSubmit}>예약 내용 확인하기</button>
     </div>
-    </div>
   );
 };
 
 export default GuestPopup;
-

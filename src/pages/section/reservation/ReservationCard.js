@@ -156,4 +156,3 @@ const ReservationCard = ({ reservation }) => {
 };
 
 export default ReservationCard;
-
